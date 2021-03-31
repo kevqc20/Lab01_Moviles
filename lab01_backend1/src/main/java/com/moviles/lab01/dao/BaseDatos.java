@@ -29,7 +29,7 @@ public class BaseDatos {
                 throw ex;
             }
         } catch (IOException ex) {
-            System.err.println("No se pudo leer el archivo de configuración..");
+            System.err.print("No se pudo leer el archivo de configuración..");
             throw ex;
         }
     }
