@@ -15,7 +15,7 @@ DROP SCHEMA IF EXISTS `mydb` ;
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8mb4 ;
 SHOW WARNINGS;
 USE `mydb` ;
 
@@ -26,14 +26,14 @@ DROP TABLE IF EXISTS `mydb`.`airplane` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `mydb`.`airplane` (
-  `id` VARCHAR(45) NOT NULL,
-  `year` INT NULL,
-  `model` VARCHAR(45) NULL,
-  `brand` VARCHAR(45) NULL,
-  `type` TINYINT NOT NULL,
-  `cant_max` INT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+    `id` VARCHAR(45) NOT NULL,
+    `year_` INT NULL,
+    `model` VARCHAR(45) NULL,
+    `brand` VARCHAR(45) NULL,
+    `type_` INT NOT NULL,
+    `cant_max` INT NOT NULL,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB;
 
 SHOW WARNINGS;
 
@@ -111,12 +111,12 @@ DROP TABLE IF EXISTS `mydb`.`rute` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `mydb`.`rute` (
-  `id` VARCHAR(45) NOT NULL,
-  `origin` VARCHAR(45) NOT NULL,
-  `destination` VARCHAR(45) NOT NULL,
-  `duration` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+    `id` VARCHAR(45) NOT NULL,
+    `origin` VARCHAR(45) NOT NULL,
+    `destination` VARCHAR(45) NOT NULL,
+    `duration` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB;
 
 SHOW WARNINGS;
 
@@ -127,12 +127,12 @@ DROP TABLE IF EXISTS `mydb`.`schedule` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `mydb`.`schedule` (
-  `id` VARCHAR(45) NOT NULL,
-  `day` INT NOT NULL,
-  `hour` INT NOT NULL,
-  `minute` INT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
+    `id` VARCHAR(45) NOT NULL,
+    `day` INT NOT NULL,
+    `hour` INT NOT NULL,
+    `minute` INT NOT NULL,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB;
 
 SHOW WARNINGS;
 
@@ -165,13 +165,131 @@ DROP TABLE IF EXISTS `mydb`.`user` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `mydb`.`user` (
-  `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `rol` TINYINT NOT NULL,
-  PRIMARY KEY (`username`))
-ENGINE = InnoDB;
+    `username` VARCHAR(45) NOT NULL,
+    `password` VARCHAR(45) NOT NULL,
+    `rol` INT NOT NULL,
+    PRIMARY KEY (`username`)
+)  ENGINE=INNODB;
 
+-- -----------------------------------------------------
+-- TODOS LOS PROCEDIMIENTOS DE INSERTAR
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Procedure PRC_INSERT_AIRPLANE (CORRECTO)
+-- Se inserta el airplane
+-- -----------------------------------------------------
+USE `mydb`;
+DROP procedure IF EXISTS `mydb`.`PRC_INSERT_AIRPLANE`;
+DELIMITER $$
+USE `mydb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_INSERT_AIRPLANE`(id VARCHAR(45),year_ INT,
+model varchar(45), brand varchar(45),type_ INT, cant_max INT)
+BEGIN
+
+insert into airplane values(id,year_,model,brand,type_,cant_max);
+END$$
+DELIMITER ;
 SHOW WARNINGS;
+
+
+-- -----------------------------------------------------
+-- Procedure PRC_LIST_AIRPLANES
+-- En este caso, lista de todos los airplanes
+-- -----------------------------------------------------
+
+USE `mydb`;
+DROP procedure IF EXISTS `mydb`.`PRC_LIST_AIRPLANES`;
+
+DELIMITER $$
+USE `mydb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_LIST_AIRPLANES`()
+BEGIN
+SELECT * FROM mydb.airplane;
+END$$
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- TODOS LOS PROCEDIMIENTOS DE BUSCAR
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Procedure PRC_SEARCH_AIRPLANE
+-- Busca el airplane por medio del ID
+-- -----------------------------------------------------
+
+USE `mydb`;
+DROP procedure IF EXISTS `mydb`.`PRC_SEARCH_AIRPLANE`;
+
+DELIMITER $$
+USE `mydb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_SEARCH_AIRPLANE`(P_AIRPLANE_ID VARCHAR(45))
+BEGIN
+select * from mydb.airplane where id = P_AIRPLANE_ID;
+END$$
+DELIMITER ;
+-- -----------------------------------------------------
+-- TODOS LOS PROCEDIMIENTOS DE BORRAR
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Procedure PRC_DELETE_AIRPLANE
+-- En este caso, elimina el airplane
+-- -----------------------------------------------------
+
+USE `mydb`;
+DROP procedure IF EXISTS `mydb`.`PRC_DELETE_AIRPLANE`;
+DELIMITER $$
+USE `mydb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_DELETE_AIRPLANE`(in P_AIRPLANE_ID VARCHAR(45))
+BEGIN
+DELETE FROM airplane
+WHERE id =P_AIRPLANE_ID;
+END$$
+DELIMITER ;
+
+-- -----------------------------------------------------
+-- TODOS LOS PROCEDIMIENTOS DE ACTUALIZAR
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- procedure PRC_UPDATE_USER
+-- Actualiza el airplane, excepto el id
+-- -----------------------------------------------------
+
+USE `mydb`;
+DROP procedure IF EXISTS `mydb`.`PRC_UPDATE_AIRPLANE`;
+
+DELIMITER $$
+USE `mydb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_UPDATE_AIRPLANE`( 
+IN P_AIRPLANE_ID VARCHAR(45),
+IN P_AIRPLANE_YEAR INT,
+IN P_AIRPLANE_MODEL varchar(100),
+IN P_AIRPLANE_BRAND varchar(100),
+IN P_AIRPLANE_TYPE INT,
+IN P_AIRPLANE_CANT_MAX INT
+)
+
+BEGIN
+UPDATE airplane
+SET
+year_ = P_AIRPLANE_YEAR,
+model = P_AIRPLANE_MODEL,
+brand = P_AIRPLANE_BRAND,
+type_ = P_AIRPLANE_TYPE,
+cant_max = P_AIRPLANE_CANT_MAX
+WHERE id = P_AIRPLANE_ID;
+END$$
+DELIMITER ;
+-- -----------------------------------------------------
+-- PRUEBAS DE LOS PROCEDIMIENTOS
+-- TODOS FUNCIONAN CORRECTAMENTE
+-- -----------------------------------------------------
+call PRC_INSERT_AIRPLANE('5094A',2020,'Iberia','Airbus A330',01,150);
+call PRC_INSERT_AIRPLANE('6589B',2019,'Iberia','Airbus B440',02,140);
+call PRC_LIST_AIRPLANES();
+call PRC_SEARCH_AIRPLANE('6589B');
+call PRC_DELETE_AIRPLANE('6589B');
+call PRC_UPDATE_AIRPLANE('5094A',2020,'Iberia','Airbus A330',01,160);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
