@@ -1,5 +1,6 @@
 package com.moviles.lab01.dao;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -64,6 +65,9 @@ public class BaseDatos {
     }
 
     public static void main(String[] args) {
+        File file = new File("bd.properties");
+        System.out.println(file.getAbsolutePath());
+        
         try {
             BaseDatos bd = BaseDatos.obtenerInstancia();
             Properties cfg = bd.obtenerConfiguracion();
