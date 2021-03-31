@@ -1,0 +1,8 @@
+cr\ac\database\managers\test\ConnectionTest.class
+cr\ac\database\managers\DBManager.class
+cr\ac\database\managers\ODBCDBManager.class
+cr\ac\database\managers\DBManager$1.class
+cr\ac\database\managers\MySQLDBManager.class
+cr\ac\database\managers\DBManager$DB_MGR.class
+cr\ac\database\managers\IDBManager.class
+cr\ac\database\managers\Database.class
