@@ -13,6 +13,8 @@ public enum IMEC {
 
      */
     //escribir todas las consultas aqui de todos los IMECS
+    
+    LOGIN("select * from user_ where user_name = ? AND password = ?;"),
     //inserts
     INSERT_AIRPLANE("insert into airplane (id,year_,model,brand,type_,cant_max) values (?,?,?,?,?,?);"),
     INSERT_RUTE("insert into rute(id,origin,destination,duration) values(?,?,?,?);"),
