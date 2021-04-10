@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  *
  * @author valverde
  */
-public class servicioInsert extends service {
+public class serviceInsert extends service {
 
     public void insertAirplane(String id, int year, String model, String brand, boolean type, int cant_max) {
         try (Connection cnx = obtenerConexion();
