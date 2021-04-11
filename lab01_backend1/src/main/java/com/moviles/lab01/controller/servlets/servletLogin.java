@@ -42,8 +42,8 @@ public class servletLogin extends HttpServlet {
     protected void logIn(HttpServletRequest request, HttpServletResponse response) {
         try{
         HttpSession sesion = request.getSession(true);
-        String usuario = request.getParameter("txt_user");
-        String pass = request.getParameter("txt_password");
+        String usuario = request.getParameter("user");
+        String pass = request.getParameter("password");
         User usu = service.getUser(usuario,pass);
         if (usu != null) {
             sesion.setAttribute("loggin_user", usu);
