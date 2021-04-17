@@ -1,6 +1,6 @@
-C:\Users\KEVIN\OneDrive\Documents\U\Diseño y Programación de Plataformas Móviles\Lab01\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\ODBCDBManager.java
-C:\Users\KEVIN\OneDrive\Documents\U\Diseño y Programación de Plataformas Móviles\Lab01\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\Database.java
-C:\Users\KEVIN\OneDrive\Documents\U\Diseño y Programación de Plataformas Móviles\Lab01\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\IDBManager.java
-C:\Users\KEVIN\OneDrive\Documents\U\Diseño y Programación de Plataformas Móviles\Lab01\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\MySQLDBManager.java
-C:\Users\KEVIN\OneDrive\Documents\U\Diseño y Programación de Plataformas Móviles\Lab01\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\DBManager.java
-C:\Users\KEVIN\OneDrive\Documents\U\Diseño y Programación de Plataformas Móviles\Lab01\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\test\ConnectionTest.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\IDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\MySQLDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\DBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\ODBCDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\Database.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\test\ConnectionTest.java

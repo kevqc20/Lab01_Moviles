@@ -26,14 +26,13 @@ import java.sql.Timestamp;
  */
 public class serviceSearch extends service {
 
-    public User searchUser(String username, String password, boolean rol) {
+    public User searchUser(String username, String password) {
         User r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_USER.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, username);
             stm.setString(2, password);
-            stm.setBoolean(3, rol);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new User(
