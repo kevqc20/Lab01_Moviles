@@ -190,7 +190,8 @@ public class serviceSearch extends service {
                             rs.getString("flight_id"),
                             rs.getDouble("price"),
                             rs.getDouble("discount"),
-                            rs.getInt("seat")
+                            rs.getInt("seat"),
+                            rs.getString("user_username")
                     );
                     System.out.println("entro a datos");
                 }
@@ -229,8 +230,7 @@ public class serviceSearch extends service {
                             rs.getDate("dob"),
                             rs.getString("address"),
                             rs.getInt("work_phone"),
-                            rs.getInt("cell_phone"),
-                            rs.getInt("ticket_id")
+                            rs.getInt("cell_phone")
                     );
                     System.out.println("entro a datos");
                 }

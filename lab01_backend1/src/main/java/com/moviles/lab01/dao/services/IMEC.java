@@ -19,8 +19,8 @@ public enum IMEC {
     INSERT_SCHEDULE("insert into schedule_ (id,day_,hour_, minute_) values (?,?,?,?);"),
     INSERT_USER("insert into user_ (user_name,password_ ,rol ) vlaues(?,?,?);"),
     INSERT_FLIGHT("insert into flight (id,rute_id,airplane_id,schedule_id) values (?,?,?,?);"),
-    INSERT_TICKET("insert into ticket(id,flight_id,price,seat) values (?,?,?,?);"),
-    INSERT_PASSENGER("insert into passenger (user_user_name,name_,lastname,email,bob,address,work_phone,cell_phone,ticket_id) values (?,?,?,?,?,?,?,?,?);"),
+    INSERT_TICKET("insert into ticket(id,flight_id,price,seat,user_username) values (?,?,?,?,?);"),
+    INSERT_PASSENGER("insert into passenger (user_user_name,name_,lastname,email,bob,address,work_phone,cell_phone) values (?,?,?,?,?,?,?,?);"),
     //lists
     LIST_AIRPLANES("select * from airplane;"),
     LIST_RUTE("select * from rute;"),

@@ -1,9 +1,0 @@
-com\moviles\lab01\model\entities\Schedule.class
-com\moviles\lab01\model\Model.class
-com\moviles\lab01\model\entities\Passanger.class
-com\moviles\lab01\model\entities\Route.class
-com\moviles\lab01\dao\BaseDatos.class
-com\moviles\lab01\model\entities\Flight.class
-com\moviles\lab01\model\entities\Airplane.class
-com\moviles\lab01\model\entities\Ticket.class
-com\moviles\lab01\model\entities\User.class

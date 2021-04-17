@@ -5,7 +5,13 @@
  */
 package com.moviles.lab01.controller.servlet;
 
+import com.moviles.lab01.dao.services.serviceInsert;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,18 +28,39 @@ public class servletCheckIn extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesion = request.getSession(true);
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(servletCheckIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession sesion = request.getSession(true);
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(servletCheckIn.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
+        String user = request.getParameter("user_username_rm");
+        String email = request.getParameter("email_rm");
+        String pass = request.getParameter("password_rm");
+        String name = request.getParameter("name_rm");
+        String last_name = request.getParameter("lastname_rm");
+        String wk_phone = request.getParameter("work_phone_rm");
+        String cellphone = request.getParameter("cell_phone_rm");
+        String address = request.getParameter("address_rm");
+        String birthday = request.getParameter("dob_rm");
+        serv.insertarUser(user, pass, true);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        serv.insertPassenger(user, name, last_name, email, format.parse(birthday), address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
     }
     HttpSession sesion = null;
+    serviceInsert serv = new serviceInsert();
 }

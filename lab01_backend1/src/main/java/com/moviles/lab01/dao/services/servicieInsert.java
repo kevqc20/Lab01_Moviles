@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  *
  * @author valverde
  */
-public class servicioInsert extends service {
+public class servicieInsert extends service {
 
     public void insertAirplane(String id, int year, String model, String brand, boolean type, int cant_max) {
         try (Connection cnx = obtenerConexion();
@@ -65,7 +65,7 @@ public class servicioInsert extends service {
         }
     }
 
-    public void insertPassenger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone, int ticket_id) {
+    public void insertPassenger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone) {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.INSERT_PASSENGER.obtenerComando());) {
             stm.clearParameters();
@@ -77,7 +77,6 @@ public class servicioInsert extends service {
             stm.setString(6, address);
             stm.setInt(7, work_phone);
             stm.setInt(8, cell_phone);
-            stm.setInt(9, ticket_id);
             try {
                 int val = stm.executeUpdate();
             } catch (SQLException ex) {
@@ -136,15 +135,15 @@ public class servicioInsert extends service {
 
     }
 
-    public void insertarTicket(String id, String flight_id, double price, double discount, int seat) {
+    public void insertarTicket(String id, String flight_id, double price, double discount, int seat, String user_username) {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.INSERT_TICKET.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
             stm.setString(2, flight_id);
-            stm.setDouble(3, price);
-            stm.setDouble(4, discount);
-            stm.setInt(5, seat);
+            stm.setDouble(3, price - discount);
+            stm.setInt(4, seat);
+            stm.setString(5, user_username);
             try {
                 int val = stm.executeUpdate();
             } catch (SQLException ex) {

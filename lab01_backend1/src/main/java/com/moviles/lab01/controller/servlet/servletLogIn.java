@@ -52,8 +52,8 @@ public class servletLogIn extends HttpServlet {
     }
 
     private void logIn(HttpServletRequest request, HttpServletResponse response) {
-        String user = request.getParameter("");
-        String pass = request.getParameter("");
+        String user = request.getParameter("user");
+        String pass = request.getParameter("password");
         User usu = serv.searchUser(user, pass);
         sesion.setAttribute("user", usu);
     }
