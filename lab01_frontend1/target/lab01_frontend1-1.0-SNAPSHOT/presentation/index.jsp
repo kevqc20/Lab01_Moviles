@@ -135,9 +135,9 @@
                     <div class="col-md-10 col-lg-8 mx-auto text-center">
                         <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
                         <h2 class="text-white mb-5">¿A qué esperas? ¡Empieza a viajar ya!</h2>
-                        <form class="form-inline d-flex">
-                            <button class="btn btn-primary mx-auto" type="submit" data-toggle='modal' data-target="#registerModal">Registarse</button>
-                        </form>
+                        <div class="mx-auto text-center">
+                            <a class="btn btn-primary js-scroll-trigger" data-toggle='modal' data-target="#registerModal">Registrarse</a>
+                        </div>
                     </div>
                 </div>
             </div>
