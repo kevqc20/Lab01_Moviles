@@ -5,7 +5,6 @@
  */
 package com.moviles.lab01.dao.services;
 
-
 import com.moviles.lab01.dao.BaseDatos;
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,10 +21,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-
 
 /**
  *
@@ -39,10 +39,20 @@ public class service {
     public Date nowDate() {
         return Date.valueOf(LocalDate.now());
     }
+
+    public java.util.Date str_to_java_date(String str) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.parse(str);
+    }
     
+    public java.sql.Date str_to_sql_date(String str) throws ParseException {
+        return date_Java_to_Sql(str_to_java_date(str));
+        
+    }
+
     public static Date date_Java_to_Sql(java.util.Date uDate) {
-		return new java.sql.Date(uDate.getTime());
-	}
+        return new java.sql.Date(uDate.getTime());
+    }
 
     public Connection obtenerConexion() throws
             ClassNotFoundException,

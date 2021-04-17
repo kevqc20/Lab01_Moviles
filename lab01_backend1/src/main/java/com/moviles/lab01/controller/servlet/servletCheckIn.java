@@ -9,10 +9,11 @@ import com.moviles.lab01.dao.services.serviceInsert;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author jose
  */
+@WebServlet(name = "servletCheckIn", urlPatterns = {"/servletCheckIn"})
 public class servletCheckIn extends HttpServlet {
 
     @Override
@@ -58,8 +60,7 @@ public class servletCheckIn extends HttpServlet {
         String address = request.getParameter("address_rm");
         String birthday = request.getParameter("dob_rm");
         serv.insertarUser(user, pass, true);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        serv.insertPassenger(user, name, last_name, email, format.parse(birthday), address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
+        serv.insertPassenger(user, name, last_name, email, serv.str_to_sql_date(birthday), address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone),0 );
     }
     HttpSession sesion = null;
     serviceInsert serv = new serviceInsert();
