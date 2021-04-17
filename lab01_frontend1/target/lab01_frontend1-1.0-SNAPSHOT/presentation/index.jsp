@@ -1,3 +1,6 @@
+<%@page import="com.google.gson.Gson"%>
+<%@page pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,13 +11,23 @@
         <title>Lab01</title>
         <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/default.css" rel="stylesheet" />
-
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.22/r-2.2.6/sc-2.0.3/datatables.min.js"></script>
+        <script src="https://cdn.rawgit.com/PascaleBeier/bootstrap-validate/v2.2.0/dist/bootstrap-validate.js" ></script>
+        <link href="css/default.css" rel="stylesheet" type="text/css"/>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/script.js" type="text/javascript"></script>
+        
 
     </head>
 
@@ -43,7 +56,7 @@
                     <div class="col-lg-8 mx-auto">
                         <h2 class="text-white mb-4">El mundo te espera</h2>
                         <p class="text-white-50">
-                            Disfruta de aventuras inolvidables al rededor del mundo, nuestra pagina ofrece acceso inmediato a destinos de ensueño.
+                            Disfruta de aventuras inolvidables al rededor del mundo, nuestra pagina ofrece acceso inmediato a destinos de ensueÃ±o.
                         </p>
                     </div>
                 </div>
@@ -87,7 +100,7 @@
                         <div class="bg-black text-center h-100 project">
                             <div class="d-flex h-100">
                                 <div class="project-text w-100 my-auto text-center text-lg-right">
-                                    <h4 class="text-white">París</h4>
+                                    <h4 class="text-white">ParÃ­s</h4>
                                     <p class="mb-0 text-white-50">La ciudad de los amantes, del amor.</p>
                                     <hr class="d-none d-lg-block mb-0 mr-0" />
                                 </div>
@@ -121,10 +134,10 @@
                 <div class="row">
                     <div class="col-md-10 col-lg-8 mx-auto text-center">
                         <i class="far fa-paper-plane fa-2x mb-2 text-white"></i>
-                        <h2 class="text-white mb-5">¿A qué esperas? ¡Empieza a viajar ya!</h2>
-                        <form class="form-inline d-flex">
-                            <button class="btn btn-primary mx-auto" type="submit" data-toggle='modal' data-target="#registerModal">Registarse</button>
-                        </form>
+                        <h2 class="text-white mb-5">Â¿A quÃ© esperas? Â¡Empieza a viajar ya!</h2>
+                        <div class="mx-auto text-center">
+                            <a class="btn btn-primary js-scroll-trigger" data-toggle='modal' data-target="#registerModal">Registrarse</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,7 +150,7 @@
                         <div class="card py-4 h-100">
                             <div class="card-body text-center">
                                 <i class="fas fa-graduation-cap text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Diseño y Programación de Plataformas Móviles</h4>
+                                <h4 class="text-uppercase m-0">DiseÃ±o y ProgramaciÃ³n de Plataformas MÃ³viles</h4>
                                 <hr class="my-4" />
                                 <h5 class="text-uppercase m-0">Lab01</h5>
                             </div>
@@ -177,13 +190,6 @@
 
         <!-- Modals-->
         <%@ include file="/presentation/modals.jsp" %>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/script.js"></script>
-
+        
     </body>
 </html>
