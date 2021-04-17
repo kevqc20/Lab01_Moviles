@@ -8,6 +8,7 @@ package com.moviles.lab01.controller.servlets;
 import com.moviles.lab01.dao.services.serviceLogginUser;
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author jose
  */
+@WebServlet(urlPatterns = {"/servletCheckin"})
 public class servletCheckin extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
