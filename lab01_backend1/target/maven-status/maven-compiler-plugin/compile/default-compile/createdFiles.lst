@@ -11,6 +11,7 @@ com\moviles\lab01\model\Model.class
 com\moviles\lab01\dao\services\serviceSearch.class
 com\moviles\lab01\model\entities\Route.class
 com\moviles\lab01\dao\services\service.class
+com\moviles\lab01\controller\servlets\servletCheckin.class
 com\moviles\lab01\dao\services\serviceList.class
 com\moviles\lab01\controller\servlets\servletLogin.class
 com\moviles\lab01\model\entities\Ticket.class

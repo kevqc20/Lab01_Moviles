@@ -5,6 +5,7 @@
  */
 package com.moviles.lab01.controller.servlets;
 
+import com.moviles.lab01.dao.services.serviceInsert;
 import com.moviles.lab01.dao.services.serviceLogginUser;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -34,6 +35,5 @@ public class servletCheckin extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    private serviceLogginUser service = new serviceLogginUser();
+    private serviceInsert service = new serviceInsert();
 }
