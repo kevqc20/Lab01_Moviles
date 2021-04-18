@@ -176,13 +176,6 @@ window.onload = function () {
     }
 }
 
-// Logout of system
-function logout() {
-    window.sessionStorage.removeItem("user");
-    window.sessionStorage.removeItem("name");
-    window.sessionStorage.removeItem("role");
-    window.location.reload();
-}
 
 // Email verification
 function isEmail(email) {
@@ -266,7 +259,6 @@ function showPasswordRM() {
     }
 }
 
-
 /*-------------------------------------------------------*/
 
 /* Ajax functions */
@@ -284,10 +276,13 @@ function logIn() {
     $.ajax({
         url: 'servletLogin/in',
         data: jsonUser,
-        type: 'get',
+        type: 'post',
         cache: false,
         success: function (data) {
-            alert(JSON.stringify(data))
+            window.sessionStorage.user = data["user"]["username"]
+            window.sessionStorage.password = data["user"]["password"]
+            window.sessionStorage.role = data["user"]["rol"] ? "1" : "0"
+            //window.location.replace("../presentation/idle.jsp");
         },
         error: function () {
             alert('error');
@@ -296,6 +291,11 @@ function logIn() {
     );
 }
 
-
-
-document.addEventListener("DOMContentLoaded", loaded);
+// Logout of system
+function logout() {
+//    window.sessionStorage.removeItem("user");
+//    window.sessionStorage.removeItem("password");
+//    window.sessionStorage.removeItem("role");
+//    //window.location.reload();
+    console.log("aaaa")
+}
