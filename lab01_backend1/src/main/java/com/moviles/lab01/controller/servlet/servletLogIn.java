@@ -7,6 +7,7 @@ package com.moviles.lab01.controller.servlet;
 
 import com.moviles.lab01.model.entities.User;
 import com.moviles.lab01.dao.services.serviceSearch;
+import com.moviles.lab01.model.Model;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,5 +66,6 @@ public class servletLogIn extends HttpServlet {
         sesion.setAttribute("user", null);
     }
     HttpSession sesion = null;
-    serviceSearch serv = new serviceSearch();
+    Model mod = Model.getInstance();
+    serviceSearch serv = mod.getServSearch();
 }
