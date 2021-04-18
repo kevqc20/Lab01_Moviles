@@ -186,4 +186,6 @@ public class servletList extends HttpServlet {
     Model mod = Model.getInstance();
     serviceList serv = mod.getServList();
     HttpSession sesion = null;
+    
+    
 }
