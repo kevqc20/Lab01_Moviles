@@ -6,6 +6,7 @@
 package com.moviles.lab01.controller.servlet;
 
 import com.moviles.lab01.dao.services.serviceUpdate;
+import com.moviles.lab01.model.Model;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -131,6 +132,7 @@ public class servletUpdate extends HttpServlet {
         serv.updateFlight(id, rute_id, airplane_id, shedule_id);
     }
     HttpSession sesion = null;
-    serviceUpdate serv = new serviceUpdate();
+    Model mod = Model.getInstance();
+    serviceUpdate serv = Model.getServUpdate();
 
 }

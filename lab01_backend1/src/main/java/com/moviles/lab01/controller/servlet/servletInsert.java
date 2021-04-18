@@ -6,6 +6,7 @@
 package com.moviles.lab01.controller.servlet;
 
 import com.moviles.lab01.dao.services.serviceInsert;
+import com.moviles.lab01.model.Model;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -131,6 +132,7 @@ public class servletInsert extends HttpServlet {
         serv.insertFlight(id, rute_id, airplane_id, shedule_id);
     }
     HttpSession sesion = null;
-    serviceInsert serv = new serviceInsert();
+    Model mod = Model.getInstance();
+    serviceInsert serv = mod.getServInsert();
 
 }
