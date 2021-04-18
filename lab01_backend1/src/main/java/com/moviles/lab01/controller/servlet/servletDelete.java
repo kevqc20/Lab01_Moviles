@@ -110,4 +110,5 @@ public class servletDelete extends HttpServlet {
     Model mod = Model.getInstance();
     serviceDelete serv = mod.getServDelete();
     HttpSession sesion = null;
+    
 }
