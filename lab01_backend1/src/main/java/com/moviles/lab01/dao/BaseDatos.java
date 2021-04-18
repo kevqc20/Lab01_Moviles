@@ -9,6 +9,7 @@ import java.util.Properties;
 
 public class BaseDatos {
 
+    
     private BaseDatos() throws
             ClassNotFoundException,
             IOException,
