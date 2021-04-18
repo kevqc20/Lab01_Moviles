@@ -6,8 +6,6 @@
 // All onload functions
 window.onload = function () {
 
-    window.sessionStorage.role = '1'
-
 // Reset modals
     $(".modal").on("hidden.bs.modal", function () {
         $(this).find('form').trigger("reset");
@@ -164,10 +162,16 @@ window.onload = function () {
                     'min:8:No puede tener menos de 8 caracteres.'
                     );
         });
+
+        if ($("#loginModal").length > 0) {
+            $("#loginModal").on("click", function () {
+                bootstrapValidate(
+                        '#password',
+                        'min:8:Contraseña debe tener al menos 8 caracteres.'
+                        );
+            });
+        }
     }
-
-
-
 }
 
 // Logout of system
@@ -259,5 +263,37 @@ function showPasswordRM() {
         x.type = "password";
     }
 }
+
+
+/*-------------------------------------------------------*/
+
+/* Ajax functions */
+
+function logIn() {
+    var user = document.getElementById("user").value;
+    var password = document.getElementById("password").value;
+
+    var jsonUser = {
+        "user": user,
+        "password": password,
+    }
+
+    $.ajax({
+        url: "servletLogin/in",
+        method: "POST",
+        data: JSON.stringify(jsonUser),
+        dataType: 'json',
+        contentType: "application/json",
+        success: function (data) {
+            alert("yep")
+        },
+        error: function (data) {
+            alert("nel")
+
+        }
+    });
+}
+
+
 
 document.addEventListener("DOMContentLoaded", loaded);
