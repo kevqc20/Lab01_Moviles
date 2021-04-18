@@ -5,25 +5,62 @@
  */
 package com.moviles.lab01.model;
 
+import com.moviles.lab01.dao.services.serviceDelete;
+import com.moviles.lab01.dao.services.serviceInsert;
+import com.moviles.lab01.dao.services.serviceList;
+import com.moviles.lab01.dao.services.serviceSearch;
+import com.moviles.lab01.dao.services.serviceUpdate;
 import java.io.Serializable;
 
 /**
  *
  * @author KEVIN
  */
-public class Model implements Serializable{
+public class Model implements Serializable {
+
     /*Todos los DAOs*/
-    
+
+    private static serviceInsert servInsert = null;
+    private static serviceDelete servDelete = null;
+    private static serviceUpdate servUpdate = null;
+    private static serviceSearch servSearch = null;
+    private static serviceList servList = null;
+
     private static Model model_instance = null;
 
     public Model() {
-        /*Todos los DAOs*/
-        
+        servInsert= new serviceInsert();
+        servDelete= new serviceDelete();
+        servUpdate = new serviceUpdate();
+        servSearch= new serviceSearch();
+        servList = new serviceList();
     }
-    
-    public static Model getInstance(){
-        if(model_instance == null)
+
+    public static serviceInsert getServInsert() {
+        return servInsert;
+    }
+
+    public static serviceDelete getServDelete() {
+        return servDelete;
+    }
+
+    public static serviceUpdate getServUpdate() {
+        return servUpdate;
+    }
+
+    public static serviceSearch getServSearch() {
+        return servSearch;
+    }
+
+    public static serviceList getServList() {
+        return servList;
+    }
+
+    public static Model getInstance() {
+        if (model_instance == null) {
             model_instance = new Model();
+        }
         return model_instance;
     }
+
 }
