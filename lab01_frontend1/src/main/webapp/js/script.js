@@ -6,8 +6,6 @@
 // All onload functions
 window.onload = function () {
 
-    window.sessionStorage.role = '0'
-
 // Reset modals
     $(".modal").on("hidden.bs.modal", function () {
         $(this).find('form').trigger("reset");
@@ -65,6 +63,9 @@ window.onload = function () {
                     "                       </div>" +
                     "                   </li>"
                     :
+                    "") +
+            (
+                    window.sessionStorage.role === '1' ?
                     "                   <li class='nav-item dropdown'>" +
                     "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de administrador</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
@@ -76,12 +77,13 @@ window.onload = function () {
                     "                           <a class='dropdown-item' href='#flightsAdminTickets' class='trigger-btn' data-toggle='modal' onclick=''>Administrar ticketes</a>" +
                     "                       </div>" +
                     "                   </li>"
-                    ) +
+                    :
+                    "") +
             "                   <li class='nav-item'>" +
             (
                     window.sessionStorage.user === undefined ?
                     "<a class='nav-link js-scroll-trigger' href='#loginModal' class='trigger-btn' data-toggle='modal'>Ingresar</a></li>" :
-                    "<a class='nav-link js-scroll-trigger' onclick='logout() class='trigger-btn'>Cerrar sesión</a></li>"
+                    "<a class='nav-link js-scroll-trigger' onclick='logout()' class='trigger-btn'>Cerrar sesión</a></li>"
                     ) +
             "               </ul>" +
             "           </div>" +
@@ -282,7 +284,7 @@ function logIn() {
             window.sessionStorage.user = data["user"]["username"]
             window.sessionStorage.password = data["user"]["password"]
             window.sessionStorage.role = data["user"]["rol"] ? "1" : "0"
-            //window.location.replace("../presentation/idle.jsp");
+            window.location.replace("presentation/idle.jsp");
         },
         error: function () {
             alert('error');
@@ -293,9 +295,8 @@ function logIn() {
 
 // Logout of system
 function logout() {
-//    window.sessionStorage.removeItem("user");
-//    window.sessionStorage.removeItem("password");
-//    window.sessionStorage.removeItem("role");
-//    //window.location.reload();
-    console.log("aaaa")
+    window.sessionStorage.removeItem("user");
+    window.sessionStorage.removeItem("password");
+    window.sessionStorage.removeItem("role");
+    window.location.replace("/lab01_frontend1");
 }
