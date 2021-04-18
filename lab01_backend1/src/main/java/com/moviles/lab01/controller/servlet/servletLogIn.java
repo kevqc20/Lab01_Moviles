@@ -52,10 +52,6 @@ public class servletLogIn extends HttpServlet {
             case "/servletLogin/in":
                 this.logIn(request, response);
                 break;
-            case "/servletLogin/out":
-                this.logOut(request, response);
-                break;
-
         }
     }
 
