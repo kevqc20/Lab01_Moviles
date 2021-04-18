@@ -12,11 +12,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="post" action="">
+                <form method="post">
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control" id="user" placeholder="Correo electrónico" required="required">
+                            <input type="text" class="form-control" id="user" placeholder="Usuario" required="required">
                         </div>
                     </div>
                     <div class="form-group">
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block btn-lg" id='login'>Acceder</button>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg" id='login' onclick="logIn()">Acceder</button>
                     </div>
                 </form>
             </div>
