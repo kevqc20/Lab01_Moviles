@@ -39,7 +39,7 @@ import static jdk.nashorn.internal.objects.NativeDebug.map;
  * @author jose
  */
 @WebServlet(name = "servletList", urlPatterns = {"/servletList/userList", "/servletList/passengerList", "/servletList/airplaneList", "/servletList/routeList", "/servletList/scheduleList",
-    "/servletList/ticketsList", "/servletList/flightList"})
+    "/servletList/ticketsList", "../servletList/flightList"})
 public class servletList extends HttpServlet {
 
     @Override
@@ -86,7 +86,7 @@ public class servletList extends HttpServlet {
             case "/servletList/ticketsList":
                 this.ticketsLists(request, response);
                 break;
-            case "/servletList/flightList":
+            case "../servletList/flightList":
                 this.flightList(request, response);
                 break;
 

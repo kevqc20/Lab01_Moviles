@@ -27,12 +27,10 @@ public class serviceList extends service {
 
     public ArrayList<User> listUser() {
         ArrayList<User> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_USER.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_USER.obtenerComando())) {
             while (rs.next()) {
                 User e = new User(
-                        rs.getString("username"),
+                        rs.getString("user_name"),
                         rs.getString("password"),
                         rs.getBoolean("rol")
                 );
@@ -50,17 +48,15 @@ public class serviceList extends service {
 
     public ArrayList<Airplane> listAirplane() {
         ArrayList<Airplane> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_AIRPLANES.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_AIRPLANES.obtenerComando())) {
             while (rs.next()) {
                 Airplane e = new Airplane(
                         rs.getString("id"),
-                        rs.getInt("year"),
+                        rs.getInt("year_"),
                         rs.getString("model"),
                         rs.getString("brand"),
-                        rs.getBoolean("type"),
-                        rs.getInt("rol")
+                        rs.getBoolean("type_"),
+                        rs.getInt("cant_max")
                 );
                 r.add(e);
             }
@@ -76,9 +72,7 @@ public class serviceList extends service {
 
     public ArrayList<Route> listRoute() {
         ArrayList<Route> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_RUTE.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_RUTE.obtenerComando())) {
             while (rs.next()) {
                 Route e = new Route(
                         rs.getString("id"),
@@ -100,13 +94,11 @@ public class serviceList extends service {
 
     public ArrayList<Schedule> listSchedule() {
         ArrayList<Schedule> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_SCHEDULE.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_SCHEDULE.obtenerComando())) {
             while (rs.next()) {
                 Schedule e = new Schedule(
                         rs.getString("id"),
-                        rs.getTimestamp("date_time")
+                        rs.getTimestamp("date_")
                 );
                 r.add(e);
             }
@@ -122,14 +114,12 @@ public class serviceList extends service {
 
     public ArrayList<Flight> listFlight() {
         ArrayList<Flight> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_FLIGHT.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_FLIGHT.obtenerComando())) {
             while (rs.next()) {
                 Flight e = new Flight(
                         rs.getString("id"),
-                        rs.getString("route_id"),
-                        rs.getString("airplaine_id"),
+                        rs.getString("rute_id"),
+                        rs.getString("airplane_id"),
                         rs.getString("schedule_id")
                 );
                 r.add(e);
@@ -146,9 +136,7 @@ public class serviceList extends service {
 
     public ArrayList<Ticket> listTicket() {
         ArrayList<Ticket> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_TICKET.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_TICKET.obtenerComando())) {
             while (rs.next()) {
                 Ticket e = new Ticket(
                         rs.getString("id"),
@@ -156,7 +144,7 @@ public class serviceList extends service {
                         rs.getDouble("price"),
                         rs.getDouble("discount"),
                         rs.getInt("seat"),
-                        rs.getString("user_username")
+                        rs.getString("passenger_user")
                 );
                 r.add(e);
             }
@@ -172,16 +160,14 @@ public class serviceList extends service {
 
     public ArrayList<Passanger> listPassanger() {
         ArrayList<Passanger> r = new ArrayList<>();
-        try (Connection cnx = obtenerConexion();
-                Statement stm = cnx.createStatement();
-                ResultSet rs = stm.executeQuery(IMEC.LIST_PASSENGER.obtenerComando())) {
+        try ( Connection cnx = obtenerConexion();  Statement stm = cnx.createStatement();  ResultSet rs = stm.executeQuery(IMEC.LIST_PASSENGER.obtenerComando())) {
             while (rs.next()) {
                 Passanger e = new Passanger(
-                        rs.getString("user_username"),
-                        rs.getString("name"),
+                        rs.getString("user_user_name"),
+                        rs.getString("name_"),
                         rs.getString("lastname"),
                         rs.getString("email"),
-                        rs.getDate("dob"),
+                        rs.getDate("bob"),
                         rs.getString("address"),
                         rs.getInt("work_phone"),
                         rs.getInt("cell_phone")
@@ -198,4 +184,12 @@ public class serviceList extends service {
         return r;
     }
 
+    public static void main(String[] args) {
+        serviceList s = new serviceList();
+        ArrayList<Flight> r = s.listFlight();
+
+        for (Flight a : r) {
+            System.out.println(a.toString());
+        }
+    }
 }

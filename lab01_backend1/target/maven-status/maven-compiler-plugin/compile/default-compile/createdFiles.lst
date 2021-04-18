@@ -3,6 +3,7 @@ com\moviles\lab01\dao\BaseDatos.class
 com\moviles\lab01\model\entities\Flight.class
 com\moviles\lab01\model\entities\Airplane.class
 com\moviles\lab01\controller\servlet\servletInsert.class
+com\moviles\lab01\controller\servlet\servletList.class
 com\moviles\lab01\dao\services\serviceInsert.class
 com\moviles\lab01\dao\services\IMEC.class
 com\moviles\lab01\model\entities\Schedule.class
@@ -12,6 +13,7 @@ com\moviles\lab01\controller\servlet\servletLogIn.class
 com\moviles\lab01\model\entities\Route.class
 com\moviles\lab01\dao\services\service.class
 com\moviles\lab01\dao\services\serviceList.class
+com\moviles\lab01\controller\servlet\servletSearch.class
 com\moviles\lab01\model\entities\Ticket.class
 com\moviles\lab01\controller\servlet\servletDelete.class
 com\moviles\lab01\controller\servlet\servletUpdate.class
