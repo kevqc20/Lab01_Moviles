@@ -12,7 +12,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="post" action="/lab01_frontend1/presentation/idle.jsp">
+                <form method="post" action="/servletLogin/in">
                     <div class="form-group">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
