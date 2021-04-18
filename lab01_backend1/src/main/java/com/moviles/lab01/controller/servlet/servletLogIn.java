@@ -19,7 +19,10 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.json.JSONArray;
 
 /**
  *
@@ -62,17 +65,31 @@ public class servletLogIn extends HttpServlet {
 
         User usu = serv.searchUser(user);
         if (usu.getPassword().equals(pass)) {
-            String greetings = "Hello " ;
-            response.setContentType("text/plain");
-            response.getWriter().write(greetings);
+            Map map = new HashMap();
+            if (usu != null) { //or whatever conditions you need
+                map.put("user", usu.getUsername());
+                map.put("pass", usu.getPassword());
+                map.put("rool", usu.isRol() ? "1" : "0");
+            } else {
+                map.put("isValid", false);
+
+            }
+            write(response, map);
         } else {
-            sesion.setAttribute("user", null);
+            //sesion.setAttribute("user", null);
         }
     }
 
     private void logOut(HttpServletRequest request, HttpServletResponse response) {
         sesion.setAttribute("user", null);
     }
+
+    private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(new Gson().toJson(map)); //this is how simple GSON works
+    }
+
     HttpSession sesion = null;
     Model mod = Model.getInstance();
     serviceSearch serv = mod.getServSearch();

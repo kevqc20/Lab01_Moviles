@@ -1,6 +1,6 @@
-E:\Kevin\Documents\Github\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\Database.java
-E:\Kevin\Documents\Github\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\test\ConnectionTest.java
-E:\Kevin\Documents\Github\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\MySQLDBManager.java
-E:\Kevin\Documents\Github\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\DBManager.java
-E:\Kevin\Documents\Github\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\IDBManager.java
-E:\Kevin\Documents\Github\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\ODBCDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\IDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\MySQLDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\DBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\ODBCDBManager.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\Database.java
+D:\GIT\Lab01_Moviles\simpleDBLibm\src\main\java\cr\ac\database\managers\test\ConnectionTest.java
