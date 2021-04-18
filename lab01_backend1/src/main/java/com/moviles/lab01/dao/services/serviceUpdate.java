@@ -18,30 +18,8 @@ import java.sql.Timestamp;
  */
 public class serviceUpdate extends service {
 
-    private void updateUser(String username, String password, boolean rol) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_USER.obtenerComando());) {
-            stm.clearParameters();
-            stm.setString(1, username);
-            stm.setString(2, password);
-            stm.setBoolean(3, rol);
-            try {
-                int val = stm.executeUpdate();
-            } catch (SQLException ex) {
-                System.err.printf("Excepción: '%s'%n", ex.getMessage());
-            }
-        } catch (IOException
-                | ClassNotFoundException
-                | IllegalAccessException
-                | InstantiationException
-                | SQLException ex) {
-            System.err.printf("Excepción: '%s'%n", ex.getMessage());
-        }
-    }
-
-    private void updateAirplane(String id, int year, String model, String brand, boolean type, int cant_max) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_AIRPLANE.obtenerComando());) {
+    public void updateAirplane(String id, int year, String model, String brand, boolean type, int cant_max) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_AIRPLANE.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
             stm.setInt(2, year);
@@ -61,56 +39,10 @@ public class serviceUpdate extends service {
                 | SQLException ex) {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
-
     }
 
-    private void updateRoute(String id, String origin, String destination, String duration) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_RUTE.obtenerComando());) {
-            stm.clearParameters();
-            stm.setString(1, id);
-            stm.setString(2, origin);
-            stm.setString(3, destination);
-            stm.setString(4, duration);
-            try {
-                int val = stm.executeUpdate();
-            } catch (SQLException ex) {
-                System.err.printf("Excepción: '%s'%n", ex.getMessage());
-            }
-        } catch (IOException
-                | ClassNotFoundException
-                | IllegalAccessException
-                | InstantiationException
-                | SQLException ex) {
-            System.err.printf("Excepción: '%s'%n", ex.getMessage());
-        }
-
-    }
-
-    private void updateSchedule(String id, Timestamp date_time) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_SCHEDULE.obtenerComando());) {
-            stm.clearParameters();
-            stm.setString(1, id);
-            stm.setTimestamp(2, date_time);
-            try {
-                int val = stm.executeUpdate();
-            } catch (SQLException ex) {
-                System.err.printf("Excepción: '%s'%n", ex.getMessage());
-            }
-        } catch (IOException
-                | ClassNotFoundException
-                | IllegalAccessException
-                | InstantiationException
-                | SQLException ex) {
-            System.err.printf("Excepción: '%s'%n", ex.getMessage());
-        }
-
-    }
-
-    private void updateFlight(String id, String route_id, String airplaine_id, String schedule_id) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_FLIGHT.obtenerComando());) {
+    public void updateFlight(String id, String route_id, String airplaine_id, String schedule_id) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_FLIGHT.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
             stm.setString(2, route_id);
@@ -131,15 +63,35 @@ public class serviceUpdate extends service {
 
     }
 
-    private void updateTicket(String id, String flight_id, double price, double discount, int seat) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_TICKET.obtenerComando());) {
+    public void updatePassenger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_PASSENGER.obtenerComando());) {
+            stm.setString(1, user_username);
+            stm.setString(2, name);
+            stm.setString(3, lastname);
+            stm.setString(4, email);
+            stm.setDate(5, dob);
+            stm.setString(6, address);
+            stm.setInt(7, work_phone);
+            stm.setInt(8, cell_phone);
+            try {
+                int val = stm.executeUpdate();
+            } catch (SQLException ex) {
+                System.err.printf("Excepción: '%s'%n", ex.getMessage());
+            }
+        } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+
+    }
+    public void updateSchedule(String id, Timestamp date_time) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_SCHEDULE.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
-            stm.setString(2, flight_id);
-            stm.setDouble(3, price);
-            stm.setDouble(4, discount);
-            stm.setInt(5, seat);
+            stm.setTimestamp(2, date_time);
             try {
                 int val = stm.executeUpdate();
             } catch (SQLException ex) {
@@ -155,18 +107,59 @@ public class serviceUpdate extends service {
 
     }
 
-    private void updatePassenger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone, int ticket_id) {
-        try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_PASSENGER.obtenerComando());) {
-            stm.setString(1, user_username);
-            stm.setString(2, name);
-            stm.setString(3, lastname);
-            stm.setString(4, email);
-            stm.setDate(5, dob);
-            stm.setString(6, address);
-            stm.setInt(7, work_phone);
-            stm.setInt(8, cell_phone);
-            stm.setInt(9, ticket_id);
+    public void updateUser(String username, String password, boolean rol) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_USER.obtenerComando());) {
+            stm.clearParameters();
+            stm.setString(1, username);
+            stm.setString(2, password);
+            stm.setBoolean(3, rol);
+            try {
+                int val = stm.executeUpdate();
+            } catch (SQLException ex) {
+                System.err.printf("Excepción: '%s'%n", ex.getMessage());
+            }
+        } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+    }
+
+    public void updateRoute(String id, String origin, String destination, String duration) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_RUTE.obtenerComando());) {
+            stm.clearParameters();
+            stm.setString(1, id);
+            stm.setString(2, origin);
+            stm.setString(3, destination);
+            stm.setString(4, duration);
+            try {
+                int val = stm.executeUpdate();
+            } catch (SQLException ex) {
+                System.err.printf("Excepción: '%s'%n", ex.getMessage());
+            }
+        } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
+        }
+
+    }
+
+    
+
+    public void updateTicket(String id, String flight_id, double price, int seat, String user_name, double discount) {
+        try ( Connection cnx = obtenerConexion();  PreparedStatement stm = cnx.prepareStatement(IMEC.UPDATE_TICKET.obtenerComando());) {
+            stm.clearParameters();
+            stm.setString(1, id);
+            stm.setString(2, flight_id);
+            stm.setDouble(3, price);
+            stm.setInt(4, seat);
+            stm.setString(5, user_name);
+            stm.setDouble(6, discount);
             try {
                 int val = stm.executeUpdate();
             } catch (SQLException ex) {
