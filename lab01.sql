@@ -40,6 +40,49 @@ CREATE TABLE IF NOT EXISTS `mydb`.`airplane` (
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
+-- Table `mydb`.`rute`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`rute` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `mydb`.`rute` (
+    `id` VARCHAR(45) NOT NULL,
+    `origin` VARCHAR(45) NOT NULL,
+    `destination` VARCHAR(45) NOT NULL,
+    `duration` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`schedule_`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`schedule_` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `mydb`.`schedule_` (
+    `id` VARCHAR(45) NOT NULL,
+    `date_` DATETIME NOT NULL,
+    PRIMARY KEY (`id`)
+)  ENGINE=INNODB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`user_`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`user_` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `mydb`.`user_` (
+    `user_name` VARCHAR(45) NOT NULL,
+    `password_` VARCHAR(45) NOT NULL,
+    `rol` TINYINT NOT NULL,
+    PRIMARY KEY (`user_name`)
+)  ENGINE=INNODB;
+
+-- -----------------------------------------------------
 -- Table `mydb`.`flight`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`flight` ;
@@ -107,36 +150,6 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`rute`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`rute` ;
-
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`rute` (
-    `id` VARCHAR(45) NOT NULL,
-    `origin` VARCHAR(45) NOT NULL,
-    `destination` VARCHAR(45) NOT NULL,
-    `duration` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`)
-)  ENGINE=INNODB;
-
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- Table `mydb`.`schedule_`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`schedule_` ;
-
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`schedule_` (
-    `id` VARCHAR(45) NOT NULL,
-    `date_` DATETIME NOT NULL,
-    PRIMARY KEY (`id`)
-)  ENGINE=INNODB;
-
-SHOW WARNINGS;
-
--- -----------------------------------------------------
 -- Table `mydb`.`ticket`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`ticket` ;
@@ -159,18 +172,6 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
--- -----------------------------------------------------
--- Table `mydb`.`user_`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`user_` ;
-
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`user_` (
-    `user_name` VARCHAR(45) NOT NULL,
-    `password_` VARCHAR(45) NOT NULL,
-    `rol` TINYINT NOT NULL,
-    PRIMARY KEY (`user_name`)
-)  ENGINE=INNODB;
 
 ALTER TABLE `mydb`.`passenger` 
 DROP FOREIGN KEY `fk_passenger_ticket1`;
@@ -189,7 +190,7 @@ ADD CONSTRAINT `passenger_user`
   REFERENCES `mydb`.`passenger` (`user_user_name`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
-  
+
 -- -----------------------------------------------------
 -- TODOS LOS PROCEDIMIENTOS DE INSERTAR
 -- -----------------------------------------------------
