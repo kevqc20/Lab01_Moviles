@@ -6,7 +6,9 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
@@ -128,9 +130,7 @@ DROP TABLE IF EXISTS `mydb`.`schedule_` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `mydb`.`schedule_` (
     `id` VARCHAR(45) NOT NULL,
-    `day_` INT NOT NULL,
-    `hour_` INT NOT NULL,
-    `minute_` INT NOT NULL,
+    `date_` DATETIME NOT NULL,
     PRIMARY KEY (`id`)
 )  ENGINE=INNODB;
 
@@ -147,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`ticket` (
   `flight_id` VARCHAR(45) NOT NULL,
   `price` INT NOT NULL,
   `seat` INT NOT NULL,
+  `discount` INT NOT NULL,
   INDEX `fk_ticket_flight1_idx` (`flight_id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ticket_flight1`
@@ -171,6 +172,24 @@ CREATE TABLE IF NOT EXISTS `mydb`.`user_` (
     PRIMARY KEY (`user_name`)
 )  ENGINE=INNODB;
 
+ALTER TABLE `mydb`.`passenger` 
+DROP FOREIGN KEY `fk_passenger_ticket1`;
+ALTER TABLE `mydb`.`passenger` 
+DROP COLUMN `ticket_id`,
+DROP INDEX `fk_passenger_ticket1_idx` ;
+;
+
+ALTER TABLE `mydb`.`ticket` 
+ADD COLUMN `passenger_user` VARCHAR(45) NOT NULL AFTER `seat`,
+ADD INDEX `passenger_user_idx` (`passenger_user` ASC) VISIBLE;
+;
+ALTER TABLE `mydb`.`ticket` 
+ADD CONSTRAINT `passenger_user`
+  FOREIGN KEY (`passenger_user`)
+  REFERENCES `mydb`.`passenger` (`user_user_name`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+  
 -- -----------------------------------------------------
 -- TODOS LOS PROCEDIMIENTOS DE INSERTAR
 -- -----------------------------------------------------
@@ -213,13 +232,12 @@ USE `mydb`;
 DROP procedure IF EXISTS `mydb`.`PRC_INSERT_SCHEDULE`;
 DELIMITER $$
 USE `mydb`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_INSERT_SCHEDULE`(id VARCHAR(45),day_ int,
-hour_ int, minute_ int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_INSERT_SCHEDULE`(id VARCHAR(45), date_ DATETIME)
 BEGIN
 
-insert into schedule_ values(id,day_,hour_,minute_);
+insert into schedule_ values(id, date_);
 END$$
-DELIMITER ;
+DELIMITER;
 
 -- -----------------------------------------------------
 -- Procedure PRC_INSERT_USER(CORRECTO)
@@ -267,10 +285,10 @@ DROP procedure IF EXISTS `mydb`.`PRC_INSERT_TICKET`;
 DELIMITER $$
 USE `mydb`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_INSERT_TICKET`(id VARCHAR(45),flight_id VARCHAR(45),
-price INT, seat INT)
+price INT, seat INT, passenger_user VARCHAR(45), discount INT)
 
 BEGIN
-insert into ticket(id,flight_id,price,seat) values (id,(select flight.id from flight where flight.id = flight_id),price,seat);
+insert into ticket(id,flight_id,price,seat, passenger_user, discount) values (id, (select flight.id from flight where flight.id = flight_id), price, seat, (select passenger.user_user_name from passenger where passenger.user_user_name = passenger_user), discount);
 
 END$$
 DELIMITER ;
@@ -286,10 +304,10 @@ DROP procedure IF EXISTS `mydb`.`PRC_INSERT_PASSENGER`;
 DELIMITER $$
 USE `mydb`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_INSERT_PASSENGER`(user_user_name VARCHAR(45),name_ VARCHAR(50),
-lastname VARCHAR(45), email VARCHAR(45),bob DATETIME,address VARCHAR(45),work_phone int,cell_phone int,ticket_id VARCHAR(45))
+lastname VARCHAR(45), email VARCHAR(45),bob DATETIME,address VARCHAR(45),work_phone int,cell_phone int)
 
 BEGIN
-insert into passenger(user_user_name,name_,lastname,email,bob,address,work_phone,cell_phone,ticket_id) values ((select user_.user_name from user_ where user_.user_name = user_user_name),name_,lastname,email,bob,address,work_phone,cell_phone,(select ticket.id from ticket where ticket.id = ticket_id));
+insert into passenger(user_user_name,name_,lastname,email,bob,address,work_phone,cell_phone) values ((select user_.user_name from user_ where user_.user_name = user_user_name),name_,lastname,email,bob,address,work_phone,cell_phone);
 
 END$$
 DELIMITER ;
@@ -703,17 +721,13 @@ DELIMITER $$
 USE `mydb`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_UPDATE_SCHEDULE`( 
 IN P_SCHEDULE_ID VARCHAR(45),
-IN P_SCHEDULE_DAY int,
-IN P_SCHEDULE_HOUR int,
-IN P_SCHEDUL_MINUTE int
+IN P_SCHEDULE_DATE DATETIME
 )
 
 BEGIN
 UPDATE schedule_
 SET
-day_ = P_SCHEDULE_DAY,
-hour_ = P_SCHEDULE_HOUR,
-minute_ = P_SCHEDUL_MINUTE
+date_ = P_SCHEDULE_DATE
 WHERE id = P_SCHEDULE_ID;
 END$$
 DELIMITER ;
@@ -785,7 +799,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `PRC_UPDATE_TICKET`(
 IN P_TICKET_ID VARCHAR(45),
 IN P_TICKET_FLIGHT VARCHAR(45),
 IN P_TICKET_PRICE int,
-IN P_TICKET_SEAT int
+IN P_TICKET_SEAT int,
+IN P_TICKET_passenger VARCHAR(45),
+in P_TICKET_DISCOUNT int
 )
 
 BEGIN
@@ -793,8 +809,10 @@ UPDATE ticket
 SET
 flight_id = P_TICKET_FLIGHT,
 price = P_TICKET_PRICE,
-seat = P_TICKET_SEAT
-WHERE id = P_FLIGHT_ID;
+seat = P_TICKET_SEAT,
+passenger_user = P_TICKET_passenger,
+discount = P_TICKET_DISCOUNT
+WHERE id = P_TICKET_ID;
 END$$
 DELIMITER ;
 
@@ -816,8 +834,7 @@ IN P_PASSENGER_EMAIL VARCHAR(45),
 IN P_PASSENGER_BOB DATETIME,
 IN P_PASSENGER_ADDRESS VARCHAR(45),
 IN P_PASSENGER_WORK_PHONE INT,
-IN P_PASSENGER_CELL_PHONE INT,
-IN P_PASSENGER_TICKET VARCHAR(45)
+IN P_PASSENGER_CELL_PHONE INT
 )
 
 BEGIN
@@ -829,8 +846,7 @@ email = P_PASSENGER_EMAIL,
 bob = P_PASSENGER_BOB,
 address = P_PASSENGER_ADDRESS,
 work_phone = P_PASSENGER_WORK_PHONE,
-cell_phone = P_PASSENGER_CELL_PHONE,
-ticket_id = P_PASSENGER_TICKET
+cell_phone = P_PASSENGER_CELL_PHONE
 WHERE user_user_name = P_PASSENGER_USER_NAME;
 END$$
 DELIMITER ;
@@ -839,29 +855,26 @@ DELIMITER ;
 -- TODOS FUNCIONAN CORRECTAMENTE
 -- -----------------------------------------------------
 
+
+
+
 call PRC_INSERT_AIRPLANE('5094A',2020,'Iberia','Airbus A330',01,150);
 call PRC_INSERT_AIRPLANE('6589B',2019,'Iberia','Airbus B440',02,140);
 call PRC_LIST_AIRPLANES();
 call PRC_SEARCH_AIRPLANE('6589B');
-call PRC_DELETE_AIRPLANE('5094A');
-call PRC_DELETE_AIRPLANE('6589B');
 call PRC_UPDATE_AIRPLANE('5094A',2020,'Iberia','Airbus A330',01,160);
 
 call PRC_INSERT_RUTE('5296','Estados Unidos','Mexico','02:55 minutos');
 call PRC_INSERT_RUTE('7854','Costa Rica','Panama','01:30 minutos');
 call PRC_LIST_RUTE();
 call PRC_SEARCH_RUTE('5296');
-call PRC_DELETE_RUTE('5296');
-call PRC_DELETE_RUTE('7854');
 call PRC_UPDATE_RUTE('5296','Estados Unidos','Mexico','03:15 minutos');
 
-call PRC_INSERT_SCHEDULE('01',01,02,50);
-call PRC_INSERT_SCHEDULE('02',03,09,25);
+call PRC_INSERT_SCHEDULE('01','1996-12-27');
+call PRC_INSERT_SCHEDULE('02','1996-12-27');
 call PRC_LIST_SCHEDULE();
 call PRC_SEARCH_SCHEDULE('01');
-call PRC_DELETE_SCHEDULE('01');
-call PRC_DELETE_SCHEDULE('02');
-call PRC_UPDATE_SCHEDULE('02',03,13,25);
+call PRC_UPDATE_SCHEDULE('02','1995-12-27');
 
 call PRC_INSERT_USER('yen_cc','7856',01);
 call PRC_INSERT_USER('kev_qc','5982',01);
@@ -869,35 +882,26 @@ call PRC_INSERT_USER('mari_vm','2548',02);
 call PRC_INSERT_USER('josito_ba','0245',02);
 call PRC_LIST_USER();
 call PRC_SEARCH_USER('yen_cc');
-call PRC_DELETE_USER('yen_cc');
-call PRC_DELETE_USER('kev_qc');
-call PRC_DELETE_USER('mari_vm');
-call PRC_DELETE_USER('josito_ba');
 call PRC_UPDATE_USER('josito_ba','7842',02);
 
 call PRC_INSERT_FLIGHT('5789','5296','5094A','01');
 call PRC_INSERT_FLIGHT('7845','7854','6589B','02');
 call PRC_LIST_FLIGHT();
 call PRC_SEARCH_FLIGHT('5789');
-call PRC_DELETE_FLIGHT('5789');
-call PRC_DELETE_FLIGHT('7845');
 call PRC_UPDATE_FLIGHT('5789','5296','5094A','02');
 
-call PRC_INSERT_TICKET('01','5789',12000,25);
-call PRC_INSERT_TICKET('02','7845',25000,50);
+call PRC_INSERT_TICKET('03','5789',12000,25, 'yen_cc', 5);
+call PRC_INSERT_TICKET('02','7845',25000,50, 'kev_qc', 10);
 call PRC_LIST_TICKET();
-call PRC_SEARCH_TICKET('01');
-call PRC_DELETE_TICKET('01');
-call PRC_DELETE_TICKET('02');
-call PRC_UPDATE_TICKET('01','5789',12000,45);
+call PRC_SEARCH_TICKET('03');
+call PRC_UPDATE_TICKET('03','5789',12000,45, 'yen_cc', 10);
 
-call PRC_INSERT_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119,'02');
-call PRC_INSERT_PASSENGER('kev_qc','Kevin','Quesada','kevin.q.c20@hotmail.com','1995-06-20','Heredia',22604859,84258285,'01');
+call PRC_INSERT_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119);
+call PRC_INSERT_PASSENGER('kev_qc','Kevin','Quesada','kevin.q.c20@hotmail.com','1995-06-20','Heredia',22604859,84258285);
 call PRC_LIST_PASSENGER();
 call PRC_SEARCH_PASSENGER('yen_cc');
-call PRC_DELETE_PASSENGER('kev_qc');
-call PRC_UPDATE_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119,'01');
+call PRC_UPDATE_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119);
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+

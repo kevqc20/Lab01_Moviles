@@ -6,7 +6,7 @@
 // All onload functions
 window.onload = function () {
 
-    window.sessionStorage.role = '1'
+    window.sessionStorage.role = '0'
 
 // Reset modals
     $(".modal").on("hidden.bs.modal", function () {
@@ -66,7 +66,7 @@ window.onload = function () {
                     "                   </li>"
                     :
                     "                   <li class='nav-item dropdown'>" +
-                    "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de admnistrador</a>" +
+                    "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de administrador</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
                     "                           <a class='dropdown-item' href='#flightsAdminFlights' class='trigger-btn' data-toggle='modal' onclick=''>Administrar vuelos</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminRoutes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar rutas</a>" +
@@ -170,10 +170,6 @@ window.onload = function () {
 
 }
 
-
-
-
-
 // Logout of system
 function logout() {
     window.sessionStorage.removeItem("user");
@@ -182,14 +178,11 @@ function logout() {
     window.location.reload();
 }
 
-
-
 // Email verification
 function isEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
-
 
 /*!
  * Start Bootstrap - Grayscale v6.0.3 (https://startbootstrap.com/theme/grayscale)
@@ -248,7 +241,6 @@ function isEmail(email) {
     $(window).scroll(navbarCollapse);
 })(jQuery); // End of use strict
 
-
 function showPassword()
 {
     var x = document.getElementById("password");
@@ -267,7 +259,5 @@ function showPasswordRM() {
         x.type = "password";
     }
 }
-
-
 
 document.addEventListener("DOMContentLoaded", loaded);
