@@ -17,17 +17,31 @@ public class Ticket implements Serializable{
     private double price;
     private double discount;
     private int seat;
+    private String user_username;
 
     public Ticket() {
     }
 
-    public Ticket(String id, String flight_id, double price, double discount, int seat) {
+    public Ticket(String id, String flight_id, double price, double discount, int seat, String user_username) {
         this.id = id;
         this.flight_id = flight_id;
         this.price = price;
         this.discount = discount;
         this.seat = seat;
+        this.user_username = user_username;
     }
+
+    public String getUser_username() {
+        return user_username;
+    }
+
+    public void setUser_username(String user_username) {
+        this.user_username = user_username;
+    }
+
+
+
+    
 
     public String getId() {
         return id;
@@ -71,7 +85,7 @@ public class Ticket implements Serializable{
 
     @Override
     public String toString() {
-        return "Ticket{" + "id=" + id + ", flight_id=" + flight_id + ", price=" + price + ", discount=" + discount + ", seat=" + seat + '}';
+        return "Ticket{" + "id=" + id + ", flight_id=" + flight_id + ", price=" + price + ", discount=" + discount + ", seat=" + seat + "username"+user_username+ '}';
     }
     
     

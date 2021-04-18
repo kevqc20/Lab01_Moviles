@@ -65,7 +65,7 @@ public class serviceInsert extends service {
         }
     }
 
-    public void insertPassenger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone, int ticket_id) {
+    public void insertPassenger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone) {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.INSERT_PASSENGER.obtenerComando());) {
             stm.clearParameters();
@@ -77,7 +77,6 @@ public class serviceInsert extends service {
             stm.setString(6, address);
             stm.setInt(7, work_phone);
             stm.setInt(8, cell_phone);
-            stm.setInt(9, ticket_id);
             try {
                 int val = stm.executeUpdate();
             } catch (SQLException ex) {
@@ -115,7 +114,7 @@ public class serviceInsert extends service {
 
     }
 
-    public void insertarSchedule(String id, Timestamp date_time) {
+    public void insertSchedule(String id, Timestamp date_time) {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.INSERT_SCHEDULE.obtenerComando());) {
             stm.clearParameters();
@@ -136,15 +135,16 @@ public class serviceInsert extends service {
 
     }
 
-    public void insertarTicket(String id, String flight_id, double price, double discount, int seat) {
+    public void insertTicket(String id, String flight_id, double price, int seat, String user_username,double discount) {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.INSERT_TICKET.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
             stm.setString(2, flight_id);
-            stm.setDouble(3, price);
-            stm.setDouble(4, discount);
-            stm.setInt(5, seat);
+            stm.setDouble(3, price );
+            stm.setInt(4, seat);
+            stm.setString(5, user_username);
+            stm.setDouble(6, discount);
             try {
                 int val = stm.executeUpdate();
             } catch (SQLException ex) {
@@ -159,7 +159,7 @@ public class serviceInsert extends service {
         }
     }
 
-    public void insertarUser(String username, String password, boolean rol) {
+    public void insertUser(String username, String password, boolean rol) {
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.INSERT_USER.obtenerComando());) {
             stm.clearParameters();

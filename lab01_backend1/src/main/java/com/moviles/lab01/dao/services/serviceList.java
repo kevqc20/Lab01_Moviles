@@ -155,7 +155,8 @@ public class serviceList extends service {
                         rs.getString("flight_id"),
                         rs.getDouble("price"),
                         rs.getDouble("discount"),
-                        rs.getInt("seat")
+                        rs.getInt("seat"),
+                        rs.getString("user_username")
                 );
                 r.add(e);
             }
@@ -183,8 +184,7 @@ public class serviceList extends service {
                         rs.getDate("dob"),
                         rs.getString("address"),
                         rs.getInt("work_phone"),
-                        rs.getInt("cell_phone"),
-                        rs.getInt("ticket_id")
+                        rs.getInt("cell_phone")
                 );
                 r.add(e);
             }

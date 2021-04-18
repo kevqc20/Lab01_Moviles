@@ -26,14 +26,12 @@ import java.sql.Timestamp;
  */
 public class serviceSearch extends service {
 
-    public User searchUser(String username, String password, boolean rol) {
+    public User searchUser(String username) {
         User r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_USER.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, username);
-            stm.setString(2, password);
-            stm.setBoolean(3, rol);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new User(
@@ -54,17 +52,12 @@ public class serviceSearch extends service {
         return r;
     }
 
-    public Airplane searchAirplane(String id, int year, String model, String brand, boolean type, int cant_max) {
+    public Airplane searchAirplane(String id) {
         Airplane r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_AIRPLANE.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
-            stm.setInt(2, year);
-            stm.setString(3, model);
-            stm.setString(4, brand);
-            stm.setBoolean(5, type);
-            stm.setInt(6, cant_max);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new Airplane(
@@ -88,15 +81,12 @@ public class serviceSearch extends service {
         return r;
     }
 
-    public Route searchRoute(String id, String origin, String destination, String duration) {
+    public Route searchRoute(String id) {
         Route r = null;
         try (Connection cnx = obtenerConexion();
-                PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_ROUTE.obtenerComando());) {
+                PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_RUTE.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
-            stm.setString(2, origin);
-            stm.setString(3, destination);
-            stm.setString(4, duration);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new Route(
@@ -118,13 +108,12 @@ public class serviceSearch extends service {
         return r;
     }
 
-    public Schedule searchSchedule(String id, Timestamp date_time) {
+    public Schedule searchSchedule(String id) {
         Schedule r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_SCHEDULE.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
-            stm.setTimestamp(2, date_time);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new Schedule(
@@ -144,15 +133,12 @@ public class serviceSearch extends service {
         return r;
     }
 
-    public Flight searchFlight(String id, String route_id, String airplaine_id, String schedule_id) {
+    public Flight searchFlight(String id) {
         Flight r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_FLIGHT.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
-            stm.setString(2, route_id);
-            stm.setString(3, airplaine_id);
-            stm.setString(4, schedule_id);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new Flight(
@@ -174,16 +160,12 @@ public class serviceSearch extends service {
         return r;
     }
 
-    public Ticket searchTicket(String id, String flight_id, double price, double discount, int seat) {
+    public Ticket searchTicket(String id) {
         Ticket r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_TICKET.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, id);
-            stm.setString(2, flight_id);
-            stm.setDouble(3, price);
-            stm.setDouble(4, discount);
-            stm.setInt(5, seat);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new Ticket(
@@ -191,7 +173,8 @@ public class serviceSearch extends service {
                             rs.getString("flight_id"),
                             rs.getDouble("price"),
                             rs.getDouble("discount"),
-                            rs.getInt("seat")
+                            rs.getInt("seat"),
+                            rs.getString("user_username")
                     );
                     System.out.println("entro a datos");
                 }
@@ -206,20 +189,12 @@ public class serviceSearch extends service {
         return r;
     }
 
-    public Passanger searchPassanger(String user_username, String name, String lastname, String email, Date dob, String address, int work_phone, int cell_phone, int ticket_id) {
+    public Passanger searchPassanger(String user_username ) {
         Passanger r = null;
         try (Connection cnx = obtenerConexion();
                 PreparedStatement stm = cnx.prepareStatement(IMEC.SEARCH_PASSENGER.obtenerComando());) {
             stm.clearParameters();
             stm.setString(1, user_username);
-            stm.setString(2, name);
-            stm.setString(3, lastname);
-            stm.setString(4, email);
-            stm.setDate(5, dob);
-            stm.setString(6, address);
-            stm.setInt(7, work_phone);
-            stm.setInt(8, cell_phone);
-            stm.setInt(9, ticket_id);
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new Passanger(
@@ -230,8 +205,7 @@ public class serviceSearch extends service {
                             rs.getDate("dob"),
                             rs.getString("address"),
                             rs.getInt("work_phone"),
-                            rs.getInt("cell_phone"),
-                            rs.getInt("ticket_id")
+                            rs.getInt("cell_phone")
                     );
                     System.out.println("entro a datos");
                 }
