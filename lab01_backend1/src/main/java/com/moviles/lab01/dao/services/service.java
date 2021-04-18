@@ -41,17 +41,18 @@ public class service {
         return Date.valueOf(LocalDate.now());
     }
 
-    public java.sql.Timestamp fechaTSp(String str) throws ParseException{
-    return new Timestamp(str_to_java_date(str).getTime());
+    public java.sql.Timestamp fechaTSp(String str) throws ParseException {
+        return new Timestamp(str_to_java_date(str).getTime());
     }
+
     public java.util.Date str_to_java_date(String str) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.parse(str);
     }
-    
+
     public java.sql.Date str_to_sql_date(String str) throws ParseException {
         return date_Java_to_Sql(str_to_java_date(str));
-        
+
     }
 
     public static Date date_Java_to_Sql(java.util.Date uDate) {
@@ -65,8 +66,22 @@ public class service {
             IOException,
             SQLException {
         BaseDatos bd = BaseDatos.obtenerInstancia();
-        Properties cfg = bd.obtenerConfiguracion();
-        Connection cnx = bd.obtenerConexion("mydb","root","209506Kqc");
+        Connection cnx = bd.obtenerConexion("mydb", "root", "209506Kqc");
         return cnx;
+    }
+
+    public static void main(String[] args) {
+        service s = new service();
+        System.out.println("La conexión fue exitosa..");
+        try {
+            s.obtenerConexion();
+
+        } catch (IOException
+                | ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException
+                | SQLException ex) {
+            System.err.println("No se pudo establecer la conexión a la base de datos.");
+        }
     }
 }

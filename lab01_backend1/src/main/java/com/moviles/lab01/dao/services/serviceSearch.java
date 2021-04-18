@@ -35,8 +35,8 @@ public class serviceSearch extends service {
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     r = new User(
-                            rs.getString("username"),
-                            rs.getString("password"),
+                            rs.getString("user_name"),
+                            rs.getString("password_"),
                             rs.getBoolean("rol")
                     );
                     System.out.println("entro a datos");
@@ -218,6 +218,13 @@ public class serviceSearch extends service {
             System.err.printf("Excepción: '%s'%n", ex.getMessage());
         }
         return r;
+    }
+    
+    public static void main(String[] args) {
+        serviceSearch s = new serviceSearch();
+        User test = s.searchUser("kev_qc");
+        
+        System.out.println(test.toString());
     }
 
 }

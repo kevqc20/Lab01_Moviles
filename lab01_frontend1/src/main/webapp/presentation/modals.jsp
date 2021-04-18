@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block btn-lg" id='login' onclick="logIn()">Acceder</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='login' onclick="logIn()">Acceder</button>
                     </div>
                 </form>
             </div>

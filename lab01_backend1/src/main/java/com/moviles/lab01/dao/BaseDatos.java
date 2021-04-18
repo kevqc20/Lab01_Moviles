@@ -56,10 +56,7 @@ public class BaseDatos {
     }
 
     public static void main(String[] args) {
-//        File file = new File("bd.properties");
-//        System.out.println("------------------------------------");
-//        System.out.println(file.getAbsolutePath());
-//        System.out.println("------------------------------------");
+
         
         try {
             BaseDatos bd = BaseDatos.obtenerInstancia();
