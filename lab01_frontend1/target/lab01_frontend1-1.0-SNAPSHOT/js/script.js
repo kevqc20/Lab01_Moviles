@@ -5,6 +5,8 @@
  */
 // All onload functions
 window.onload = function () {
+    
+    window.sessionStorage.role = '0'
 
 // Reset modals
     $(".modal").on("hidden.bs.modal", function () {

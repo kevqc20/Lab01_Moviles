@@ -27,7 +27,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/script.js" type="text/javascript"></script>
-        
+
+        <script src="js/jquery.seat-charts.js"></script>
+        <link rel="stylesheet" href="css/jquery.seat-charts.css">
+
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
 
     </head>
 
@@ -190,6 +195,6 @@
 
         <!-- Modals-->
         <%@ include file="/presentation/modals.jsp" %>
-        
+
     </body>
 </html>
