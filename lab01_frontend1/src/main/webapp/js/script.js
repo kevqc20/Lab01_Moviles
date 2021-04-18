@@ -69,7 +69,7 @@ window.onload = function () {
                     "                   <li class='nav-item dropdown'>" +
                     "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de administrador</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminFlights' class='trigger-btn' data-toggle='modal' onclick=''>Administrar vuelos</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminFlights' class='trigger-btn' data-toggle='modal' onclick='showListFlightsAdmin()'>Administrar vuelos</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminRoutes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar rutas</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminAirplanes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar aviones</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminSchedules' class='trigger-btn' data-toggle='modal' onclick=''>Administrar horarios</a>" +
@@ -264,7 +264,7 @@ function showPasswordRM() {
 /*-------------------------------------------------------*/
 
 /* Ajax functions */
-
+// Login to system
 function logIn() {
     var user = document.getElementById("user").value;
     var password = document.getElementById("password").value;
@@ -299,4 +299,116 @@ function logout() {
     window.sessionStorage.removeItem("password");
     window.sessionStorage.removeItem("role");
     window.location.replace("/lab01_frontend1");
+}
+
+
+// List
+// Get all campaigns
+function showListFlightsAdmin() {
+    console.log("aaaaaa")
+    $.ajax({
+        type: 'GET',
+        url: '/servletList/flightList',
+        //cache: false,
+        success: function (data) {
+            alert("data");
+//            list(data);
+//            $(document).ready(function () {
+//                $('#campaigns').DataTable({
+//                    "language": {
+//                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+//                    },
+//                    retrieve: true
+//                })
+//            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function(){
+            alert("fail")
+        }
+        
+        
+        
+    })
+}
+//Create list
+function list(data) {
+
+    if ($("#listModal").is(':visible')) {
+        console.log("listModal");
+        var listado = document.getElementById("listado");
+        listado.innerHTML = "";
+        data.forEach((u) => {
+            row(u);
+        });
+    } else if ($("#listModalCampaigns").is(':visible')) {
+        console.log("listModalCampaigns");
+        var listado = document.getElementById("listadoC");
+        listado.innerHTML = "";
+        data.forEach((u) => {
+            row(u);
+        });
+    } else if ($("#campaignModal").length > 0) {
+        console.log("campaignModal1");
+        var listado = document.getElementById("myCarousel");
+        listado.innerHTML = "";
+        for (var i = 0; i <= data.length; i++) {
+            var cp = ""
+            if (i == 0)
+                cp += "<div class='carousel-item active'>"
+            else
+                cp += "<div class='carousel-item'>"
+            cp += "<div id='rowC' class='row'>"
+            $('#myCarousel').append(cp);
+            row(data[i]);
+        }
+
+    }
+}
+// Add rows to table
+function row(data) {
+    if (data) {
+        var tr = '<tr>';
+        var cp = "";
+        if ($("#listModal").is(':visible')) {
+            console.log("#listModal")
+            tr += '<td>' + data.email + '</td>';
+            tr += '<td>' + data.firstName + '</td>';
+            tr += '<td>' + data.lastName + '</td>';
+            tr += '<td>' + data.cel_Num + '</td>';
+            tr += '<td>' + data.id_Address + '</td>';
+            tr += '<td><button class="edit" href="#updateModalAll" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += '</tr>';
+            $('#listado').append(tr);
+        } else if ($("#listModalCampaigns").is(':visible')) {
+            console.log("listModalCampaigns")
+            tr += '<td>' + data.id_campaign + '</td>';
+            tr += '<td>' + data.name + '</td>';
+            tr += '<td>' + data.instructor + '</td>';
+            tr += '<td>' + data.target + '</td>';
+            tr += '<td>' + data.location + '</td>';
+            tr += '<td>' + data.max + '</td>';
+            tr += '<td><button class="editC" href="#updateModalCampaign" class="trigger-btn" data-toggle="modal">Editar</button> <button class="editC" href="#" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#listadoC').append(tr);
+        } else if ($("#campaignModal").length > 0) {
+            console.log("#campaignModal2")
+            cp += "<div class='col-sm-4'>";
+            cp += "<div class='thumb-wrapper'>";
+            cp += "<div class='img-box'>";
+            cp += "<img src='../css/images/car6.jpg' class='img-fluid' alt=''>";
+            cp += "</div>";
+            cp += "<div class='thumb-content'>"
+            cp += "<h4>" + data.name + "</h4>";
+            cp += "<p>" + data.instructor + "</p>";
+            cp += "<a href='#' class='btn btn-primary' id='inscriptionB' onclick='inscription()'>Anotarse<i class='fa fa-angle-right'></i></a>";
+            cp += "</div>";
+            cp += "</div>";
+            cp += "</div>";
+
+            $("#rowC").append(cp);
+        }
+    }
 }
