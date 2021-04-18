@@ -57,7 +57,7 @@ public class servletLogIn extends HttpServlet {
         User usu = serv.searchUser(user);
         if (usu.getPassword().equals(pass)) {
             sesion.setAttribute("user", usu);
-        }else{
+        } else {
             sesion.setAttribute("user", null);
         }
     }
