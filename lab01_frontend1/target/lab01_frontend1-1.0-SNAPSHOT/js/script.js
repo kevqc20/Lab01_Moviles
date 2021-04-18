@@ -328,6 +328,9 @@ function showListFlightsAdmin() {
         fail: function(){
             alert("fail")
         }
+        
+        
+        
     })
 }
 //Create list
