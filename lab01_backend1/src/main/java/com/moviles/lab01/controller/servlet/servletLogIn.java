@@ -67,21 +67,15 @@ public class servletLogIn extends HttpServlet {
         if (usu.getPassword().equals(pass)) {
             Map map = new HashMap();
             if (usu != null) { //or whatever conditions you need
-                map.put("user", usu.getUsername());
-                map.put("pass", usu.getPassword());
-                map.put("rool", usu.isRol() ? "1" : "0");
+                map.put("user", usu);
             } else {
-                map.put("isValid", false);
+                map.put("isInValid", false);
 
             }
             write(response, map);
         } else {
             //sesion.setAttribute("user", null);
         }
-    }
-
-    private void logOut(HttpServletRequest request, HttpServletResponse response) {
-        sesion.setAttribute("user", null);
     }
 
     private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
