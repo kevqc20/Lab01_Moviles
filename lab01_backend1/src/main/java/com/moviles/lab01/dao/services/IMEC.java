@@ -6,15 +6,15 @@ public enum IMEC {
     private static final String INSERTARAVION = "{call insertarAvion(?,?,?,?,?)}";
     private static final String ACTUALIZARAVION = "{call actualizarAvion(?,?,?,?,?)}";
     private static final String ELIMINARAVION = "{call eliminarAvion(?)}";
-    private static final String SETASIGNADOAVION = "{call setasignadoavion(?,?)}";
-
+    private static final String SETASIGNADOAVION = "{call setasignadoavion(?,?)}"
     private static final String LISTARAVIONES = "{?=call listarAviones()}";
     private static final String CONSULTARAVION = "{?=call consultarAvion(?)}";
 
      */
+    
     //escribir todas las consultas aqui de todos los IMECS
     //inserts
-    INSERT_AIRPLANE("insert into airplane (id,year_,model,brand,type_,cant_max) values (?,?,?,?,?,?);"),
+    INSERT_AIRPLANE("call PRC_INSERT_AIRPLANE(?,?,?,?,?,?);"),
     INSERT_RUTE("insert into rute(id,origin,destination,duration) values(?,?,?,?);"),
     INSERT_SCHEDULE("insert into schedule_ (id,day_,hour_, minute_) values (?,?,?,?);"),
     INSERT_USER("insert into user_ (user_name,password_ ,rol ) vlaues(?,?,?);"),
@@ -55,6 +55,7 @@ public enum IMEC {
     DELETE_PASSENGER("DELETE FROM passenger WHERE P_USER_NAME=?;"), //?????SETASIGNADOAVION(),
     ;
 
+    
     IMEC(String comando) {
         this.comando = comando;
     }
