@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='register'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateUser'>Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -903,7 +903,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateRouteB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateTicketB'>Actualizar</button>
                     </div>
                 </form>
             </div>
