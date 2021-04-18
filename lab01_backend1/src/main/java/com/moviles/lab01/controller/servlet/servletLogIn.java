@@ -5,6 +5,7 @@
  */
 package com.moviles.lab01.controller.servlet;
 
+import com.google.gson.Gson;
 import com.moviles.lab01.model.entities.User;
 import com.moviles.lab01.dao.services.serviceSearch;
 import com.moviles.lab01.model.Model;
@@ -16,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -40,6 +44,7 @@ public class servletLogIn extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        sesion = request.getSession(true);
         switch (request.getServletPath()) {
             case "/servletLogin/in":
                 this.logIn(request, response);
@@ -51,13 +56,15 @@ public class servletLogIn extends HttpServlet {
         }
     }
 
-    private void logIn(HttpServletRequest request, HttpServletResponse response) {
+    private void logIn(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user = request.getParameter("user");
         String pass = request.getParameter("password");
-        System.out.println("holas");
+
         User usu = serv.searchUser(user);
         if (usu.getPassword().equals(pass)) {
-            sesion.setAttribute("user", usu);
+            String greetings = "Hello " ;
+            response.setContentType("text/plain");
+            response.getWriter().write(greetings);
         } else {
             sesion.setAttribute("user", null);
         }

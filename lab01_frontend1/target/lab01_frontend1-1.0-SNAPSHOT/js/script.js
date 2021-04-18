@@ -5,7 +5,7 @@
  */
 // All onload functions
 window.onload = function () {
-    
+
     window.sessionStorage.role = '0'
 
 // Reset modals
@@ -280,20 +280,20 @@ function logIn() {
         "password": password,
     }
 
-    $.ajax({
-        url: "servletLogin/in",
-        method: "POST",
-        data: JSON.stringify(jsonUser),
-        dataType: 'json',
-        contentType: "application/json",
-        success: function (data) {
-            alert("yep")
-        },
-        error: function (data) {
-            alert("nel")
 
+    $.ajax({
+        url: 'servletLogin/in',
+        data: jsonUser,
+        type: 'get',
+        cache: false,
+        success: function (data) {
+            console.log(data)
+        },
+        error: function () {
+            alert('error');
         }
-    });
+    }
+    );
 }
 
 
