@@ -9,27 +9,21 @@ import java.util.Properties;
 
 public class BaseDatos {
 
+    
     private BaseDatos() throws
             ClassNotFoundException,
             IOException,
             IllegalAccessException,
             InstantiationException {
-        configuracion = new Properties();
         try {
-            configuracion.load(getClass().getResourceAsStream(ARCHIVO_CONFIGURACION));
-            try {
-                String manejador = configuracion.getProperty("database_driver");
-                System.out.printf("Cargando el manejador de la base de datos: %s%n", manejador);
-                Class.forName(manejador).newInstance();
-            } catch (ClassNotFoundException
-                    | IllegalAccessException
-                    | InstantiationException ex) {
-                System.err.println("No se pudo cargar el manejador de la base de datos..");
-                System.err.printf("Excepción: '%s'%n", ex.getMessage());
-                throw ex;
-            }
-        } catch (IOException ex) {
-            System.err.print("No se pudo leer el archivo de configuración..");
+            String manejador = "com.mysql.cj.jdbc.Driver";
+            System.out.printf("Cargando el manejador de la base de datos: %s%n", manejador);
+            Class.forName(manejador).newInstance();
+        } catch (ClassNotFoundException
+                | IllegalAccessException
+                | InstantiationException ex) {
+            System.err.println("No se pudo cargar el manejador de la base de datos..");
+            System.err.printf("Excepción: '%s'%n", ex.getMessage());
             throw ex;
         }
     }
@@ -50,10 +44,7 @@ public class BaseDatos {
         if (cnx != null) {
             cnx.close();
         }
-        String URL_conexion = String.format("%s//%s/%s",
-                configuracion.getProperty("protocol"),
-                configuracion.getProperty("server_url"),
-                baseDatos);
+        String URL_conexion = String.format("%s//%s/%s","jdbc:mysql:","localhost","mydb");
         System.out.printf("Conexión: '%s'%n", URL_conexion);
 
         cnx = DriverManager.getConnection(URL_conexion, usuario, clave);
@@ -65,19 +56,15 @@ public class BaseDatos {
     }
 
     public static void main(String[] args) {
-        File file = new File("bd.properties");
-        System.out.println("------------------------------------");
-        System.out.println(file.getAbsolutePath());
-        System.out.println("------------------------------------");
+//        File file = new File("bd.properties");
+//        System.out.println("------------------------------------");
+//        System.out.println(file.getAbsolutePath());
+//        System.out.println("------------------------------------");
         
         try {
             BaseDatos bd = BaseDatos.obtenerInstancia();
             Properties cfg = bd.obtenerConfiguracion();
-            try ( Connection cnx = bd.obtenerConexion(
-                    cfg.getProperty("database"),
-                    cfg.getProperty("user"),
-                    cfg.getProperty("password")
-            )) {
+            try ( Connection cnx = bd.obtenerConexion("mydb","root","209506Kqc")) {
                 System.out.println("La conexión fue exitosa..");
             }
         } catch (IOException
@@ -89,7 +76,6 @@ public class BaseDatos {
         }
     }
 
-    private static final String ARCHIVO_CONFIGURACION = "bd.properties";
     private static BaseDatos instancia = null;
     private Properties configuracion;
     private Connection cnx;
