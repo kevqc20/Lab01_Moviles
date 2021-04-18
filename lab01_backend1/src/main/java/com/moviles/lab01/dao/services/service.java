@@ -66,11 +66,7 @@ public class service {
             SQLException {
         BaseDatos bd = BaseDatos.obtenerInstancia();
         Properties cfg = bd.obtenerConfiguracion();
-        Connection cnx = bd.obtenerConexion(
-                cfg.getProperty("database"),
-                cfg.getProperty("user"),
-                cfg.getProperty("password")
-        );
+        Connection cnx = bd.obtenerConexion("mydb","root","209506Kqc");
         return cnx;
     }
 }
