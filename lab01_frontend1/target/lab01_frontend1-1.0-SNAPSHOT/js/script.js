@@ -70,11 +70,11 @@ window.onload = function () {
                     "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de administrador</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
                     "                           <a class='dropdown-item' href='#flightsAdminFlights' class='trigger-btn' data-toggle='modal' onclick='showListFlightsAdmin()'>Administrar vuelos</a>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminRoutes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar rutas</a>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminAirplanes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar aviones</a>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminSchedules' class='trigger-btn' data-toggle='modal' onclick=''>Administrar horarios</a>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminPassangers' class='trigger-btn' data-toggle='modal' onclick=''>Administrar pasajeros</a>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminTickets' class='trigger-btn' data-toggle='modal' onclick=''>Administrar ticketes</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminRoutes' class='trigger-btn' data-toggle='modal' onclick='showListRoutesAdmin()'>Administrar rutas</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminAirplanes' class='trigger-btn' data-toggle='modal' onclick='showListAirplanesAdmin()'>Administrar aviones</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminSchedules' class='trigger-btn' data-toggle='modal' onclick='showListSchedulesAdmin()'>Administrar horarios</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminPassangers' class='trigger-btn' data-toggle='modal' onclick='showListPassangersAdmin()'>Administrar pasajeros</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminTickets' class='trigger-btn' data-toggle='modal' onclick='showListTicketsAdmin()'>Administrar ticketes</a>" +
                     "                       </div>" +
                     "                   </li>"
                     :
@@ -361,8 +361,141 @@ function showListFlightsAdmin() {
         }
     })
 }
+
+function showListRoutesAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/routeList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data);
+            $(document).ready(function () {
+                $('#flightsAdminRoutesTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
+function showListAirplanesAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/airplaneList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data);
+            $(document).ready(function () {
+                $('#flightsAdminAirplanesTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
+function showListSchedulesAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/scheduleList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data);
+            $(document).ready(function () {
+                $('#flightsAdminSchedulesTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
+function showListPassangersAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/passengerList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data);
+            $(document).ready(function () {
+                $('#flightsAdminPassangersTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
+function showListTicketsAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/ticketsList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data);
+            $(document).ready(function () {
+                $('#flightsAdminTicketsTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
+
 //Create list
 function list(data) {
+    alert(JSON.stringify(data));
     if ($("#flightsAdminFlights").length > 0) {
         console.log("flightsAdminFlights");
         var listado = document.getElementById("flightsAdminTable");
@@ -370,7 +503,49 @@ function list(data) {
         data["flightList"].forEach((u) => {
             row(u);
         });
+
+    } else if ($("#flightsAdminRoutes").length > 0) {
+        alert("hi n.n");
+        console.log("flightsAdminRoutes");
+        var listado = document.getElementById("flightsAdminRoutesTable");
+        listado.innerHTML = "";
+        data["routeList"].forEach((u) => {
+            row(u);
+        });
+    } else if ($("#flightsAdminAirplanes").length > 0) {
+        alert("hi n.n");
+        console.log("flightsAdminAirplanes");
+        var listado = document.getElementById("flightsAdminAirplanesTable");
+        listado.innerHTML = "";
+        data["airplaneList"].forEach((u) => {
+            row(u);
+        });
+    } else if ($("#flightsAdminSchedules").length > 0) {
+        alert("hi n.n");
+        console.log("flightsAdminSchedules");
+        var listado = document.getElementById("flightsAdminSchedulesTable");
+        listado.innerHTML = "";
+        data["routeList"].forEach((u) => {
+            row(u);
+        });
+    } else if ($("#flightsAdminPassangers").length > 0) {
+        alert("hi n.n");
+        console.log("flightsAdminPassangers");
+        var listado = document.getElementById("flightsAdminPassangersTable");
+        listado.innerHTML = "";
+        data["passengerList"].forEach((u) => {
+            row(u);
+        });
+    } else if ($("#flightsAdminTickets").length > 0) {
+        alert("hi n.n");
+        console.log("flightsAdminTickets");
+        var listado = document.getElementById("flightsAdminTicketsTable");
+        listado.innerHTML = "";
+        data["ticketsList"].forEach((u) => {
+            row(u);
+        });
     }
+
 //    } else if ($("#listModalCampaigns").is(':visible')) {
 //        console.log("listModalCampaigns");
 //        var listado = document.getElementById("listadoC");
@@ -391,10 +566,74 @@ function row(data) {
             tr += '<td>' + data.airplaine_id + '</td>';
             tr += '<td>' + data.schedule_id + '</td>';
             tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>'
+            tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
             tr += '</tr>';
             $('#flightsAdminTable').append(tr);
+
+        } else if ($("#flightsAdminRoutes").length > 0) {
+            console.log("#flightsAdminRoutes")
+            tr += '<td>' + data.id + '</td>';
+            tr += '<td>' + data.origin + '</td>';
+            tr += '<td>' + data.destination + '</td>';
+            tr += '<td>' + data.duration + '</td>';
+            tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#flightsAdminRoutesTable').append(tr);
+
+        } else if ($("#flightsAdminAirplanes").length > 0) {
+            console.log("#flightsAdminAirplanes")
+            tr += '<td>' + data.id + '</td>';
+            tr += '<td>' + data.year + '</td>';
+            tr += '<td>' + data.model + '</td>';
+            tr += '<td>' + data.brand + '</td>';
+            tr += '<td>' + data.type + '</td>';
+            tr += '<td>' + data.cant_max + '</td>';
+            tr += '<td>' + data.duration + '</td>';
+            tr += '<td>' + data.duration + '</td>';
+            tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#flightsAdminAirplanesTable').append(tr);
+
+        } else if ($("#flightsAdminSchedules").length > 0) {
+            console.log("#flightsAdminSchedules")
+            tr += '<td>' + data.id + '</td>';
+            tr += '<td>' + data.date_time + '</td>';
+            tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += '<td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#flightsAdminSchedulesTable').append(tr);
+
+        } else if ($("#flightsAdminPassangers").length > 0) {
+            console.log("#flightsAdminPassangers")
+            tr += '<td>' + data.user_username + '</td>';
+            tr += '<td>' + data.name + '</td>';
+            tr += '<td>' + data.last_name + '</td>';
+            tr += '<td>' + data.email + '</td>';
+            tr += '<td>' + data.dob + '</td>';
+            tr += '<td>' + data.address + '</td>';
+            tr += '<td>' + data.work_phone + '</td>';
+            tr += '<td>' + data.cell_phone + '</td>';
+            tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += '<td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#flightsAdminPassangersTable').append(tr);
+
+        } else if ($("#flightsAdminTickets").length > 0) {
+            console.log("#flightsAdminTickets")
+            tr += '<td>' + data.id + '</td>';
+            tr += '<td>' + data.flight_id + '</td>';
+            tr += '<td>' + data.price + '</td>';
+            tr += '<td>' + data.discount + '</td>';
+            tr += '<td>' + data.seat + '</td>';
+            tr += '<td>' + data.use_username + '</td>';
+            tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#flightsAdminTicketsTable').append(tr);
         }
+
 //        else if ($("#listModalCampaigns").is(':visible')) {
 //            console.log("listModalCampaigns")
 //            tr += '<td>' + data.id_campaign + '</td>';

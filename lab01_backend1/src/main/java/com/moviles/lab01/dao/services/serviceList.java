@@ -31,7 +31,7 @@ public class serviceList extends service {
             while (rs.next()) {
                 User e = new User(
                         rs.getString("user_name"),
-                        rs.getString("password"),
+                        rs.getString("password_"),
                         rs.getBoolean("rol")
                 );
                 r.add(e);
