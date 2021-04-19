@@ -296,6 +296,7 @@
 </div>
 
 
+<!-- ---------------------Modal LIST--------------------- -->
 <!-- Admin -->
 <!-- Modal List flightsAdminFlights-->
 <div class="modal fade" id="flightsAdminFlights">
@@ -699,10 +700,9 @@
     </div>
 </div>
 
+<!-- ---------------------Modal UPDATE--------------------- !-->
+
 <!-- Modal Update Airplane-->
-
-
-
 <div id="updateAirplaneModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
@@ -944,6 +944,8 @@
         </div>
     </div>
 </div>
+
+<!-- ---------------------Modal DELETE--------------------- -->
 
 <!-- Modal Delete Airplante -->
 <div id="airplaneDeleteModal" class="modal fade">

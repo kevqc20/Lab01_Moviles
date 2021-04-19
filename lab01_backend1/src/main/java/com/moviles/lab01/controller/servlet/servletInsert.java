@@ -125,8 +125,8 @@ public class servletInsert extends HttpServlet {
 
     private void tiquetes(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
-        String flight_id = request.getParameter("price");
-        String price = request.getParameter("id");
+        String flight_id = request.getParameter("flight_id");
+        String price = request.getParameter("price");
         String discount = request.getParameter("discount");
         String seat = request.getParameter("seat");
         String user_usuario = request.getParameter("user_usuario");
