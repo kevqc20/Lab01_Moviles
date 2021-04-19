@@ -279,7 +279,7 @@
                         </ul>
                         Total: <b>$<span id="total">0</span></b>
                         <button class="checkout-button">Checkout &raquo;</button>
-                        
+
                     </div>
 
                 </div>
@@ -396,6 +396,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="routesAdminTable">
+                                    <!--
                                     <tr>
                                         <td>Mark</td>
                                         <td>Otto</td>
@@ -404,6 +405,7 @@
                                         <td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
                                         <td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
                                     </tr>
+                                    !-->
                                 </tbody>
                             </table>
                         </div>

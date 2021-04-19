@@ -70,7 +70,7 @@ window.onload = function () {
                     "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de administrador</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
                     "                           <a class='dropdown-item' href='#flightsAdminFlights' class='trigger-btn' data-toggle='modal' onclick='showListFlightsAdmin()'>Administrar vuelos</a>" +
-                    "                           <a class='dropdown-item' href='#flightsAdminRoutes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar rutas</a>" +
+                    "                           <a class='dropdown-item' href='#flightsAdminRoutes' class='trigger-btn' data-toggle='modal' onclick='showListRoutesAdmin()'>Administrar rutas</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminAirplanes' class='trigger-btn' data-toggle='modal' onclick=''>Administrar aviones</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminSchedules' class='trigger-btn' data-toggle='modal' onclick=''>Administrar horarios</a>" +
                     "                           <a class='dropdown-item' href='#flightsAdminPassangers' class='trigger-btn' data-toggle='modal' onclick=''>Administrar pasajeros</a>" +
@@ -322,8 +322,36 @@ function showListFlightsAdmin() {
         }
     })
 }
+
+function showListRoutesAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/routeList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data);
+            $(document).ready(function () {
+                $('#flightsAdminRoutesTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
 //Create list
 function list(data) {
+    //alert(JSON.stringify(data));
     if ($("#flightsAdminFlights").length > 0) {
         console.log("flightsAdminFlights");
         var listado = document.getElementById("flightsAdminTable");
@@ -331,7 +359,17 @@ function list(data) {
         data["flightList"].forEach((u) => {
             row(u);
         });
+
+    } else if ($("#flightsAdminRoutes").length > 0) {
+        alert("hi n.n");
+        console.log("flightsAdminRoutes");
+        var listado = document.getElementById("flightsAdminRoutesTable");
+        listado.innerHTML = "";
+        data["routeList"].forEach((u) => {
+            row(u);
+        });
     }
+
 //    } else if ($("#listModalCampaigns").is(':visible')) {
 //        console.log("listModalCampaigns");
 //        var listado = document.getElementById("listadoC");
@@ -352,9 +390,20 @@ function row(data) {
             tr += '<td>' + data.airplaine_id + '</td>';
             tr += '<td>' + data.schedule_id + '</td>';
             tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>'
+            tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
             tr += '</tr>';
             $('#flightsAdminTable').append(tr);
+
+        } else if ($("#flightsAdminRoutes").length > 0) {
+            console.log("#flightsAdminRoutes")
+            tr += '<td>' + data.id + '</td>';
+            tr += '<td>' + data.origin + '</td>';
+            tr += '<td>' + data.destination + '</td>';
+            tr += '<td>' + data.duration + '</td>';
+            tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+            tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+            tr += '</tr>';
+            $('#flightsAdminRoutesTable').append(tr);
         }
 //        else if ($("#listModalCampaigns").is(':visible')) {
 //            console.log("listModalCampaigns")
