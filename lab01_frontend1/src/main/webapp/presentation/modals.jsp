@@ -334,6 +334,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="flightsAdminTable">
+                                    <!--
                                     <tr>
                                         <td>Mark</td>
                                         <td>Otto</td>
@@ -341,7 +342,8 @@
                                         <td>Mark</td>
                                         <td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
                                         <td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
-                                    </tr>
+                                    </tr> 
+                                    -->
                                 </tbody>
                             </table>
                         </div>
