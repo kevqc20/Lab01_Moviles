@@ -653,49 +653,42 @@ function showListTicketsAdmin() {
 
 //Create list
 function list(data) {
-    alert(JSON.stringify(data));
     if ($("#flightsAdminFlights").length > 0) {
-        console.log("flightsAdminFlights");
         var listado = document.getElementById("flightsAdminTable");
         listado.innerHTML = "";
         data["flightList"].forEach((u) => {
             row(u);
         });
-
-    } else if ($("#flightsAdminRoutes").length > 0) {
-        alert("hi n.n");
-        console.log("flightsAdminRoutes");
+    } else if ($("#flightsAdminRoutes").is(':visible')) {
         var listado = document.getElementById("flightsAdminRoutesTable");
         listado.innerHTML = "";
+        console.log("aaaaaaa")
         data["routeList"].forEach((u) => {
             row(u);
         });
-    } else if ($("#flightsAdminAirplanes").length > 0) {
-        alert("hi n.n");
+    } else if ($("#flightsAdminAirplanes").is(':visible')) {
         console.log("flightsAdminAirplanes");
         var listado = document.getElementById("flightsAdminAirplanesTable");
         listado.innerHTML = "";
+        console.log("aaaaaaa")
         data["airplaneList"].forEach((u) => {
             row(u);
         });
-    } else if ($("#flightsAdminSchedules").length > 0) {
-        alert("hi n.n");
+    } else if ($("#flightsAdminSchedules").is(':visible')) {
         console.log("flightsAdminSchedules");
         var listado = document.getElementById("flightsAdminSchedulesTable");
         listado.innerHTML = "";
         data["routeList"].forEach((u) => {
             row(u);
         });
-    } else if ($("#flightsAdminPassangers").length > 0) {
-        alert("hi n.n");
+    } else if ($("#flightsAdminPassangers").is(':visible')) {
         console.log("flightsAdminPassangers");
         var listado = document.getElementById("flightsAdminPassangersTable");
         listado.innerHTML = "";
         data["passengerList"].forEach((u) => {
             row(u);
         });
-    } else if ($("#flightsAdminTickets").length > 0) {
-        alert("hi n.n");
+    } else if ($("#flightsAdminTickets").is(':visible')) {
         console.log("flightsAdminTickets");
         var listado = document.getElementById("flightsAdminTicketsTable");
         listado.innerHTML = "";

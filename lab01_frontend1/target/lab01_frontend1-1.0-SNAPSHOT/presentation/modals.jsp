@@ -364,7 +364,7 @@
 </div>
 
 <!-- Modal List flightsAdminRoutes-->
-<div class="modal fade" id="flightsAdminRoutes">
+<div class="modal" id="flightsAdminRoutes">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
