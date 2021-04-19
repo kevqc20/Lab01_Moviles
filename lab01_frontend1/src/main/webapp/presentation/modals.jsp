@@ -320,6 +320,9 @@
                                     </div>
                                     <div class="col-sm-4">
                                     </div>
+                                    <div class="col-sm-4">
+                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo vuelo</span></a>						
+                                    </div>
                                 </div>
                             </div>
                             <table class="table-dark table-striped table-bordered" id='flightsAdminFlightsTable' style="width:100%">
@@ -382,6 +385,9 @@
                                     </div>
                                     <div class="col-sm-4">
                                     </div>
+                                    <div class="col-sm-4">
+                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nueva ruta</span></a>						
+                                    </div>
                                 </div>
                             </div>
                             <table class="table-dark table-striped table-bordered" id='flightsAdminRoutesTable' style="width:100%">
@@ -441,6 +447,9 @@
                                         <h2>Administrar <b>aviones</b></h2>
                                     </div>
                                     <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo avion</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -506,6 +515,9 @@
                                     </div>
                                     <div class="col-sm-4">
                                     </div>
+                                    <div class="col-sm-4">
+                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo horario</span></a>						
+                                    </div>
                                 </div>
                             </div>
                             <table class="table-dark table-striped table-bordered" id='flightsAdminSchedulesTable' style="width:100%">
@@ -561,6 +573,9 @@
                                         <h2>Administrar <b>pasajeros</b></h2>
                                     </div>
                                     <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo pasajero</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -631,6 +646,9 @@
                                         <h2>Administrar <b>tickets</b></h2>
                                     </div>
                                     <div class="col-sm-4">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo ticket</span></a>						
                                     </div>
                                 </div>
                             </div>
