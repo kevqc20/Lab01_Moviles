@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='register'>Registrarse</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='register' onclick="addNewUser()">Registrarse</button>
                     </div>
                 </form>
             </div>
