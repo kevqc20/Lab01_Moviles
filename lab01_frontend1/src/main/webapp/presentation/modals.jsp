@@ -460,6 +460,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="airplanesAdminTable">
+                                    <!--
                                     <tr>
                                         <td>Mark</td>
                                         <td>Otto</td>
@@ -470,6 +471,7 @@
                                         <td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
                                         <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
                                     </tr>
+                                    !-->
                                 </tbody>
                             </table>
                         </div>
@@ -520,12 +522,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="scheduleAdminTable">
+                                    <!--
                                     <tr>
                                         <td>Mark</td>
                                         <td>Otto</td>
                                         <td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
                                         <td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
                                     </tr>
+                                    !-->
                                 </tbody>
                             </table>
                         </div>
@@ -583,6 +587,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="passangersAdminTable">
+                                    <!--
                                     <tr>
                                         <td>Mark</td>
                                         <td>Otto</td>
@@ -596,6 +601,7 @@
                                         <td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
                                         <td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
                                     </tr>
+                                    !-->
                                 </tbody>
                             </table>
                         </div>
@@ -649,7 +655,8 @@
                                     </tr>
                                 </thead>
                                 <tbody id="ticketsAdminTable">
-                                    <tr>
+                                     <!--
+                                    <tr>                            
                                         <td>Mark</td>
                                         <td>Otto</td>
                                         <td>@mdo</td>
@@ -658,6 +665,7 @@
                                         <td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
                                         <td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
                                     </tr>
+                                     !-->
                                 </tbody>
                             </table>
                         </div>
