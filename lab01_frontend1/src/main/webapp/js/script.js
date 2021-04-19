@@ -258,6 +258,45 @@ function showPasswordRM() {
 /*-------------------------------------------------------*/
 
 /* Ajax functions */
+
+// Register new user 
+function addNewUser() {
+    var user_username_rm = document.getElementById("user_username_rm").value;
+    var email_rm = document.getElementById("email_rm").value;
+    var password_rm = document.getElementById("password_rm").value;
+    var name_rm = document.getElementById("name_rm").value;
+    var lastname_rm = document.getElementById("lastname_rm").value;
+    var work_phone_rm = document.getElementById("work_phone_rm").value;
+    var cell_phone_rm = document.getElementById("cell_phone_rm").value;
+    var address_rm = document.getElementById("address_rm").value;
+    var dob_rm = document.getElementById("dob_rm").value;
+
+    var jsonUser = {
+        "user_name": user_username_rm,
+        "password": password_rm,
+        "name_": name_rm,
+        "lastname": lastname_rm,
+        "email": email_rm,
+        "bob": dob_rm,
+        "address": address_rm,
+        "work_phone": work_phone_rm,
+        "cell_phone": cell_phone_rm
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/registro",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil creado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        }
+    });
+}
+
 // Login to system
 function logIn() {
     var user = document.getElementById("user").value;
@@ -609,3 +648,6 @@ function row(data) {
 //        } 
     }
 }
+
+
+// Edit active profile
