@@ -8,7 +8,7 @@ package com.moviles.lab01.controller.servlet;
 import com.moviles.lab01.dao.services.serviceInsert;
 import com.moviles.lab01.model.Model;
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author jose
  */
-@WebServlet(name = "servletInsert", urlPatterns = {"/servletInsert/registro", "/servletInsert/avion", "/servletInsert/ruta", "/servletInsert/horario", 
-    "/servletInsert/tiquete","/servletInsert/vuelo"})
+@WebServlet(name = "servletInsert", urlPatterns = {"/servletInsert/registro", "/servletInsert/avion", "/servletInsert/ruta", "/servletInsert/horario",
+    "/servletInsert/tiquete", "/servletInsert/vuelo"})
 public class servletInsert extends HttpServlet {
 
     @Override
@@ -70,7 +70,7 @@ public class servletInsert extends HttpServlet {
             case "/servletInsert/tiquete":
                 this.tiquetes(request, response);
                 break;
-                case "/servletInsert/vuelo":
+            case "/servletInsert/vuelo":
                 this.vuelo(request, response);
                 break;
 
@@ -78,17 +78,25 @@ public class servletInsert extends HttpServlet {
     }
 
     private void registrar(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-        String user = request.getParameter("user_username_rm");
-        String email = request.getParameter("email_rm");
-        String pass = request.getParameter("password_rm");
-        String name = request.getParameter("name_rm");
-        String last_name = request.getParameter("lastname_rm");
-        String wk_phone = request.getParameter("work_phone_rm");
-        String cellphone = request.getParameter("cell_phone_rm");
-        String address = request.getParameter("address_rm");
-        String birthday = request.getParameter("dob_rm");
-        serv.insertUser(user, pass, true);
-        serv.insertPassenger(user, name, last_name, email, serv.str_to_sql_date(birthday), address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
+        String user = request.getParameter("user_name");
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
+        String name = request.getParameter("name_");
+        String last_name = request.getParameter("lastname");
+        String wk_phone = request.getParameter("work_phone");
+        String cellphone = request.getParameter("cell_phone");
+        String address = request.getParameter("address");
+        String birthday = request.getParameter("bob");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        java.sql.Date sql = null;
+        try {
+            java.util.Date parsed = format.parse(birthday);
+            sql = new java.sql.Date(parsed.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        serv.insertUser(user, pass, false);
+        serv.insertPassenger(user, name, last_name, email, sql, address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
     }
 
     private void avion(HttpServletRequest request, HttpServletResponse response) {
@@ -112,7 +120,7 @@ public class servletInsert extends HttpServlet {
     private void horario(HttpServletRequest request, HttpServletResponse response) throws ParseException {
         String id = request.getParameter("id");
         String date = request.getParameter("date");
-        serv.insertSchedule(id,serv.fechaTSp(date));
+        serv.insertSchedule(id, serv.fechaTSp(date));
     }
 
     private void tiquetes(HttpServletRequest request, HttpServletResponse response) {
@@ -124,6 +132,7 @@ public class servletInsert extends HttpServlet {
         String user_usuario = request.getParameter("user_usuario");
         serv.insertTicket(id, flight_id, Integer.parseInt(price), Integer.parseInt(seat), user_usuario, Integer.parseInt(discount));
     }
+
     private void vuelo(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
         String rute_id = request.getParameter("rute_id");
@@ -134,5 +143,13 @@ public class servletInsert extends HttpServlet {
     HttpSession sesion = null;
     Model mod = Model.getInstance();
     serviceInsert serv = mod.getServInsert();
+
+    public static void main(String[] args) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        java.util.Date parsed = format.parse("20110210");
+        java.sql.Date sql = new java.sql.Date(parsed.getTime());
+        System.out.println(sql);
+    }
 
 }
