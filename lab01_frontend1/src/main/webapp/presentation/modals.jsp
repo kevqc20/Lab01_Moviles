@@ -690,6 +690,9 @@
 </div>
 
 <!-- Modal Update Airplane-->
+
+
+
 <div id="updateAirplaneModal" class="modal fade">
     <div class="modal-dialog modal-login">
         <div class="modal-content">
