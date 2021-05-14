@@ -94,6 +94,7 @@ public class servletList extends HttpServlet {
     }
 
     private void userList(HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+        System.out.println("AQUI");
         ArrayList<User> usu = serv.listUser();
         Map map = new HashMap();
         if (usu != null) { //or whatever conditions you need
@@ -130,6 +131,8 @@ public class servletList extends HttpServlet {
         write(response, map);
     }
 
+    
+    
     private void routeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ArrayList<Route> rut = serv.listRoute();
         Map map = new HashMap();
@@ -186,6 +189,9 @@ public class servletList extends HttpServlet {
     Model mod = Model.getInstance();
     serviceList serv = mod.getServList();
     HttpSession sesion = null;
+    
+    
+
     
     
 }

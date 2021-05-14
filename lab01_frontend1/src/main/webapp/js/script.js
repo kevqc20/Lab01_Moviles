@@ -236,8 +236,7 @@ function isEmail(email) {
     $(window).scroll(navbarCollapse);
 })(jQuery); // End of use strict
 
-function showPassword()
-{
+function showPassword() {
     var x = document.getElementById("password");
     if (x.type === "password") {
         x.type = "text";
@@ -299,7 +298,7 @@ function addNewUser() {
         }
     });
 }
-
+// Register new airplane 
 function addNewAirplane() {
     var id = document.getElementById("ap_id_em").value;
     var year = document.getElementById("ap_year_em").value;
@@ -333,7 +332,7 @@ function addNewAirplane() {
         }
     });
 }
-
+// Register new rute 
 function addNewRute() {
     var id = document.getElementById("rt_id_em").value;
     var origin = document.getElementById("rt_origin_em").value;
@@ -363,7 +362,7 @@ function addNewRute() {
         }
     });
 }
-
+// Register new schedule 
 function addNewShedule() {
     var id = document.getElementById("sh_id_em").value;
     var date = document.getElementById("sh_datetime_em").value;
@@ -389,7 +388,7 @@ function addNewShedule() {
         }
     });
 }
-
+// Register new ticket 
 function addNewTicket() {
     var id = document.getElementById("tk_id_em").value;
     var flight_id = document.getElementById("tk_fid_em").value;
@@ -424,7 +423,7 @@ function addNewTicket() {
         }
     });
 }
-
+// Register new flight 
 function addNewFlight() {
     var id = document.getElementById("f_id_em").value;
     var rute_id = document.getElementById("f_rid_em").value;
@@ -455,6 +454,8 @@ function addNewFlight() {
     });
 }
 
+
+// User administration
 // Login to system
 function logIn() {
     var user = document.getElementById("user").value;
@@ -472,25 +473,201 @@ function logIn() {
         type: 'post',
         cache: false,
         success: function (data) {
-            window.sessionStorage.user = data["user"]["username"]
-            window.sessionStorage.password = data["user"]["password"]
-            window.sessionStorage.role = data["user"]["rol"] ? "1" : "0"
-            window.location.replace("presentation/idle.jsp");
+            if (data["user"] != undefined) {
+                window.sessionStorage.main = data["user"]
+                window.sessionStorage.user = data["user"]["username"]
+                window.sessionStorage.password = data["user"]["password"]
+                window.sessionStorage.role = data["user"]["rol"] ? "1" : "0"
+                window.location.replace("presentation/idle.jsp");
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Contraseña incorrecta.</p>');
+                jQuery("#errorModal").modal('show');
+                $("#errorModal").on("hidden.bs.modal", function () {
+                    $('#loginModal').find('form').trigger('reset');
+                });
+            }
         },
         error: function () {
-            alert('error');
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Ese usuario no existe.</p>');
+            jQuery("#errorModal").modal('show');
+            $("#errorModal").on("hidden.bs.modal", function () {
+                $('#loginModal').find('form').trigger('reset');
+            });
         }
     }
     );
 }
-
 // Logout of system
 function logout() {
+    window.sessionStorage.removeItem("main");
     window.sessionStorage.removeItem("user");
     window.sessionStorage.removeItem("password");
     window.sessionStorage.removeItem("role");
     window.location.replace("/lab01_frontend1");
 }
+
+//User edit
+/*   Pending code
+ // Show profile
+ function showUser() {
+ var user = JSON.parse(window.sessionStorage.user);
+ if (window.sessionStorage.role === "1") {
+ $.ajax({
+ type: "GET",
+ url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
+ contentType: "application/json",
+ dataType: 'json',
+ success: function (data) {
+ window.sessionStorage.citizen = JSON.stringify(data);
+ fill(user, data);
+ },
+ error: function (status) {
+ document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+ document.getElementById("user").setAttribute('title', 'Usuario no existente');
+ },
+ fail: function (xhr, textStatus, errorThrown) {
+ jQuery("#errorModal").modal('show');
+ }
+ });
+ } else {
+ $.ajax({
+ type: "GET",
+ url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
+ contentType: "application/json",
+ dataType: 'json',
+ success: function (data) {
+ window.sessionStorage.citizen = JSON.stringify(data);
+ fill(user, data);
+ },
+ error: function (status) {
+ document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+ document.getElementById("user").setAttribute('title', 'Usuario no existente');
+ },
+ fail: function (xhr, textStatus, errorThrown) {
+ jQuery("#errorModal").modal('show');
+ }
+ });
+ }
+ }
+ // Update user
+ function updateUser() {
+ var email = document.getElementById("userU").value;
+ var pass = document.getElementById("passwordU").value;
+ var name = document.getElementById("nameU").value;
+ var lastname = document.getElementById("lastnameU").value;
+ var cel = document.getElementById("celU").value;
+ if (validateAll()) {
+ var lat = markersArray[0].getPosition().toJSON()["lat"];
+ var longi = markersArray[0].getPosition().toJSON()["lng"];
+ var jsonUser = {
+ "email": email,
+ "password": pass,
+ "role_id_role": window.sessionStorage.role
+ }
+ var jsonCitizen = {
+ "email": email,
+ "firstName": name,
+ "lastName": lastname,
+ "cel_Num": cel,
+ "lat": lat,
+ "longi": longi
+ }
+ 
+ $.ajax({
+ url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
+ method: "PUT",
+ data: JSON.stringify(jsonUser),
+ dataType: 'json',
+ contentType: "application/json",
+ fail: function (xhr, textStatus, erarorThrown) {
+ jQuery("#errorModal").modal('show');
+ }
+ });
+ 
+ if (window.sessionStorage.role === "1") {
+ $.ajax({
+ url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
+ method: "PUT",
+ data: JSON.stringify(jsonCitizen),
+ dataType: 'json',
+ contentType: "application/json",
+ success: function (data) {
+ jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+ jQuery("#successModal").modal('show');
+ $("#successModal").on("hidden.bs.modal", function () {
+ $('#updateModal').modal('hide')
+ });
+ window.sessionStorage.pass = pass;
+ window.sessionStorage.name = name;
+ 
+ }
+ });
+ } else {
+ $.ajax({
+ url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + email,
+ method: "PUT",
+ data: JSON.stringify(jsonCitizen),
+ dataType: 'json',
+ contentType: "application/json",
+ success: function (data) {
+ jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+ jQuery("#successModal").modal('show');
+ window.sessionStorage.name = name;
+ window.sessionStorage.pass = pass;
+ }
+ });
+ }
+ 
+ } else {
+ jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
+ jQuery("#errorModal").modal('show');
+ }
+ }
+ // Fill rows with info
+ function fillUser(user, data) {
+ document.getElementById("userU").value = user.email;
+ document.getElementById("passwordU").value = user.password;
+ document.getElementById("nameU").value = data['firstName'];
+ document.getElementById("lastnameU").value = data['lastName'];
+ document.getElementById("celU").value = data['cel_Num'];
+ 
+ map = new google.maps.Map(document.getElementById("mapE"), {
+ center: {lat: parseFloat(data['lat']), lng: parseFloat(data['longi'])},
+ zoom: 18,
+ mapTypeId: 'roadmap'
+ });
+ 
+ marker = new google.maps.Marker({
+ position: {lat: parseFloat(data['lat']), lng: parseFloat(data['longi'])},
+ map: map,
+ draggable: false,
+ animation: google.maps.Animation.BOUNCE,
+ title: "Ubicación actual"
+ });
+ marker.setIcon('https://img.icons8.com/officel/80/000000/marker.png')
+ 
+ 
+ var marker2 = null;
+ google.maps.event.addListener(map, "click", function (ele) {
+ clearOverlays()
+ marker2 = new google.maps.Marker({
+ position: ele.latLng,
+ map: map,
+ draggable: true,
+ animation: google.maps.Animation.BOUNCE,
+ title: "Nueva ubicación"
+ });
+ marker2.setIcon('https://img.icons8.com/ultraviolet/40/000000/marker.png')
+ markersArray.push(marker2)
+ console.log(marker2.getPosition().toJSON())
+ })
+ 
+ if (marker2 == null) {
+ markersArray.push(marker)
+ }
+ console.log(markersArray[0].getPosition().toJSON())
+ }
+ */
 
 
 // List
@@ -501,7 +678,7 @@ function showListFlightsAdmin() {
         url: '/lab01_frontend1/servletList/flightList',
         cache: false,
         success: function (data) {
-            list(data);
+            list(data, 1);
             $(document).ready(function () {
                 $('#flightsAdminFlightsTable').DataTable({
                     "language": {
@@ -527,7 +704,7 @@ function showListRoutesAdmin() {
         cache: false,
         success: function (data) {
             //alert(JSON.stringify(data));
-            list(data);
+            list(data, 2);
             $(document).ready(function () {
                 $('#flightsAdminRoutesTable').DataTable({
                     "language": {
@@ -553,7 +730,7 @@ function showListAirplanesAdmin() {
         cache: false,
         success: function (data) {
             //alert(JSON.stringify(data));
-            list(data);
+            list(data, 3);
             $(document).ready(function () {
                 $('#flightsAdminAirplanesTable').DataTable({
                     "language": {
@@ -579,7 +756,7 @@ function showListSchedulesAdmin() {
         cache: false,
         success: function (data) {
             //alert(JSON.stringify(data));
-            list(data);
+            list(data, 4);
             $(document).ready(function () {
                 $('#flightsAdminSchedulesTable').DataTable({
                     "language": {
@@ -605,7 +782,7 @@ function showListPassangersAdmin() {
         cache: false,
         success: function (data) {
             //alert(JSON.stringify(data));
-            list(data);
+            list(data, 5);
             $(document).ready(function () {
                 $('#flightsAdminPassangersTable').DataTable({
                     "language": {
@@ -631,7 +808,7 @@ function showListTicketsAdmin() {
         cache: false,
         success: function (data) {
             //alert(JSON.stringify(data));
-            list(data);
+            list(data, 6);
             $(document).ready(function () {
                 $('#flightsAdminTicketsTable').DataTable({
                     "language": {
@@ -652,153 +829,176 @@ function showListTicketsAdmin() {
 
 
 //Create list
-function list(data) {
-    if ($("#flightsAdminFlights").length > 0) {
-        var listado = document.getElementById("flightsAdminTable");
-        listado.innerHTML = "";
-        data["flightList"].forEach((u) => {
-            row(u);
-        });
-    } else if ($("#flightsAdminRoutes").is(':visible')) {
-        var listado = document.getElementById("flightsAdminRoutesTable");
-        listado.innerHTML = "";
-        console.log("aaaaaaa")
-        data["routeList"].forEach((u) => {
-            row(u);
-        });
-    } else if ($("#flightsAdminAirplanes").is(':visible')) {
-        console.log("flightsAdminAirplanes");
-        var listado = document.getElementById("flightsAdminAirplanesTable");
-        listado.innerHTML = "";
-        console.log("aaaaaaa")
-        data["airplaneList"].forEach((u) => {
-            row(u);
-        });
-    } else if ($("#flightsAdminSchedules").is(':visible')) {
-        console.log("flightsAdminSchedules");
-        var listado = document.getElementById("flightsAdminSchedulesTable");
-        listado.innerHTML = "";
-        data["routeList"].forEach((u) => {
-            row(u);
-        });
-    } else if ($("#flightsAdminPassangers").is(':visible')) {
-        console.log("flightsAdminPassangers");
-        var listado = document.getElementById("flightsAdminPassangersTable");
-        listado.innerHTML = "";
-        data["passengerList"].forEach((u) => {
-            row(u);
-        });
-    } else if ($("#flightsAdminTickets").is(':visible')) {
-        console.log("flightsAdminTickets");
-        var listado = document.getElementById("flightsAdminTicketsTable");
-        listado.innerHTML = "";
-        data["ticketsList"].forEach((u) => {
-            row(u);
-        });
+function list(data, i) {
+    switch (i) {
+        case 1:
+        {
+            var listado = document.getElementById("flightsAdminTable");
+            listado.innerHTML = "";
+            data["flightList"].forEach((u) => {
+                row(u, 1);
+            });
+            break;
+        }
+        case 2:
+        {
+            var listado = document.getElementById("routesAdminTable");
+            listado.innerHTML = "";
+            data["routeList"].forEach((u) => {
+                row(u, 2);
+            });
+            break;
+        }
+        case 3:
+        {
+            var listado = document.getElementById("airplanesAdminTable");
+            listado.innerHTML = "";
+            data["airplaneList"].forEach((u) => {
+                row(u, 3);
+            });
+            break;
+        }
+        case 4:
+        {
+            var listado = document.getElementById("schedulesAdminTable");
+            listado.innerHTML = "";
+            data["scheduleList"].forEach((u) => {
+                row(u, 4);
+            });
+            break;
+        }
+        case 5:
+        {
+            var listado = document.getElementById("passangersAdminTable");
+            listado.innerHTML = "";
+            data["passengerList"].forEach((u) => {
+                row(u, 5);
+            });
+            break;
+        }
+        case 6:
+        {
+            var listado = document.getElementById("ticketsAdminTable");
+            listado.innerHTML = "";
+            data["ticketsLists"].forEach((u) => {
+                row(u, 6);
+            });
+            break;
+        }
     }
-
-//    } else if ($("#listModalCampaigns").is(':visible')) {
-//        console.log("listModalCampaigns");
-//        var listado = document.getElementById("listadoC");
-//        listado.innerHTML = "";
-//        data.forEach((u) => {
-//            row(u);
-//        });
-//    }
 }
 // Add rows to table
-function row(data) {
+function row(data, i) {
     if (data) {
         var tr = '<tr>';
-        if ($("#flightsAdminFlights").length > 0) {
-            console.log("#flightsAdminFlights")
-            tr += '<td>' + data.id + '</td>';
-            tr += '<td>' + data.route_id + '</td>';
-            tr += '<td>' + data.airplaine_id + '</td>';
-            tr += '<td>' + data.schedule_id + '</td>';
-            tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-            tr += '</tr>';
-            $('#flightsAdminTable').append(tr);
-
-        } else if ($("#flightsAdminRoutes").length > 0) {
-            console.log("#flightsAdminRoutes")
-            tr += '<td>' + data.id + '</td>';
-            tr += '<td>' + data.origin + '</td>';
-            tr += '<td>' + data.destination + '</td>';
-            tr += '<td>' + data.duration + '</td>';
-            tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-            tr += '</tr>';
-            $('#flightsAdminRoutesTable').append(tr);
-
-        } else if ($("#flightsAdminAirplanes").length > 0) {
-            console.log("#flightsAdminAirplanes")
-            tr += '<td>' + data.id + '</td>';
-            tr += '<td>' + data.year + '</td>';
-            tr += '<td>' + data.model + '</td>';
-            tr += '<td>' + data.brand + '</td>';
-            tr += '<td>' + data.type + '</td>';
-            tr += '<td>' + data.cant_max + '</td>';
-            tr += '<td>' + data.duration + '</td>';
-            tr += '<td>' + data.duration + '</td>';
-            tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-            tr += '</tr>';
-            $('#flightsAdminAirplanesTable').append(tr);
-
-        } else if ($("#flightsAdminSchedules").length > 0) {
-            console.log("#flightsAdminSchedules")
-            tr += '<td>' + data.id + '</td>';
-            tr += '<td>' + data.date_time + '</td>';
-            tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-            tr += '</tr>';
-            $('#flightsAdminSchedulesTable').append(tr);
-
-        } else if ($("#flightsAdminPassangers").length > 0) {
-            console.log("#flightsAdminPassangers")
-            tr += '<td>' + data.user_username + '</td>';
-            tr += '<td>' + data.name + '</td>';
-            tr += '<td>' + data.last_name + '</td>';
-            tr += '<td>' + data.email + '</td>';
-            tr += '<td>' + data.dob + '</td>';
-            tr += '<td>' + data.address + '</td>';
-            tr += '<td>' + data.work_phone + '</td>';
-            tr += '<td>' + data.cell_phone + '</td>';
-            tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-            tr += '</tr>';
-            $('#flightsAdminPassangersTable').append(tr);
-
-        } else if ($("#flightsAdminTickets").length > 0) {
-            console.log("#flightsAdminTickets")
-            tr += '<td>' + data.id + '</td>';
-            tr += '<td>' + data.flight_id + '</td>';
-            tr += '<td>' + data.price + '</td>';
-            tr += '<td>' + data.discount + '</td>';
-            tr += '<td>' + data.seat + '</td>';
-            tr += '<td>' + data.use_username + '</td>';
-            tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-            tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-            tr += '</tr>';
-            $('#flightsAdminTicketsTable').append(tr);
+        switch (i) {
+            case 1:
+            {
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.route_id + '</td>';
+                tr += '<td>' + data.airplaine_id + '</td>';
+                tr += '<td>' + data.schedule_id + '</td>';
+                tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '</tr>';
+                $('#flightsAdminTable').append(tr);
+                break;
+            }
+            case 2:
+            {
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.origin + '</td>';
+                tr += '<td>' + data.destination + '</td>';
+                tr += '<td>' + data.duration + '</td>';
+                tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '</tr>';
+                $('#routesAdminTable').append(tr);
+                break;
+            }
+            case 3:
+            {
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.year + '</td>';
+                tr += '<td>' + data.model + '</td>';
+                tr += '<td>' + data.brand + '</td>';
+                tr += '<td>' + data.type + '</td>';
+                tr += '<td>' + data.cant_max + '</td>';
+                tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '</tr>';
+                $('#airplanesAdminTable').append(tr);
+                break;
+            }
+            case 4:
+            {
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.date_time + '</td>';
+                tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '</tr>';
+                $('#schedulesAdminTable').append(tr);
+                break;
+            }
+            case 5:
+            {
+                tr += '<td>' + data.user_username + '</td>';
+                tr += '<td>' + data.name + '</td>';
+                tr += '<td>' + data.lastname + '</td>';
+                tr += '<td>' + data.email + '</td>';
+                tr += '<td>' + data.dob + '</td>';
+                tr += '<td>' + data.address + '</td>';
+                tr += '<td>' + data.work_phone + '</td>';
+                tr += '<td>' + data.cell_phone + '</td>';
+                tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '</tr>';
+                $('#passangersAdminTable').append(tr);
+                break;
+            }
+            case 6:
+            {
+                console.log(data);
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.flight_id + '</td>';
+                tr += '<td>' + data.price + '</td>';
+                tr += '<td>' + data.discount + '</td>';
+                tr += '<td>' + data.seat + '</td>';
+                tr += '<td>' + data.user_username + '</td>';
+                tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '</tr>';
+                $('#ticketsAdminTable').append(tr);
+                break;
+            }
         }
-
-//        else if ($("#listModalCampaigns").is(':visible')) {
-//            console.log("listModalCampaigns")
-//            tr += '<td>' + data.id_campaign + '</td>';
-//            tr += '<td>' + data.name + '</td>';
-//            tr += '<td>' + data.instructor + '</td>';
-//            tr += '<td>' + data.target + '</td>';
-//            tr += '<td>' + data.location + '</td>';
-//            tr += '<td>' + data.max + '</td>';
-//            tr += '<td><button class="editC" href="#updateModalCampaign" class="trigger-btn" data-toggle="modal">Editar</button> <button class="editC" href="#" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
-//            tr += '</tr>';
-//            $('#listadoC').append(tr);
-//        } 
     }
 }
 
 
-// Edit active profile
+
+// Web Sockets
+var socket = new WebSocket("ws://localhost:8080/ProgressWebSocket-1.0-SNAPSHOT/progress");
+socket.onmessage = onMessage;
+
+function onMessage(event) {
+    var btnSubmit = document.getElementById("btnSubmit");
+    btnSubmit.disabled = true;
+
+    var progress = document.getElementById("progress");
+    var data = JSON.parse(event.data);
+    progress.value = data.value;
+
+    var lblProgress = document.getElementById("lblProgress");
+    if (data.value < 100) {
+        lblProgress.innerHTML = 'Progress: ' + data.value + '%';
+    } else {
+        btnSubmit.disabled = false;
+        lblProgress.innerHTML = "Finish";
+    }
+
+}
+
+function formSubmit() {
+    socket.send("{\"start\":\"true\"}");
+}
