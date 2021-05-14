@@ -9,6 +9,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SET GLOBAL time_zone = '+3:00';
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
@@ -117,6 +118,29 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
+-- Table `mydb`.`ticket`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `mydb`.`ticket` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `mydb`.`ticket` (
+  `id` VARCHAR(45) NOT NULL,
+  `flight_id` VARCHAR(45) NOT NULL,
+  `price` INT NOT NULL,
+  `seat` INT NOT NULL,
+  `discount` INT NOT NULL,
+  INDEX `fk_ticket_flight1_idx` (`flight_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_ticket_flight1`
+    FOREIGN KEY (`flight_id`)
+    REFERENCES `mydb`.`flight` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
 -- Table `mydb`.`passenger`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mydb`.`passenger` ;
@@ -143,29 +167,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`passenger` (
   CONSTRAINT `fk_passenger_ticket1`
     FOREIGN KEY (`ticket_id`)
     REFERENCES `mydb`.`ticket` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-SHOW WARNINGS;
-
--- -----------------------------------------------------
--- Table `mydb`.`ticket`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`ticket` ;
-
-SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`ticket` (
-  `id` VARCHAR(45) NOT NULL,
-  `flight_id` VARCHAR(45) NOT NULL,
-  `price` INT NOT NULL,
-  `seat` INT NOT NULL,
-  `discount` INT NOT NULL,
-  INDEX `fk_ticket_flight1_idx` (`flight_id` ASC) VISIBLE,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_ticket_flight1`
-    FOREIGN KEY (`flight_id`)
-    REFERENCES `mydb`.`flight` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -891,18 +892,15 @@ call PRC_LIST_FLIGHT();
 call PRC_SEARCH_FLIGHT('5789');
 call PRC_UPDATE_FLIGHT('5789','5296','5094A','02');
 
-call PRC_INSERT_TICKET('03','5789',12000,25, 'yen_cc', 5);
-call PRC_INSERT_TICKET('02','7845',25000,50, 'kev_qc', 10);
-call PRC_LIST_TICKET();
-call PRC_SEARCH_TICKET('03');
-call PRC_UPDATE_TICKET('03','5789',12000,45, 'yen_cc', 10);
-
 call PRC_INSERT_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119);
 call PRC_INSERT_PASSENGER('kev_qc','Kevin','Quesada','kevin.q.c20@hotmail.com','1995-06-20','Heredia',22604859,84258285);
 call PRC_LIST_PASSENGER();
 call PRC_SEARCH_PASSENGER('yen_cc');
 call PRC_UPDATE_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119);
 
-
-
+call PRC_INSERT_TICKET('03','5789',12000,25, 'yen_cc', 5);
+call PRC_INSERT_TICKET('02','7845',25000,50, 'kev_qc', 10);
+call PRC_LIST_TICKET();
+call PRC_SEARCH_TICKET('03');
+call PRC_UPDATE_TICKET('03','5789',12000,45, 'yen_cc', 10);
 
