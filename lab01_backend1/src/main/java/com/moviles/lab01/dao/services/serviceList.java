@@ -186,9 +186,9 @@ public class serviceList extends service {
 
     public static void main(String[] args) {
         serviceList s = new serviceList();
-        ArrayList<Flight> r = s.listFlight();
+        ArrayList<User> r = s.listUser();
 
-        for (Flight a : r) {
+        for (User a : r) {
             System.out.println(a.toString());
         }
     }

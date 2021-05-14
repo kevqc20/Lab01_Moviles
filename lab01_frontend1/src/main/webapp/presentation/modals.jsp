@@ -364,7 +364,7 @@
 </div>
 
 <!-- Modal List flightsAdminRoutes-->
-<div class="modal fade" id="flightsAdminRoutes">
+<div class="modal" id="flightsAdminRoutes">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
@@ -534,7 +534,7 @@
                                         <th>Borrar</th>
                                     </tr>
                                 </thead>
-                                <tbody id="scheduleAdminTable">
+                                <tbody id="schedulesAdminTable">
                                     <!--
                                     <tr>
                                         <td>Mark</td>
@@ -597,7 +597,6 @@
                                         <th class="th">Direccion</th>
                                         <th class="th">Telefono trabajo</th>
                                         <th class="th">Telefono celular</th>
-                                        <th class="th">Lista de tickets</th>
                                         <th>Editar</th>
                                         <th>Borrar</th>
                                     </tr>
@@ -669,6 +668,7 @@
                                         <th class="th">Precio</th>
                                         <th class="th">Descuento</th>
                                         <th class="th">Asiento</th>
+                                        <th class="th">Usuario</th>
                                         <th>Editar</th>
                                         <th>Borrar</th>
                                     </tr>
