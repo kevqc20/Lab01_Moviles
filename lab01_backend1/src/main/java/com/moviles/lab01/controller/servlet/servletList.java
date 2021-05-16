@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.moviles.lab01.dao.services.serviceList;
 import com.moviles.lab01.model.entities.User;
 import com.moviles.lab01.dao.services.serviceList;
+import com.moviles.lab01.dao.services.serviceSearch;
 import com.moviles.lab01.model.Model;
 import com.moviles.lab01.model.entities.Airplane;
 import com.moviles.lab01.model.entities.Flight;
@@ -39,7 +40,7 @@ import static jdk.nashorn.internal.objects.NativeDebug.map;
  * @author jose
  */
 @WebServlet(name = "servletList", urlPatterns = {"/servletList/userList", "/servletList/passengerList", "/servletList/airplaneList", "/servletList/routeList", "/servletList/scheduleList",
-    "/servletList/ticketsList", "/servletList/flightList","/servletList/flightTicketsList"})
+    "/servletList/ticketsList", "/servletList/flightList", "/servletList/clientFlightList", "/servletList/flightTicketsList"})
 public class servletList extends HttpServlet {
 
     @Override
@@ -92,7 +93,9 @@ public class servletList extends HttpServlet {
             case "/servletList/flightList":
                 this.flightList(request, response);
                 break;
-
+            case "/servletList/clientFlightList":
+                this.clientflightList(request, response);
+                break;
         }
     }
 
@@ -181,13 +184,36 @@ public class servletList extends HttpServlet {
         }
         write(response, map);
     }
-    
+
+    private void clientflightList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ArrayList<Flight> temp = serv.listFlight();
+        ArrayList<Flight> fly = new ArrayList<>();
+        for (Flight f : temp) {
+            String id = f.getId();
+            String route = servSearch.searchRoute(f.getRoute_id()).getOrigin();
+            route += " - " + servSearch.searchRoute(f.getRoute_id()).getDestination();
+            String avion = servSearch.searchAirplane(f.getAirplaine_id()).getModel();
+            avion += " - " + servSearch.searchAirplane(f.getAirplaine_id()).getBrand();
+            String shedule = servSearch.searchSchedule(f.getSchedule_id()).getDate_time().toString();
+            Flight t_f = new Flight(id, route, avion, shedule);
+            fly.add(t_f);
+        }
+        Map map = new HashMap();
+        if (fly != null) { //or whatever conditions you need
+            map.put("flightList", fly);
+        } else {
+            map.put("isValid", false);
+
+        }
+        write(response, map);
+    }
+
     private void flightTicketsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String flight_id = request.getParameter("flight_id");
         ArrayList<Ticket> tiq = serv.listTicket();
         ArrayList<Ticket> fly_tiq = new ArrayList<>();
         for (Ticket f_t : fly_tiq) {
-            if(f_t.getFlight_id().equals(flight_id)){
+            if (f_t.getFlight_id().equals(flight_id)) {
                 fly_tiq.add(f_t);
             }
         }
@@ -199,15 +225,16 @@ public class servletList extends HttpServlet {
         }
         write(response, map);
     }
-    
+
     private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(map)); //this is how simple GSON works
     }
-    
+
     Model mod = Model.getInstance();
     serviceList serv = mod.getServList();
+    serviceSearch servSearch = mod.getServSearch();
     HttpSession sesion = null;
 
 }

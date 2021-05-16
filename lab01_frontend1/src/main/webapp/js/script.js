@@ -445,7 +445,7 @@ function addNewTicketArray(flight_id, discount, array) {
     var user_usuario = window.sessionStorage.user;
     seatList.forEach(function (data) {
         var jsonUser = {
-            "id": flight_id+"_"+data.id,
+            "id": flight_id + "_" + data.id,
             "flight_id": flight_id,
             "price": data.price,
             "discount": discount,
@@ -1208,7 +1208,7 @@ function showListFlightsAdmin() {
 function showListFlightsClient() {
     $.ajax({
         type: 'GET',
-        url: '/lab01_frontend1/servletList/flightList',
+        url: '/lab01_frontend1/servletList/clientFlightList',
         cache: false,
         success: function (data) {
             list(data, 11);
