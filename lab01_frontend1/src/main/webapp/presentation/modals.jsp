@@ -222,8 +222,7 @@
                         <ul id="selected-seats">
                         </ul>
                         Total: <b>$<span id="total">0</span></b>
-                        <button class="checkout-button" onclick="checkout()">Checkout &raquo;</button>
-
+                        <button class="checkout-button" onclick="checkout()">Checkout &raquo;</button>                        
                     </div>
 
                 </div>
@@ -1080,7 +1079,7 @@
                      */
                     $counter.text(sc.find('selected').length + 1);
                     $total.text(recalculateTotal(sc) + this.data().price);
-                    var a = {"id": this.settings.id, "price": this.data().price}
+                    var a = {"id": this.settings.id, "number": getNumber(this.settings.id), "price": this.data().price}
                     seat_array.push(a);
                     return 'selected';
                 } else if (this.status() == 'selected') {
@@ -1125,12 +1124,9 @@
         });
         return array;
     }
-    function print_select() {
-        var a = '';
-        seat_array.forEach(function (dato) {
-            a += "id:" + dato.id + " price:" + dato.price + "\n";
-        });
-        alert(flight_id + "\n" + a);
+    function getNumber(id){
+        a = id[0]+id[2];
+        return a;
     }
     function flight_id_set(id) {
         flight_id = id;
