@@ -78,17 +78,26 @@ public class servletUpdate extends HttpServlet {
     }
 
     private void registrar(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-        String user = request.getParameter("user_username_rm");
-        String email = request.getParameter("email_rm");
-        String pass = request.getParameter("password_rm");
-        String name = request.getParameter("name_rm");
-        String last_name = request.getParameter("lastname_rm");
-        String wk_phone = request.getParameter("work_phone_rm");
-        String cellphone = request.getParameter("cell_phone_rm");
-        String address = request.getParameter("address_rm");
-        String birthday = request.getParameter("dob_rm");
-        serv.updateUser(user, pass, true);
-        serv.updatePassenger(user, name, last_name, email, serv.str_to_sql_date(birthday), address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
+        String user = request.getParameter("user_name");
+        String email = request.getParameter("email");
+        String pass = request.getParameter("password");
+        String name = request.getParameter("name_");
+        String last_name = request.getParameter("lastname");
+        String wk_phone = request.getParameter("work_phone");
+        String cellphone = request.getParameter("cell_phone");
+        String address = request.getParameter("address");
+        String birthday = request.getParameter("bob");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        java.sql.Date sql = null;
+        try {
+            java.util.Date parsed = format.parse(birthday);
+            sql = new java.sql.Date(parsed.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Boolean role = ("1".equals(request.getParameter("role")));
+        serv.updateUser(user, pass, role);
+        serv.updatePassenger(user, name, last_name, email, sql, address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
     }
 
     private void avion(HttpServletRequest request, HttpServletResponse response) {

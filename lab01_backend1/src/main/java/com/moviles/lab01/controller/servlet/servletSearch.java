@@ -46,6 +46,7 @@ public class servletSearch extends HttpServlet {
             throws ServletException, IOException {
         HttpSession sesion = request.getSession(true);
         try {
+            System.out.println("aaaaaaaaaaaa");
             processRequest(request, response);
         } catch (ParseException ex) {
             Logger.getLogger(servletSearch.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,7 +66,6 @@ public class servletSearch extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
-
         switch (request.getServletPath()) {
             case "/servletSearch/user":
                 this.usuario(request, response);
@@ -93,26 +93,27 @@ public class servletSearch extends HttpServlet {
     }
 
     private void usuario(HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
-        String user = request.getParameter("user_username_rm");
+        String user = request.getParameter("username");
         User usu = serv.searchUser(user);
         Map map = new HashMap();
+        System.out.println(request.getParameterMap());
         if (usu != null) { //or whatever conditions you need
             map.put("user", usu);
         } else {
-            map.put("isValid", false);
+            map.put("isValidaaaaaa", false);
 
         }
         write(response, map);
     }
 
     private void passenger(HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
-        String id = request.getParameter("user_username_rm");
+        String id = request.getParameter("username");
         Passanger pasag = serv.searchPassanger(id);
         Map map = new HashMap();
         if (pasag != null) { //or whatever conditions you need
             map.put("passanger", pasag);
         } else {
-            map.put("isValid", false);
+            map.put("isValidbbbbbbbbbbb", false);
 
         }
         write(response, map);
@@ -126,7 +127,7 @@ public class servletSearch extends HttpServlet {
         if (plane != null) { //or whatever conditions you need
             map.put("airplane", plane);
         } else {
-            map.put("isValid", false);
+            map.put("isValidccccccccccc", false);
 
         }
         write(response, map);
@@ -139,7 +140,7 @@ public class servletSearch extends HttpServlet {
         if (rut != null) { //or whatever conditions you need
             map.put("route", rut);
         } else {
-            map.put("isValid", false);
+            map.put("isValideeeeeeeeeeeeeeeeeeee", false);
 
         }
         write(response, map);
@@ -152,7 +153,7 @@ public class servletSearch extends HttpServlet {
         if (sched != null) { //or whatever conditions you need
             map.put("schedule", sched);
         } else {
-            map.put("isValid", false);
+            map.put("isValidfffffffffffffff", false);
 
         }
         write(response, map);
@@ -178,7 +179,7 @@ public class servletSearch extends HttpServlet {
         if (fly != null) { //or whatever conditions you need
             map.put("flight", fly);
         } else {
-            map.put("isValid", false);
+            map.put("isValidggggggggggggggg", false);
 
         }
         write(response, map);

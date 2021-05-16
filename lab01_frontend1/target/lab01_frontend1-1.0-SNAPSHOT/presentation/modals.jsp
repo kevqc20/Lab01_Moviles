@@ -92,62 +92,6 @@
     </div>
 </div>
 
-<!-- Modal Update -->
-<div id="updateModal" class="modal fade">
-    <div class="modal-dialog modal-login">
-        <div class="modal-content">
-            <div class="modal-header">				
-                <h4 class="modal-title">Perfil</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form method="post">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" class="form-control" id="user_username_em" placeholder="Usuario" required="required" readonly>
-                            <input type="email" class="form-control" id="email_em" placeholder="Correo" required="required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                            <input class="form-check-input" type="checkbox" onclick="showPasswordRM()">
-                            <input type="password" class="form-control" id="password_em" placeholder="Contraseña" required="required" autocomplete="on">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="name_em" placeholder="Nombre" required="required">
-                            <input type="text" class="form-control" id="lastname_em" placeholder="Apellido" required="required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="number" class="form-control" id="work_phone_em" placeholder="Teléfono de trabajo" required="required">
-                            <input type="number" class="form-control" id="cell_phone_em" placeholder="Teléfono personal" required="required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="address_em" placeholder="Dirección" required="required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="date" class="form-control" id="dob_em" placeholder="Fecha de nacimiento" required="required">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateUser'>Actualizar</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal Success -->
 <div id="successModal" class="modal fade">
     <div class="modal-dialog modal-confirm">
@@ -674,17 +618,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="ticketsAdminTable">
-                                     <!--
-                                    <tr>                            
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>Mark</td>
-                                        <td>Mark</td>
-                                        <td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>
-                                        <td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>
-                                    </tr>
-                                     !-->
                                 </tbody>
                             </table>
                         </div>
@@ -799,7 +732,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                             <input class="form-check-input" type="checkbox" onclick="showPasswordRM()">
-                            <input type="password" class="form-control" id="p_password_em" placeholder="Contraseña" required="required" autocomplete="on">
+                            <input type="password" class="form-control" id="p_password_em" placeholder="Contraseñaaaaaaa" required="required" autocomplete="on">
                         </div>
                     </div>
                     <div class="form-group">
@@ -825,7 +758,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updatePassangerAdmin'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updatePassangerAdmin' onclick="updatePassanger()">Actualizar</button>
                     </div>
                 </form>
             </div>

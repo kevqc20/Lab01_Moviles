@@ -12,15 +12,10 @@ window.onload = function () {
     });
 
 // Hide previous modal
-    $('#reMod').on('click', function () {
+    $('#updatePassangerAdmin').on('click', function () {
         $('.modal').modal('hide')
     });
-    $('#reMod2').on('click', function () {
-        $('.modal').modal('hide')
-    });
-    $('#logMod').on('click', function () {
-        $('.modal').modal('hide')
-    });
+
 
 
 
@@ -52,7 +47,7 @@ window.onload = function () {
             (
                     window.sessionStorage.user === undefined ?
                     "                       <a class='nav-link js-scroll-trigger'  href='#registerModal'data-toggle='modal'>Registro</a></li>" :
-                    "                       <a class='nav-link js-scroll-trigger'  href='#updateModal'data-toggle='modal'>Perfil</a></li>"
+                    "                       <a class='nav-link js-scroll-trigger'  href='#updatePassangerModal'data-toggle='modal' onclick='getPassanger()'>Perfil</a></li>"
                     ) +
             (
                     window.sessionStorage.role === '0' ?
@@ -258,6 +253,58 @@ function showPasswordRM() {
 
 /* Ajax functions */
 
+
+// Login to system
+function logIn() {
+    var user = document.getElementById("user").value;
+    var password = document.getElementById("password").value;
+
+    var jsonUser = {
+        "user": user,
+        "password": password,
+    }
+
+
+    $.ajax({
+        url: 'servletLogin/in',
+        data: jsonUser,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            if (data["user"] != undefined) {
+                window.sessionStorage.main = JSON.stringify(data["user"])
+                window.sessionStorage.user = data["user"]["username"]
+                window.sessionStorage.password = data["user"]["password"]
+                window.sessionStorage.role = data["user"]["rol"] ? "1" : "0"
+                window.location.replace("presentation/idle.jsp");
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Contraseña incorrecta.</p>');
+                jQuery("#errorModal").modal('show');
+                $("#errorModal").on("hidden.bs.modal", function () {
+                    $('#loginModal').find('form').trigger('reset');
+                });
+            }
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Ese usuario no existe.</p>');
+            jQuery("#errorModal").modal('show');
+            $("#errorModal").on("hidden.bs.modal", function () {
+                $('#loginModal').find('form').trigger('reset');
+            });
+        }
+    }
+    );
+}
+// Logout of system
+function logout() {
+    window.sessionStorage.removeItem("main");
+    window.sessionStorage.removeItem("user");
+    window.sessionStorage.removeItem("password");
+    window.sessionStorage.removeItem("role");
+    window.location.replace("/lab01_frontend1");
+}
+
+
 // Register new user 
 function addNewUser() {
     var user_username_rm = document.getElementById("user_username_rm").value;
@@ -455,223 +502,647 @@ function addNewFlight() {
 }
 
 
-// User administration
-// Login to system
-function logIn() {
-    var user = document.getElementById("user").value;
-    var password = document.getElementById("password").value;
-
-    var jsonUser = {
-        "user": user,
-        "password": password,
-    }
-
-
+// Get Passanger
+function getPassanger() {
+    var main = JSON.parse(window.sessionStorage.main);
     $.ajax({
-        url: 'servletLogin/in',
-        data: jsonUser,
+        url: '/lab01_frontend1/servletSearch/passenger',
+        data: main,
         type: 'post',
         cache: false,
         success: function (data) {
-            if (data["user"] != undefined) {
-                window.sessionStorage.main = data["user"]
-                window.sessionStorage.user = data["user"]["username"]
-                window.sessionStorage.password = data["user"]["password"]
-                window.sessionStorage.role = data["user"]["rol"] ? "1" : "0"
-                window.location.replace("presentation/idle.jsp");
-            } else {
-                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Contraseña incorrecta.</p>');
-                jQuery("#errorModal").modal('show');
-                $("#errorModal").on("hidden.bs.modal", function () {
-                    $('#loginModal').find('form').trigger('reset');
-                });
-            }
+            fillWithInformation(data, 1)
         },
         error: function () {
-            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Ese usuario no existe.</p>');
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
             jQuery("#errorModal").modal('show');
-            $("#errorModal").on("hidden.bs.modal", function () {
-                $('#loginModal').find('form').trigger('reset');
-            });
         }
     }
     );
+
 }
-// Logout of system
-function logout() {
-    window.sessionStorage.removeItem("main");
-    window.sessionStorage.removeItem("user");
-    window.sessionStorage.removeItem("password");
-    window.sessionStorage.removeItem("role");
-    window.location.replace("/lab01_frontend1");
+// Update Passanger
+function updatePassanger() {
+
+    var user_username_rm = document.getElementById("p_username_em").value;
+    var email_rm = document.getElementById("p_email_em").value;
+    var password_rm = document.getElementById("p_password_em").value;
+    var name_rm = document.getElementById("p_name_em").value;
+    var lastname_rm = document.getElementById("p_lastname_em").value;
+    var work_phone_rm = document.getElementById("p_work_phone_em").value;
+    var cell_phone_rm = document.getElementById("p_cell_phone_em").value;
+    var address_rm = document.getElementById("p_address_em").value;
+    var dob_rm = document.getElementById("p_dob_em").value;
+    var role_rm = window.sessionStorage.getItem("role");
+
+    var jsonUser = {
+        "user_name": user_username_rm,
+        "password": password_rm,
+        "name_": name_rm,
+        "lastname": lastname_rm,
+        "email": email_rm,
+        "bob": dob_rm,
+        "address": address_rm,
+        "work_phone": work_phone_rm,
+        "cell_phone": cell_phone_rm,
+        "role": role_rm
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/registro",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updatePassangerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+
+
+}
+// Get Airplane
+function getAirplane() {
+    var user = JSON.parse(window.sessionStorage.user);
+    if (window.sessionStorage.role === "1") {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    }
+}
+// Update Airplane
+function updateAirplane() {
+    var email = document.getElementById("userU").value;
+    var pass = document.getElementById("passwordU").value;
+    var name = document.getElementById("nameU").value;
+    var lastname = document.getElementById("lastnameU").value;
+    var cel = document.getElementById("celU").value;
+
+    if (validateAll()) {
+        var lat = markersArray[0].getPosition().toJSON()["lat"];
+        var longi = markersArray[0].getPosition().toJSON()["lng"];
+        var jsonUser = {
+            "email": email,
+            "password": pass,
+            "role_id_role": window.sessionStorage.role
+        }
+        var jsonCitizen = {
+            "email": email,
+            "firstName": name,
+            "lastName": lastname,
+            "cel_Num": cel,
+            "lat": lat,
+            "longi": longi
+        }
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonUser),
+            dataType: 'json',
+            contentType: "application/json",
+            fail: function (xhr, textStatus, erarorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonCitizen),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (data) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+                jQuery("#successModal").modal('show');
+                $("#successModal").on("hidden.bs.modal", function () {
+                    $('#updateModal').modal('hide')
+                });
+                window.sessionStorage.pass = pass;
+                window.sessionStorage.name = name;
+
+            }
+        });
+
+    } else {
+        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
+        jQuery("#errorModal").modal('show');
+    }
+}
+// Get Rute
+function getRute() {
+    var user = JSON.parse(window.sessionStorage.user);
+    if (window.sessionStorage.role === "1") {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    }
+}
+// Update Rute
+function updateRute() {
+    var email = document.getElementById("userU").value;
+    var pass = document.getElementById("passwordU").value;
+    var name = document.getElementById("nameU").value;
+    var lastname = document.getElementById("lastnameU").value;
+    var cel = document.getElementById("celU").value;
+
+    if (validateAll()) {
+        var lat = markersArray[0].getPosition().toJSON()["lat"];
+        var longi = markersArray[0].getPosition().toJSON()["lng"];
+        var jsonUser = {
+            "email": email,
+            "password": pass,
+            "role_id_role": window.sessionStorage.role
+        }
+        var jsonCitizen = {
+            "email": email,
+            "firstName": name,
+            "lastName": lastname,
+            "cel_Num": cel,
+            "lat": lat,
+            "longi": longi
+        }
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonUser),
+            dataType: 'json',
+            contentType: "application/json",
+            fail: function (xhr, textStatus, erarorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonCitizen),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (data) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+                jQuery("#successModal").modal('show');
+                $("#successModal").on("hidden.bs.modal", function () {
+                    $('#updateModal').modal('hide')
+                });
+                window.sessionStorage.pass = pass;
+                window.sessionStorage.name = name;
+
+            }
+        });
+
+    } else {
+        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
+        jQuery("#errorModal").modal('show');
+    }
+}
+// Get Shedule
+function getShedule() {
+    var user = JSON.parse(window.sessionStorage.user);
+    if (window.sessionStorage.role === "1") {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    }
+}
+// Update Shedule
+function updateShedule() {
+    var email = document.getElementById("userU").value;
+    var pass = document.getElementById("passwordU").value;
+    var name = document.getElementById("nameU").value;
+    var lastname = document.getElementById("lastnameU").value;
+    var cel = document.getElementById("celU").value;
+
+    if (validateAll()) {
+        var lat = markersArray[0].getPosition().toJSON()["lat"];
+        var longi = markersArray[0].getPosition().toJSON()["lng"];
+        var jsonUser = {
+            "email": email,
+            "password": pass,
+            "role_id_role": window.sessionStorage.role
+        }
+        var jsonCitizen = {
+            "email": email,
+            "firstName": name,
+            "lastName": lastname,
+            "cel_Num": cel,
+            "lat": lat,
+            "longi": longi
+        }
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonUser),
+            dataType: 'json',
+            contentType: "application/json",
+            fail: function (xhr, textStatus, erarorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonCitizen),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (data) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+                jQuery("#successModal").modal('show');
+                $("#successModal").on("hidden.bs.modal", function () {
+                    $('#updateModal').modal('hide')
+                });
+                window.sessionStorage.pass = pass;
+                window.sessionStorage.name = name;
+
+            }
+        });
+
+    } else {
+        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
+        jQuery("#errorModal").modal('show');
+    }
+}
+// Get Ticket
+function getTicket() {
+    var user = JSON.parse(window.sessionStorage.user);
+    if (window.sessionStorage.role === "1") {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    }
+}
+// Update Ticket
+function updateTicket() {
+    var email = document.getElementById("userU").value;
+    var pass = document.getElementById("passwordU").value;
+    var name = document.getElementById("nameU").value;
+    var lastname = document.getElementById("lastnameU").value;
+    var cel = document.getElementById("celU").value;
+
+    if (validateAll()) {
+        var lat = markersArray[0].getPosition().toJSON()["lat"];
+        var longi = markersArray[0].getPosition().toJSON()["lng"];
+        var jsonUser = {
+            "email": email,
+            "password": pass,
+            "role_id_role": window.sessionStorage.role
+        }
+        var jsonCitizen = {
+            "email": email,
+            "firstName": name,
+            "lastName": lastname,
+            "cel_Num": cel,
+            "lat": lat,
+            "longi": longi
+        }
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonUser),
+            dataType: 'json',
+            contentType: "application/json",
+            fail: function (xhr, textStatus, erarorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonCitizen),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (data) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+                jQuery("#successModal").modal('show');
+                $("#successModal").on("hidden.bs.modal", function () {
+                    $('#updateModal').modal('hide')
+                });
+                window.sessionStorage.pass = pass;
+                window.sessionStorage.name = name;
+
+            }
+        });
+
+    } else {
+        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
+        jQuery("#errorModal").modal('show');
+    }
+}
+// Get Flight
+function getFlight() {
+    var user = JSON.parse(window.sessionStorage.user);
+    if (window.sessionStorage.role === "1") {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    } else {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
+            contentType: "application/json",
+            dataType: 'json',
+            success: function (data) {
+                window.sessionStorage.citizen = JSON.stringify(data);
+                fill(user, data);
+            },
+            error: function (status) {
+                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
+                document.getElementById("user").setAttribute('title', 'Usuario no existente');
+            },
+            fail: function (xhr, textStatus, errorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+    }
+}
+// Update Flight
+function updateFlight() {
+    var email = document.getElementById("userU").value;
+    var pass = document.getElementById("passwordU").value;
+    var name = document.getElementById("nameU").value;
+    var lastname = document.getElementById("lastnameU").value;
+    var cel = document.getElementById("celU").value;
+
+    if (validateAll()) {
+        var lat = markersArray[0].getPosition().toJSON()["lat"];
+        var longi = markersArray[0].getPosition().toJSON()["lng"];
+        var jsonUser = {
+            "email": email,
+            "password": pass,
+            "role_id_role": window.sessionStorage.role
+        }
+        var jsonCitizen = {
+            "email": email,
+            "firstName": name,
+            "lastName": lastname,
+            "cel_Num": cel,
+            "lat": lat,
+            "longi": longi
+        }
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonUser),
+            dataType: 'json',
+            contentType: "application/json",
+            fail: function (xhr, textStatus, erarorThrown) {
+                jQuery("#errorModal").modal('show');
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
+            method: "PUT",
+            data: JSON.stringify(jsonCitizen),
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (data) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
+                jQuery("#successModal").modal('show');
+                $("#successModal").on("hidden.bs.modal", function () {
+                    $('#updateModal').modal('hide')
+                });
+                window.sessionStorage.pass = pass;
+                window.sessionStorage.name = name;
+
+            }
+        });
+
+    } else {
+        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
+        jQuery("#errorModal").modal('show');
+    }
 }
 
-//User edit
-/*   Pending code
- // Show profile
- function showUser() {
- var user = JSON.parse(window.sessionStorage.user);
- if (window.sessionStorage.role === "1") {
- $.ajax({
- type: "GET",
- url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
- contentType: "application/json",
- dataType: 'json',
- success: function (data) {
- window.sessionStorage.citizen = JSON.stringify(data);
- fill(user, data);
- },
- error: function (status) {
- document.getElementById("user").setAttribute('class', 'form-control is-invalid');
- document.getElementById("user").setAttribute('title', 'Usuario no existente');
- },
- fail: function (xhr, textStatus, errorThrown) {
- jQuery("#errorModal").modal('show');
- }
- });
- } else {
- $.ajax({
- type: "GET",
- url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
- contentType: "application/json",
- dataType: 'json',
- success: function (data) {
- window.sessionStorage.citizen = JSON.stringify(data);
- fill(user, data);
- },
- error: function (status) {
- document.getElementById("user").setAttribute('class', 'form-control is-invalid');
- document.getElementById("user").setAttribute('title', 'Usuario no existente');
- },
- fail: function (xhr, textStatus, errorThrown) {
- jQuery("#errorModal").modal('show');
- }
- });
- }
- }
- // Update user
- function updateUser() {
- var email = document.getElementById("userU").value;
- var pass = document.getElementById("passwordU").value;
- var name = document.getElementById("nameU").value;
- var lastname = document.getElementById("lastnameU").value;
- var cel = document.getElementById("celU").value;
- if (validateAll()) {
- var lat = markersArray[0].getPosition().toJSON()["lat"];
- var longi = markersArray[0].getPosition().toJSON()["lng"];
- var jsonUser = {
- "email": email,
- "password": pass,
- "role_id_role": window.sessionStorage.role
- }
- var jsonCitizen = {
- "email": email,
- "firstName": name,
- "lastName": lastname,
- "cel_Num": cel,
- "lat": lat,
- "longi": longi
- }
- 
- $.ajax({
- url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
- method: "PUT",
- data: JSON.stringify(jsonUser),
- dataType: 'json',
- contentType: "application/json",
- fail: function (xhr, textStatus, erarorThrown) {
- jQuery("#errorModal").modal('show');
- }
- });
- 
- if (window.sessionStorage.role === "1") {
- $.ajax({
- url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
- method: "PUT",
- data: JSON.stringify(jsonCitizen),
- dataType: 'json',
- contentType: "application/json",
- success: function (data) {
- jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
- jQuery("#successModal").modal('show');
- $("#successModal").on("hidden.bs.modal", function () {
- $('#updateModal').modal('hide')
- });
- window.sessionStorage.pass = pass;
- window.sessionStorage.name = name;
- 
- }
- });
- } else {
- $.ajax({
- url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + email,
- method: "PUT",
- data: JSON.stringify(jsonCitizen),
- dataType: 'json',
- contentType: "application/json",
- success: function (data) {
- jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
- jQuery("#successModal").modal('show');
- window.sessionStorage.name = name;
- window.sessionStorage.pass = pass;
- }
- });
- }
- 
- } else {
- jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
- jQuery("#errorModal").modal('show');
- }
- }
- // Fill rows with info
- function fillUser(user, data) {
- document.getElementById("userU").value = user.email;
- document.getElementById("passwordU").value = user.password;
- document.getElementById("nameU").value = data['firstName'];
- document.getElementById("lastnameU").value = data['lastName'];
- document.getElementById("celU").value = data['cel_Num'];
- 
- map = new google.maps.Map(document.getElementById("mapE"), {
- center: {lat: parseFloat(data['lat']), lng: parseFloat(data['longi'])},
- zoom: 18,
- mapTypeId: 'roadmap'
- });
- 
- marker = new google.maps.Marker({
- position: {lat: parseFloat(data['lat']), lng: parseFloat(data['longi'])},
- map: map,
- draggable: false,
- animation: google.maps.Animation.BOUNCE,
- title: "Ubicación actual"
- });
- marker.setIcon('https://img.icons8.com/officel/80/000000/marker.png')
- 
- 
- var marker2 = null;
- google.maps.event.addListener(map, "click", function (ele) {
- clearOverlays()
- marker2 = new google.maps.Marker({
- position: ele.latLng,
- map: map,
- draggable: true,
- animation: google.maps.Animation.BOUNCE,
- title: "Nueva ubicación"
- });
- marker2.setIcon('https://img.icons8.com/ultraviolet/40/000000/marker.png')
- markersArray.push(marker2)
- console.log(marker2.getPosition().toJSON())
- })
- 
- if (marker2 == null) {
- markersArray.push(marker)
- }
- console.log(markersArray[0].getPosition().toJSON())
- }
- */
+
+
+// Fill rows with info
+function fillWithInformation(data, i) {
+    switch (i) {
+        case 1:
+        {
+            // Passangers
+            var a = new Date(data['passanger']['dob']);
+            document.getElementById("p_username_em").value = data['passanger']['user_username'];
+            document.getElementById("p_email_em").value = data['passanger']['email'];
+            document.getElementById("p_password_em").value = window.sessionStorage.getItem("password")
+            document.getElementById("p_name_em").value = data['passanger']['name'];
+            document.getElementById("p_lastname_em").value = data['passanger']['lastname'];
+            document.getElementById("p_work_phone_em").value = data['passanger']['work_phone'];
+            document.getElementById("p_cell_phone_em").value = data['passanger']['cell_phone'];
+            document.getElementById("p_address_em").value = data['passanger']['address'];
+            document.getElementById("p_dob_em").value = a.toISOString().substring(0, 10);
+            break;
+        }
+        case 2:
+        {
+            // Airplanes
+            document.getElementById("userU").value = data1.email;
+            document.getElementById("passwordU").value = data1.password;
+            document.getElementById("nameU").value = data2['firstName'];
+            document.getElementById("lastnameU").value = data2['lastName'];
+            document.getElementById("celU").value = data2['cel_Num'];
+            break;
+        }
+        case 3:
+        {
+            // Rutes
+            document.getElementById("userU").value = data1.email;
+            document.getElementById("passwordU").value = data1.password;
+            document.getElementById("nameU").value = data2['firstName'];
+            document.getElementById("lastnameU").value = data2['lastName'];
+            document.getElementById("celU").value = data2['cel_Num'];
+            break;
+        }
+        case 4:
+        {
+            // Shedules
+            document.getElementById("userU").value = data1.email;
+            document.getElementById("passwordU").value = data1.password;
+            document.getElementById("nameU").value = data2['firstName'];
+            document.getElementById("lastnameU").value = data2['lastName'];
+            document.getElementById("celU").value = data2['cel_Num'];
+            break;
+        }
+        case 5:
+        {
+            // Tickets
+            document.getElementById("userU").value = data1.email;
+            document.getElementById("passwordU").value = data1.password;
+            document.getElementById("nameU").value = data2['firstName'];
+            document.getElementById("lastnameU").value = data2['lastName'];
+            document.getElementById("celU").value = data2['cel_Num'];
+            break;
+        }
+        case 6:
+        {
+            // Flights
+            document.getElementById("userU").value = data1.email;
+            document.getElementById("passwordU").value = data1.password;
+            document.getElementById("nameU").value = data2['firstName'];
+            document.getElementById("lastnameU").value = data2['lastName'];
+            document.getElementById("celU").value = data2['cel_Num'];
+            break;
+        }
+    }
+}
+
 
 
 // List
-// Get all campaigns
 function showListFlightsAdmin() {
     $.ajax({
         type: 'GET',
