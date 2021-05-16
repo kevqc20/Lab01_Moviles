@@ -449,7 +449,7 @@ function addNewTicketArray(flight_id, discount, array) {
             "flight_id": flight_id,
             "price": data.price,
             "discount": discount,
-            "seat": data.id,
+            "seat": data.number,
             "user_usuario": user_usuario
         }
 
