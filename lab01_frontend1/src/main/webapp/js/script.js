@@ -54,7 +54,7 @@ window.onload = function () {
                     "                   <li class='nav-item dropdown'>" +
                     "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de usuario</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
-                    "                           <a class='dropdown-item' href='#flightsSearchModal' class='trigger-btn' data-toggle='modal' onclick=''>Comprar ticket de vuelo</a>" +
+                    "                           <a class='dropdown-item' href='#flightsSearchModal' class='trigger-btn' data-toggle='modal' onclick='showListFlightsClient()'>Comprar ticket de vuelo</a>" +
                     "                       </div>" +
                     "                   </li>"
                     :
@@ -436,6 +436,42 @@ function addNewShedule() {
     });
 }
 // Register new ticket 
+
+function addNewTicketArray(flight_id, discount, array) {
+
+    var flight_id = flight_id;
+    var discount = discount;
+    var seatList = array;
+    var user_usuario = window.sessionStorage.user;
+    seatList.forEach(function (data) {
+        var jsonUser = {
+            "id": flight_id+"_"+data.id,
+            "flight_id": flight_id,
+            "price": data.price,
+            "discount": discount,
+            "seat": data.id,
+            "user_usuario": user_usuario
+        }
+
+        $.ajax({
+            url: "/lab01_frontend1/servletInsert/tiquete",
+            method: "POST",
+            data: jsonUser,
+            success: function (data) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">compra realizada con exito.</p>');
+                jQuery("#successModal").modal('show');
+                $("#successModal").on("hidden.bs.modal", function () {
+                    $('#registerModal').modal('hide')
+                });
+            },
+            error: function () {
+                alert("algo salio mal");
+            }
+        });
+    });
+
+}
+
 function addNewTicket() {
     var id = document.getElementById("tk_id_em").value;
     var flight_id = document.getElementById("tk_fid_em").value;
@@ -1143,6 +1179,8 @@ function fillWithInformation(data, i) {
 
 
 // List
+
+
 function showListFlightsAdmin() {
     $.ajax({
         type: 'GET',
@@ -1151,7 +1189,57 @@ function showListFlightsAdmin() {
         success: function (data) {
             list(data, 1);
             $(document).ready(function () {
-                $('#flightsAdminFlightsTable').DataTable({
+                $('#flightsAdminTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+function showListFlightsClient() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/flightList',
+        cache: false,
+        success: function (data) {
+            list(data, 11);
+            $(document).ready(function () {
+                $('#fligthsSearch').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
+function showListTicketsAdmin() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/ticketsList',
+        cache: false,
+        success: function (data) {
+            //alert(JSON.stringify(data));
+            list(data, 6);
+            $(document).ready(function () {
+                $('#flightsAdminTicketsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                     },
@@ -1356,6 +1444,15 @@ function list(data, i) {
             });
             break;
         }
+        case 11:
+        {
+            var listado = document.getElementById("fligthsSearch");
+            listado.innerHTML = "";
+            data["flightList"].forEach((u) => {
+                row(u, 11);
+            });
+            break;
+        }
     }
 }
 // Add rows to table
@@ -1440,6 +1537,17 @@ function row(data, i) {
                 tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#ticketsAdminTable').append(tr);
+                break;
+            }
+            case 11:
+            {
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.route_id + '</td>';
+                tr += '<td>' + data.airplaine_id + '</td>';
+                tr += '<td>' + data.schedule_id + '</td>';
+                tr += '<td><button class="checkout" href="#checkoutModal" class="trigger-btn" data-toggle="modal" onclick="flight_id_set(' + data.id + ')">Comprar ticket</button></td>';
+                tr += '</tr>';
+                $('#fligthsSearch').append(tr);
                 break;
             }
         }
