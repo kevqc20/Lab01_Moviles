@@ -39,7 +39,7 @@ import static jdk.nashorn.internal.objects.NativeDebug.map;
  * @author jose
  */
 @WebServlet(name = "servletList", urlPatterns = {"/servletList/userList", "/servletList/passengerList", "/servletList/airplaneList", "/servletList/routeList", "/servletList/scheduleList",
-    "/servletList/ticketsList", "/servletList/flightList"})
+    "/servletList/ticketsList", "/servletList/flightList","/servletList/flightTicketsList"})
 public class servletList extends HttpServlet {
 
     @Override
@@ -86,6 +86,9 @@ public class servletList extends HttpServlet {
             case "/servletList/ticketsList":
                 this.ticketsLists(request, response);
                 break;
+            case "/servletList/flightTicketsList":
+                this.flightTicketsList(request, response);
+                break;
             case "/servletList/flightList":
                 this.flightList(request, response);
                 break;
@@ -131,8 +134,6 @@ public class servletList extends HttpServlet {
         write(response, map);
     }
 
-    
-    
     private void routeList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ArrayList<Route> rut = serv.listRoute();
         Map map = new HashMap();
@@ -180,18 +181,33 @@ public class servletList extends HttpServlet {
         }
         write(response, map);
     }
-
+    
+    private void flightTicketsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String flight_id = request.getParameter("flight_id");
+        ArrayList<Ticket> tiq = serv.listTicket();
+        ArrayList<Ticket> fly_tiq = new ArrayList<>();
+        for (Ticket f_t : fly_tiq) {
+            if(f_t.getFlight_id().equals(flight_id)){
+                fly_tiq.add(f_t);
+            }
+        }
+        Map map = new HashMap();
+        if (fly_tiq != null) { //or whatever conditions you need
+            map.put("flightTicketsList", fly_tiq);
+        } else {
+            map.put("isValid", false);
+        }
+        write(response, map);
+    }
+    
     private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(map)); //this is how simple GSON works
     }
+    
     Model mod = Model.getInstance();
     serviceList serv = mod.getServList();
     HttpSession sesion = null;
-    
-    
 
-    
-    
 }

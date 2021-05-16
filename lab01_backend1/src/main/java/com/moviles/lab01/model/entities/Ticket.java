@@ -16,13 +16,13 @@ public class Ticket implements Serializable{
     private String flight_id;
     private double price;
     private double discount;
-    private int seat;
+    private String seat;
     private String user_username;
 
     public Ticket() {
     }
 
-    public Ticket(String id, String flight_id, double price, double discount, int seat, String user_username) {
+    public Ticket(String id, String flight_id, double price, double discount, String seat, String user_username) {
         this.id = id;
         this.flight_id = flight_id;
         this.price = price;
@@ -75,11 +75,11 @@ public class Ticket implements Serializable{
         this.discount = discount;
     }
 
-    public int getSeat() {
+    public String getSeat() {
         return seat;
     }
 
-    public void setSeat(int seat) {
+    public void setSeat(String seat) {
         this.seat = seat;
     }
 

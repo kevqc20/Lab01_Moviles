@@ -222,7 +222,7 @@
                         <ul id="selected-seats">
                         </ul>
                         Total: <b>$<span id="total">0</span></b>
-                        <button class="checkout-button">Checkout &raquo;</button>
+                        <button class="checkout-button" onclick="checkout()">Checkout &raquo;</button>
 
                     </div>
 
@@ -1018,6 +1018,8 @@
 
 <script>
     var firstSeatLabel = 1;
+    var flight_id = '';
+    var seat_array = [];
     $(document).ready(function () {
         var $cart = $('#selected-seats'),
                 $counter = $('#counter'),
@@ -1078,6 +1080,8 @@
                      */
                     $counter.text(sc.find('selected').length + 1);
                     $total.text(recalculateTotal(sc) + this.data().price);
+                    var a = {"id": this.settings.id, "price": this.data().price}
+                    seat_array.push(a);
                     return 'selected';
                 } else if (this.status() == 'selected') {
                     //update the counter
@@ -1085,8 +1089,10 @@
                     //and total
                     $total.text(recalculateTotal(sc) - this.data().price);
                     //remove the item from our cart
+                    seat_array = delete_seat(this.settings.id);
                     $('#cart-item-' + this.settings.id).remove();
                     //seat has been vacated
+
                     return 'available';
                 } else if (this.status() == 'unavailable') {
                     //seat has been already booked
@@ -1110,7 +1116,31 @@
         });
         return total;
     }
-
-
+    function delete_seat(seatId) {
+        var array = [];
+        seat_array.forEach(function (dato) {
+            if (dato.id != seatId) {
+                array.push(dato);
+            }
+        });
+        return array;
+    }
+    function print_select() {
+        var a = '';
+        seat_array.forEach(function (dato) {
+            a += "id:" + dato.id + " price:" + dato.price + "\n";
+        });
+        alert(flight_id + "\n" + a);
+    }
+    function flight_id_set(id) {
+        flight_id = id;
+    }
+    function checkout() {
+        if (seat_array.length > 0) {
+            addNewTicketArray(flight_id, 0, seat_array);
+        } else {
+            alert("seleccione un asiento");
+        }
+    }
 
 </script>
