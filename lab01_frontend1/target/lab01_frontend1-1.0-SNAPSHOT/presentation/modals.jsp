@@ -161,6 +161,7 @@
                             <table class="table-dark table-striped table-bordered" id='fligthsSearch' style="width:100%">
                                 <thead>
                                     <tr>
+                                        <!-- Hay que poner estas  
                                         <th class="th">Destino</th>
                                         <th class="th">Origen</th>
                                         <th class="th">Fecha de salida</th>
@@ -169,20 +170,16 @@
                                         <th class="th">Precio final</th>
                                         <th class="th">Asientos disponibles</th>
                                         <th>Acciones</th>
+                                        -->
+                                        <th class="th">ID</th>
+                                        <th class="th">ID de ruta</th>
+                                        <th class="th">ID de avion</th>
+                                        <th class="th">ID de horario</th>
+                                        <th>Compra</th>
                                     </tr>
                                 </thead>
                                 <tbody id="flightsAvailable">
-                                    <tr>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>Mark</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td><button class="checkout" href="#checkoutModal" class="trigger-btn" data-toggle="modal">Comprar ticket</button></td>
-                                    </tr>
-                                </tbody>
+                                    
                             </table>
                         </div>
                     </div>        
@@ -631,6 +628,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- ---------------------Modal UPDATE--------------------- !-->
 

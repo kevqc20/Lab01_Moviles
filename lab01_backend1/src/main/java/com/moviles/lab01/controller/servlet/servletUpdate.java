@@ -8,6 +8,7 @@ package com.moviles.lab01.controller.servlet;
 import com.moviles.lab01.dao.services.serviceUpdate;
 import com.moviles.lab01.model.Model;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author jose
  */
-@WebServlet(name = "servletUpdate", urlPatterns = {"/servletUpdate/registro", "/servletUpdate/avion", "/servletUpdate/ruta", "/servletUpdate/horario", 
-    "/servletUpdate/tiquete","/servletUpdate/vuelo"})
+@WebServlet(name = "servletUpdate", urlPatterns = {"/servletUpdate/registro", "/servletUpdate/avion", "/servletUpdate/ruta", "/servletUpdate/horario",
+    "/servletUpdate/tiquete", "/servletUpdate/vuelo"})
 public class servletUpdate extends HttpServlet {
 
     @Override
@@ -47,6 +48,7 @@ public class servletUpdate extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
+            System.out.println(ex.toString());
             Logger.getLogger(servletUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -87,17 +89,10 @@ public class servletUpdate extends HttpServlet {
         String cellphone = request.getParameter("cell_phone");
         String address = request.getParameter("address");
         String birthday = request.getParameter("bob");
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-        java.sql.Date sql = null;
-        try {
-            java.util.Date parsed = format.parse(birthday);
-            sql = new java.sql.Date(parsed.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date date = Date.valueOf(birthday);
         Boolean role = ("1".equals(request.getParameter("role")));
         serv.updateUser(user, pass, role);
-        serv.updatePassenger(user, name, last_name, email, sql, address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
+        serv.updatePassenger(user, name, last_name, email, date, address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
     }
 
     private void avion(HttpServletRequest request, HttpServletResponse response) {
@@ -121,7 +116,7 @@ public class servletUpdate extends HttpServlet {
     private void horario(HttpServletRequest request, HttpServletResponse response) throws ParseException {
         String id = request.getParameter("id");
         String date = request.getParameter("date");
-        serv.updateSchedule(id,serv.fechaTSp(date));
+        serv.updateSchedule(id, serv.fechaTSp(date));
     }
 
     private void tiquetes(HttpServletRequest request, HttpServletResponse response) {
@@ -133,6 +128,7 @@ public class servletUpdate extends HttpServlet {
         String user_usuario = request.getParameter("user_usuario");
         serv.updateTicket(id, flight_id, Integer.parseInt(price), Integer.parseInt(seat), user_usuario, Integer.parseInt(discount));
     }
+
     private void vuelo(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
         String rute_id = request.getParameter("rute_id");
