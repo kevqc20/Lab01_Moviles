@@ -86,43 +86,6 @@ window.onload = function () {
             "   </nav>"
 
 
-    $('#fligthsSearch').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminRoutesTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminAirplanesTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminSchedulesTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminPassangersTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminTicketsTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-
 
     if ($("#registerModal").length > 0) {
         $("#registerModal").on("click", function () {
@@ -165,6 +128,37 @@ window.onload = function () {
             });
         }
     }
+
+    $("#flightsAdminTable").on('click', (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        window.sessionStorage.flight = tr.cells[0].textContent;
+
+    }));
+    $("#routesAdminTable").on('click', (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        window.sessionStorage.route = tr.cells[0].textContent;
+
+    }));
+    $("#airplanesAdminTable").on('click', (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        window.sessionStorage.airplane = tr.cells[0].textContent;
+
+    }));
+    $("#schedulesAdminTable").on('click', (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        window.sessionStorage.schedule = tr.cells[0].textContent;
+
+    }));
+    $("#passangersAdminTable").on('click', (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        window.sessionStorage.passanger = tr.cells[0].textContent;
+
+    }));
+    $("#ticketsAdminTable").on('click', (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        window.sessionStorage.tickets = tr.cells[0].textContent;
+
+    }));
 }
 
 
@@ -445,7 +439,7 @@ function addNewTicketArray(flight_id, discount, array) {
     var user_usuario = window.sessionStorage.user;
     seatList.forEach(function (data) {
         var jsonUser = {
-            "id": flight_id+"_"+data.id,
+            "id": flight_id + "_" + data.id,
             "flight_id": flight_id,
             "price": data.price,
             "discount": discount,
@@ -571,6 +565,8 @@ function updatePassanger() {
     var dob_rm = document.getElementById("p_dob_em").value;
     var role_rm = window.sessionStorage.getItem("role");
 
+    console.log(dob_rm)
+
     var jsonUser = {
         "user_name": user_username_rm,
         "password": password_rm,
@@ -604,44 +600,26 @@ function updatePassanger() {
 }
 // Get Airplane
 function getAirplane() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+    var main = {
+        id: window.sessionStorage.airplane
     }
+    
+    console.log(main)
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/airplane',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            console.log(data)
+            //fillWithInformation(data, 2)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
 // Update Airplane
 function updateAirplane() {
@@ -1112,6 +1090,8 @@ function fillWithInformation(data, i) {
         {
             // Passangers
             var a = new Date(data['passanger']['dob']);
+            a.setDate(a.getDate() + 1)
+            console.log(data['passanger']['dob']);
             document.getElementById("p_username_em").value = data['passanger']['user_username'];
             document.getElementById("p_email_em").value = data['passanger']['email'];
             document.getElementById("p_password_em").value = window.sessionStorage.getItem("password")
@@ -1121,6 +1101,7 @@ function fillWithInformation(data, i) {
             document.getElementById("p_cell_phone_em").value = data['passanger']['cell_phone'];
             document.getElementById("p_address_em").value = data['passanger']['address'];
             document.getElementById("p_dob_em").value = a.toISOString().substring(0, 10);
+            console.log(a);
             break;
         }
         case 2:
@@ -1179,8 +1160,6 @@ function fillWithInformation(data, i) {
 
 
 // List
-
-
 function showListFlightsAdmin() {
     $.ajax({
         type: 'GET',
@@ -1189,29 +1168,24 @@ function showListFlightsAdmin() {
         success: function (data) {
             list(data, 1);
             $(document).ready(function () {
-                $('#flightsAdminTable').DataTable({
+                $('#flightsAdminFlightsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                     },
                     retrieve: true
                 })
             });
-        },
-        error: function () {
-            alert('error');
-        },
-        fail: function () {
-            alert("fail")
         }
     })
 }
+
 function showListFlightsClient() {
     $.ajax({
         type: 'GET',
         url: '/lab01_frontend1/servletList/flightList',
         cache: false,
         success: function (data) {
-            list(data, 11);
+            list(data, 7);
             $(document).ready(function () {
                 $('#fligthsSearch').DataTable({
                     "language": {
@@ -1230,31 +1204,31 @@ function showListFlightsClient() {
     })
 }
 
-function showListTicketsAdmin() {
-    $.ajax({
-        type: 'GET',
-        url: '/lab01_frontend1/servletList/ticketsList',
-        cache: false,
-        success: function (data) {
-            //alert(JSON.stringify(data));
-            list(data, 6);
-            $(document).ready(function () {
-                $('#flightsAdminTicketsTable').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                    },
-                    retrieve: true
-                })
-            });
-        },
-        error: function () {
-            alert('error');
-        },
-        fail: function () {
-            alert("fail")
-        }
-    })
-}
+//function showListTicketsAdmin() {
+//    $.ajax({
+//        type: 'GET',
+//        url: '/lab01_frontend1/servletList/ticketsList',
+//        cache: false,
+//        success: function (data) {
+//            //alert(JSON.stringify(data));
+//            list(data, 6);
+//            $(document).ready(function () {
+//                $('#flightsAdminTicketsTable').DataTable({
+//                    "language": {
+//                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+//                    },
+//                    retrieve: true
+//                })
+//            });
+//        },
+//        error: function () {
+//            alert('error');
+//        },
+//        fail: function () {
+//            alert("fail")
+//        }
+//    })
+//}
 
 function showListRoutesAdmin() {
     $.ajax({
@@ -1444,12 +1418,12 @@ function list(data, i) {
             });
             break;
         }
-        case 11:
+        case 7:
         {
-            var listado = document.getElementById("fligthsSearch");
+            var listado = document.getElementById("flightsAvailable");
             listado.innerHTML = "";
             data["flightList"].forEach((u) => {
-                row(u, 11);
+                row(u, 7);
             });
             break;
         }
@@ -1466,7 +1440,7 @@ function row(data, i) {
                 tr += '<td>' + data.route_id + '</td>';
                 tr += '<td>' + data.airplaine_id + '</td>';
                 tr += '<td>' + data.schedule_id + '</td>';
-                tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal" onclick="getFlight()">Editar</button></td>';
                 tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#flightsAdminTable').append(tr);
@@ -1478,7 +1452,7 @@ function row(data, i) {
                 tr += '<td>' + data.origin + '</td>';
                 tr += '<td>' + data.destination + '</td>';
                 tr += '<td>' + data.duration + '</td>';
-                tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal" onclick="getRute()">Editar</button></td>';
                 tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#routesAdminTable').append(tr);
@@ -1492,7 +1466,7 @@ function row(data, i) {
                 tr += '<td>' + data.brand + '</td>';
                 tr += '<td>' + data.type + '</td>';
                 tr += '<td>' + data.cant_max + '</td>';
-                tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal" onclick="getAirplane()">Editar</button></td>';
                 tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#airplanesAdminTable').append(tr);
@@ -1502,7 +1476,7 @@ function row(data, i) {
             {
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.date_time + '</td>';
-                tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal" onclick="getSchedule()">Editar</button></td>';
                 tr += '<td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#schedulesAdminTable').append(tr);
@@ -1518,7 +1492,7 @@ function row(data, i) {
                 tr += '<td>' + data.address + '</td>';
                 tr += '<td>' + data.work_phone + '</td>';
                 tr += '<td>' + data.cell_phone + '</td>';
-                tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal" onclick="getPassanger()">Editar</button></td>';
                 tr += '<td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#passangersAdminTable').append(tr);
@@ -1533,13 +1507,13 @@ function row(data, i) {
                 tr += '<td>' + data.discount + '</td>';
                 tr += '<td>' + data.seat + '</td>';
                 tr += '<td>' + data.user_username + '</td>';
-                tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
+                tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal" onclick="getTicket()">Editar</button></td>';
                 tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#ticketsAdminTable').append(tr);
                 break;
             }
-            case 11:
+            case 7:
             {
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.route_id + '</td>';
