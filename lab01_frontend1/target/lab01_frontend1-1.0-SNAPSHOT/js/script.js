@@ -16,7 +16,29 @@ window.onload = function () {
         $('.modal').modal('hide')
     });
 
+    $('#updatePassangerAdmin').on('click', function () {
+        $('.modal').modal('hide')
+    });
 
+    $('#updateAirplaneB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateRouteB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateScheduleB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateTicketB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateFlightB').on('click', function () {
+        $('.modal').modal('hide')
+    });
 
 
 // Enter key
@@ -129,35 +151,34 @@ window.onload = function () {
         }
     }
 
-    $("#flightsAdminTable").on('click', (function (ele) {
+
+    $("#airplanesAdminTable").on('click', ".airplanesAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
-        window.sessionStorage.flight = tr.cells[0].textContent;
+        getAirplane(tr.cells[0].textContent);
 
     }));
-    $("#routesAdminTable").on('click', (function (ele) {
+    $("#passangersAdminTable").on('click', ".passangerAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
-        window.sessionStorage.route = tr.cells[0].textContent;
-
+        getPassangerAdmin(tr.cells[0].textContent);
     }));
-    $("#airplanesAdminTable").on('click', (function (ele) {
+    $("#routesAdminTable").on('click', ".routesAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
-        window.sessionStorage.airplane = tr.cells[0].textContent;
-
+        getRoute(tr.cells[0].textContent);
     }));
-    $("#schedulesAdminTable").on('click', (function (ele) {
+    $("#schedulesAdminTable").on('click', ".schedulesAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
-        window.sessionStorage.schedule = tr.cells[0].textContent;
-
+        getSchedule(tr.cells[0].textContent);
+        console.log(tr.cells[0].textContent)
     }));
-    $("#passangersAdminTable").on('click', (function (ele) {
+    $("#ticketsAdminTable").on('click', ".ticketsAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
-        window.sessionStorage.passanger = tr.cells[0].textContent;
-
+        getTicket(tr.cells[0].textContent);
+        console.log(tr.cells[0].textContent)
     }));
-    $("#ticketsAdminTable").on('click', (function (ele) {
+    $("#flightsAdminTable").on('click', ".flightsAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
-        window.sessionStorage.tickets = tr.cells[0].textContent;
-
+        getFlight(tr.cells[0].textContent);
+        console.log(tr.cells[0].textContent)
     }));
 }
 
@@ -549,6 +570,26 @@ function getPassanger() {
         }
     }
     );
+}
+// Get Passanger Admin
+function getPassangerAdmin(data) {
+    var main = {
+        "username": data
+    }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/passenger',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 1)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 
 }
 // Update Passanger
@@ -599,20 +640,17 @@ function updatePassanger() {
 
 }
 // Get Airplane
-function getAirplane() {
+function getAirplane(data) {
     var main = {
-        id: window.sessionStorage.airplane
+        "id": data
     }
-    
-    console.log(main)
     $.ajax({
         url: '/lab01_frontend1/servletSearch/airplane',
         data: main,
         type: 'post',
         cache: false,
         success: function (data) {
-            console.log(data)
-            //fillWithInformation(data, 2)
+            fillWithInformation(data, 2)
         },
         error: function () {
             jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
@@ -623,463 +661,247 @@ function getAirplane() {
 }
 // Update Airplane
 function updateAirplane() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
+    var id = document.getElementById("ap_id_em").value;
+    var year = document.getElementById("ap_year_em").value;
+    var model = document.getElementById("ap_model_em").value;
+    var brand = document.getElementById("ap_brand_em").value;
+    var type = document.getElementById("ap_type_em").value == 1 ? true : false;
+    var cant_max = document.getElementById("ap_cantmax_em").value;
 
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var jsonUser = {
+        "id": id,
+        "year": year,
+        "model": model,
+        "brand": brand,
+        "type": type,
+        "cant_max": cant_max
     }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/avion",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Avión actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updatePassangerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+
 }
-// Get Rute
-function getRute() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+// Get Airplane
+function getRoute(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/route',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 3)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
-// Update Rute
-function updateRute() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
+// Update Airplane
+function updateRoute() {
+    var id = document.getElementById("rt_id_em").value;
+    var origin = document.getElementById("rt_origin_em").value;
+    var destination = document.getElementById("rt_destination_em").value;
+    var duration = document.getElementById("rt_duration_em").value;
 
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var jsonUser = {
+        "id": id,
+        "origin": origin,
+        "destination": destination,
+        "duration": duration
     }
+
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/ruta",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            console.log(JSON.stringify(data))
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ruta actualizada satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
-// Get Shedule
-function getShedule() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+// Get Schedule
+function getSchedule(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/schedule',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 4)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
-// Update Shedule
-function updateShedule() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
-
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+// Update Schedule
+function updateSchedule() {
+    var id = document.getElementById("sh_id_em").value;
+    var date_time = document.getElementById("sh_datetime_em").value;
+    var a = new Date(date_time).toISOString().slice(0, 19).replace('T', ' ');
+    var jsonUser = {
+        "id": id,
+        "date_time": a
     }
+
+    console.log(jsonUser);
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/horario",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Horario actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
 // Get Ticket
-function getTicket() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+function getTicket(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/ticket',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 5)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
 // Update Ticket
 function updateTicket() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
-
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var id = document.getElementById("tk_id_em").value;
+    var flight_id = document.getElementById("tk_fid_em").value;
+    var price = document.getElementById("tk_price_phone_em").value;
+    var discount = document.getElementById("tk_discount_phone_em").value;
+    var seat = document.getElementById("tk_seat_em").value;
+    var user_username = document.getElementById("tk_user_em").value;
+    var jsonUser = {
+        "id": id,
+        "flight_id": flight_id,
+        "price": price,
+        "discount": discount,
+        "seat": seat,
+        "user_username": user_username
     }
+
+    console.log(jsonUser);
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/tiquete",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ticket actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
 // Get Flight
-function getFlight() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+function getFlight(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/flight',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 6)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
 // Update Flight
 function updateFlight() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
-
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var id = document.getElementById("f_id_em").value;
+    var route_id = document.getElementById("f_rid_em").value;
+    var airplaine_id = document.getElementById("f_apid_em").value;
+    var schedule_id = document.getElementById("f_schid_em").value;
+    var jsonUser = {
+        "id": id,
+        "route_id": route_id,
+        "airplaine_id": airplaine_id,
+        "schedule_id": schedule_id
     }
+
+    console.log(jsonUser);
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/vuelo",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Vuelo actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
+
+
 
 
 
@@ -1101,57 +923,58 @@ function fillWithInformation(data, i) {
             document.getElementById("p_cell_phone_em").value = data['passanger']['cell_phone'];
             document.getElementById("p_address_em").value = data['passanger']['address'];
             document.getElementById("p_dob_em").value = a.toISOString().substring(0, 10);
-            console.log(a);
             break;
         }
         case 2:
         {
             // Airplanes
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            document.getElementById("ap_id_em").value = data['airplane']['id'];
+            document.getElementById("ap_year_em").value = data['airplane']['year'];
+            document.getElementById("ap_model_em").value = data['airplane']['model'];
+            document.getElementById("ap_brand_em").value = data['airplane']['brand'];
+            document.getElementById("ap_type_em").value = data['airplane']['type'] ? 1 : 0;
+            document.getElementById("ap_cantmax_em").value = data['airplane']['cant_max'];
             break;
         }
         case 3:
         {
-            // Rutes
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            // Routes
+            console.log(data)
+            document.getElementById("rt_id_em").value = data['route']['id'];
+            document.getElementById("rt_origin_em").value = data['route']['origin'];
+            document.getElementById("rt_destination_em").value = data['route']['destination'];
+            document.getElementById("rt_duration_em").value = data['route']['duration'];
             break;
         }
         case 4:
         {
             // Shedules
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            var a = new Date(data['schedule']['date_time']);
+            a.setMinutes(a.getMinutes() - a.getTimezoneOffset());
+            document.getElementById("sh_id_em").value = data['schedule']['id'];
+            document.getElementById("sh_datetime_em").value = a.toISOString().substring(0, 19);
             break;
         }
         case 5:
         {
             // Tickets
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            var disc = parseInt(data['tickets']['price']) - (parseInt(data['tickets']['price']) * 1 / parseInt(data['tickets']['discount']));
+            document.getElementById("tk_id_em").value = data['tickets']['id'];
+            document.getElementById("tk_fid_em").value = data['tickets']['flight_id'];
+            document.getElementById("tk_price_phone_em").value = data['tickets']['price'];
+            document.getElementById("tk_discount_phone_em").value = data['tickets']['discount'];
+            document.getElementById("tk_finalprice_em").value = disc.toString();
+            document.getElementById("tk_seat_em").value = data['tickets']['seat'];
+            document.getElementById("tk_user_em").value = data['tickets']['user_username'];
             break;
         }
         case 6:
         {
             // Flights
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            document.getElementById("f_id_em").value = data['flight']['id'];
+            document.getElementById("f_rid_em").value = data['flight']['route_id'];
+            document.getElementById("f_apid_em").value = data['flight']['airplaine_id'];
+            document.getElementById("f_schid_em").value = data['flight']['schedule_id'];
             break;
         }
     }
@@ -1437,13 +1260,55 @@ function row(data, i) {
             case 1:
             {
                 tr += '<td>' + data.id + '</td>';
-                tr += '<td>' + data.route_id + '</td>';
-                tr += '<td>' + data.airplaine_id + '</td>';
-                tr += '<td>' + data.schedule_id + '</td>';
-                tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal" onclick="getFlight()">Editar</button></td>';
+
+                // Route data
+                var route = {
+                    "id": data.route_id
+                }
+                $.ajax({
+                    url: '/lab01_frontend1/servletSearch/route',
+                    data: route,
+                    type: 'post',
+                    cache: false,
+                    async: false,
+                    success: function (a) {
+                        tr += '<td>' + a["route"]["destination"]+'</td>';
+                        tr += '<td>' + a["route"]["origin"]+'</td>';
+                    },
+                    error: function () {
+                        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+                        jQuery("#errorModal").modal('show');
+                    }
+                }
+                );
+
+                // Schedule data
+                var schedule = {
+                    "id": data.schedule_id
+                }
+                $.ajax({
+                    url: '/lab01_frontend1/servletSearch/schedule',
+                    data: schedule,
+                    type: 'post',
+                    cache: false,
+                    async: false,
+                    success: function (b) {
+                        tr += '<td>' + b["schedule"]["date_time"] +'</td>';
+                    },
+                    error: function () {
+                        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+                        jQuery("#errorModal").modal('show');
+                    }
+                }
+                );
+
+                tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#flightsAdminTable').append(tr);
+
+
+
                 break;
             }
             case 2:
@@ -1452,7 +1317,7 @@ function row(data, i) {
                 tr += '<td>' + data.origin + '</td>';
                 tr += '<td>' + data.destination + '</td>';
                 tr += '<td>' + data.duration + '</td>';
-                tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal" onclick="getRute()">Editar</button></td>';
+                tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#routesAdminTable').append(tr);
@@ -1464,9 +1329,9 @@ function row(data, i) {
                 tr += '<td>' + data.year + '</td>';
                 tr += '<td>' + data.model + '</td>';
                 tr += '<td>' + data.brand + '</td>';
-                tr += '<td>' + data.type + '</td>';
+                tr += '<td>' + (data.type ? "Grande" : "Pequeño") + '</td>';
                 tr += '<td>' + data.cant_max + '</td>';
-                tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal" onclick="getAirplane()">Editar</button></td>';
+                tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#airplanesAdminTable').append(tr);
@@ -1476,7 +1341,7 @@ function row(data, i) {
             {
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.date_time + '</td>';
-                tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal" onclick="getSchedule()">Editar</button></td>';
+                tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#schedulesAdminTable').append(tr);
@@ -1492,7 +1357,7 @@ function row(data, i) {
                 tr += '<td>' + data.address + '</td>';
                 tr += '<td>' + data.work_phone + '</td>';
                 tr += '<td>' + data.cell_phone + '</td>';
-                tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal" onclick="getPassanger()">Editar</button></td>';
+                tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#passangersAdminTable').append(tr);
@@ -1507,7 +1372,7 @@ function row(data, i) {
                 tr += '<td>' + data.discount + '</td>';
                 tr += '<td>' + data.seat + '</td>';
                 tr += '<td>' + data.user_username + '</td>';
-                tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal" onclick="getTicket()">Editar</button></td>';
+                tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#ticketsAdminTable').append(tr);
@@ -1527,7 +1392,6 @@ function row(data, i) {
         }
     }
 }
-
 
 
 // Web Sockets

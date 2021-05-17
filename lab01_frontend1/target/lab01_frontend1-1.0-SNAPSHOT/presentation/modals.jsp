@@ -162,24 +162,18 @@
                                 <thead>
                                     <tr>
                                         <!-- Hay que poner estas  
-                                        <th class="th">Destino</th>
-                                        <th class="th">Origen</th>
-                                        <th class="th">Fecha de salida</th>
-                                        <th class="th">Precio neto</th>
-                                        <th class="th">Descuento</th>
-                                        <th class="th">Precio final</th>
-                                        <th class="th">Asientos disponibles</th>
+                                        
                                         <th>Acciones</th>
                                         -->
                                         <th class="th">ID</th>
-                                        <th class="th">ID de ruta</th>
-                                        <th class="th">ID de avion</th>
-                                        <th class="th">ID de horario</th>
+                                        <th class="th">Destino</th>
+                                        <th class="th">Origen</th>
+                                        <th class="th">Fecha de salida</th>
                                         <th>Compra</th>
                                     </tr>
                                 </thead>
                                 <tbody id="flightsAvailable">
-                                    
+
                             </table>
                         </div>
                     </div>        
@@ -270,9 +264,9 @@
                                 <thead>
                                     <tr>
                                         <th class="th">ID</th>
-                                        <th class="th">ID de ruta</th>
-                                        <th class="th">ID de avion</th>
-                                        <th class="th">ID de horario</th>
+                                        <th class="th">Destino</th>
+                                        <th class="th">Origen</th>
+                                        <th class="th">Fecha de salida</th>
                                         <th>Editar</th>
                                         <th>Borrar</th>
                                     </tr>
@@ -666,7 +660,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateAirplaneB'>Registrarse</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateAirplaneB' onclick="updateAirplane()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -693,13 +687,13 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="number" class="form-control" id="f_rid_em" placeholder="ID de ruta" required="required">
-                            <input type="number" class="form-control" id="f_apid_em" placeholder="ID de avion" required="required">
-                            <input type="number" class="form-control" id="f_schid_em" placeholder="ID de horario" required="required">
+                            <input type="text" class="form-control" id="f_rid_em" placeholder="ID de ruta" required="required">
+                            <input type="text" class="form-control" id="f_apid_em" placeholder="ID de avion" required="required">
+                            <input type="text" class="form-control" id="f_schid_em" placeholder="ID de horario" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateFlightB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateFlightB' onclick="updateFlight()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -788,11 +782,11 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="number" class="form-control" id="rt_duration_phone_em" placeholder="Duracion" required="required">
+                            <input type="number" class="form-control" id="rt_duration_em" placeholder="Duracion" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateRouteB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateRouteB' onclick="updateRoute()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -819,11 +813,11 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="date" class="form-control" id="sh_datetime_em" placeholder="Origen" required="required">
+                            <input type="datetime-local" class="form-control" id="sh_datetime_em" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateScheduleB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateScheduleB' onclick="updateSchedule()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -866,7 +860,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateTicketB'>Actualizar</button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tk_user_em" placeholder="Usuario" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateTicketB' onclick="updateTicket()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -1092,7 +1091,7 @@
 
                     return 'available';
                 } else if (this.status() == 'unavailable') {
-                    //seat has been already booked
+                    //seat has' been already booked
                     return 'unavailable';
                 } else {
                     return this.style();
@@ -1122,8 +1121,8 @@
         });
         return array;
     }
-    function getNumber(id){
-        a = id[0]+id[2];
+    function getNumber(id) {
+        a = id[0] + id[2];
         return a;
     }
     function flight_id_set(id) {

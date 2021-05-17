@@ -866,11 +866,11 @@ call PRC_LIST_AIRPLANES();
 call PRC_SEARCH_AIRPLANE('6589B');
 call PRC_UPDATE_AIRPLANE('5094A',2020,'Iberia','Airbus A330',01,160);
 
-call PRC_INSERT_RUTE('5296','Estados Unidos','Mexico','02:55 minutos');
-call PRC_INSERT_RUTE('7854','Costa Rica','Panama','01:30 minutos');
+call PRC_INSERT_RUTE('5296','Estados Unidos','Mexico','120');
+call PRC_INSERT_RUTE('7854','Costa Rica','Panama','300');
 call PRC_LIST_RUTE();
 call PRC_SEARCH_RUTE('5296');
-call PRC_UPDATE_RUTE('5296','Estados Unidos','Mexico','03:15 minutos');
+call PRC_UPDATE_RUTE('5296','Estados Unidos','Mexico','200');
 
 call PRC_INSERT_SCHEDULE('01','1996-12-27');
 call PRC_INSERT_SCHEDULE('02','1996-12-27');
@@ -878,10 +878,10 @@ call PRC_LIST_SCHEDULE();
 call PRC_SEARCH_SCHEDULE('01');
 call PRC_UPDATE_SCHEDULE('02','1995-12-27');
 
-call PRC_INSERT_USER('yen_cc','7856',01);
-call PRC_INSERT_USER('kev_qc','5982',01);
-call PRC_INSERT_USER('mari_vm','2548',02);
-call PRC_INSERT_USER('josito_ba','0245',02);
+call PRC_INSERT_USER('yen_cc','7856',0);
+call PRC_INSERT_USER('kev_qc','2095',1);
+call PRC_INSERT_USER('mari_vm','2548',0);
+call PRC_INSERT_USER('josito_ba','0245',1);
 call PRC_LIST_USER();
 call PRC_SEARCH_USER('yen_cc');
 call PRC_UPDATE_USER('josito_ba','7842',02);
