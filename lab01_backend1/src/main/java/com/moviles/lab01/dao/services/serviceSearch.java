@@ -215,7 +215,7 @@ public class serviceSearch extends service {
 
     public static void main(String[] args) {
         serviceSearch s = new serviceSearch();
-        User test = s.searchUser("kev_qc");
+        Airplane test = s.searchAirplane("5094A");
 
         System.out.println(test.toString());
     }

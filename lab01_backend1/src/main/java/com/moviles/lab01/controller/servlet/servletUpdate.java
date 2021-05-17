@@ -115,25 +115,28 @@ public class servletUpdate extends HttpServlet {
 
     private void horario(HttpServletRequest request, HttpServletResponse response) throws ParseException {
         String id = request.getParameter("id");
-        String date = request.getParameter("date");
-        serv.updateSchedule(id, serv.fechaTSp(date));
+        String date = request.getParameter("date_time");
+
+        java.util.Date sql = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(date);
+        java.sql.Timestamp timestamp = new java.sql.Timestamp(sql.getTime());
+        serv.updateSchedule(id, timestamp);
     }
 
     private void tiquetes(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
-        String flight_id = request.getParameter("price");
-        String price = request.getParameter("id");
+        String flight_id = request.getParameter("flight_id");
+        String price = request.getParameter("price");
         String discount = request.getParameter("discount");
         String seat = request.getParameter("seat");
-        String user_usuario = request.getParameter("user_usuario");
+        String user_usuario = request.getParameter("user_username");
         serv.updateTicket(id, flight_id, Integer.parseInt(price), Integer.parseInt(seat), user_usuario, Integer.parseInt(discount));
     }
 
     private void vuelo(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
-        String rute_id = request.getParameter("rute_id");
-        String airplane_id = request.getParameter("airplane_id");
-        String shedule_id = request.getParameter("shedule_id");
+        String rute_id = request.getParameter("route_id");
+        String airplane_id = request.getParameter("airplaine_id");
+        String shedule_id = request.getParameter("schedule_id");
         serv.updateFlight(id, rute_id, airplane_id, shedule_id);
     }
     HttpSession sesion = null;
