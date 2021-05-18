@@ -16,10 +16,6 @@ window.onload = function () {
         $('.modal').modal('hide')
     });
 
-    $('#updatePassangerAdmin').on('click', function () {
-        $('.modal').modal('hide')
-    });
-
     $('#updateAirplaneB').on('click', function () {
         $('.modal').modal('hide')
     });
@@ -39,6 +35,30 @@ window.onload = function () {
     $('#updateFlightB').on('click', function () {
         $('.modal').modal('hide')
     });
+    $('#registerPassangerAdmin').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerAirplaneB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerRouteB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerScheduleB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerTicketB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerFlightB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
 
 
 // Enter key
@@ -362,12 +382,12 @@ function addNewUser() {
 }
 // Register new airplane 
 function addNewAirplane() {
-    var id = document.getElementById("ap_id_em").value;
-    var year = document.getElementById("ap_year_em").value;
-    var model = document.getElementById("ap_model_em").value;
-    var brand = document.getElementById("ap_brand_em").value;
-    var cant = document.getElementById("ap_cantmax_em").value;
-    var type = document.getElementById("ap_type_em").value;
+    var id = document.getElementById("ap_id_add").value;
+    var year = document.getElementById("ap_year_add").value;
+    var model = document.getElementById("ap_model_add").value;
+    var brand = document.getElementById("ap_brand_add").value;
+    var cant = document.getElementById("ap_cantmax_add").value;
+    var type = document.getElementById("ap_type_add").value;
 
     var jsonUser = {
         "id": id,
@@ -375,7 +395,7 @@ function addNewAirplane() {
         "model": model,
         "brand": brand,
         "cant": cant,
-        "type": type
+        "type": (type == 1 ? true : false)
     }
 
     $.ajax({
@@ -383,7 +403,7 @@ function addNewAirplane() {
         method: "POST",
         data: jsonUser,
         success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">avion agregado con exito.</p>');
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Avión agregado con exito.</p>');
             jQuery("#successModal").modal('show');
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
@@ -394,12 +414,12 @@ function addNewAirplane() {
         }
     });
 }
-// Register new rute 
-function addNewRute() {
-    var id = document.getElementById("rt_id_em").value;
-    var origin = document.getElementById("rt_origin_em").value;
-    var destination = document.getElementById("rt_destination_em").value;
-    var duration = document.getElementById("rt_duration_phone_em").value;
+// Register new route 
+function addNewRoute() {
+    var id = document.getElementById("rt_id_add").value;
+    var origin = document.getElementById("rt_origin_add").value;
+    var destination = document.getElementById("rt_destination_add").value;
+    var duration = document.getElementById("rt_duration_add").value;
 
     var jsonUser = {
         "id": id,
@@ -413,7 +433,7 @@ function addNewRute() {
         method: "POST",
         data: jsonUser,
         success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">ruta de vuelo agregada con exito.</p>');
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ruta de vuelo agregada con exito.</p>');
             jQuery("#successModal").modal('show');
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
@@ -426,12 +446,13 @@ function addNewRute() {
 }
 // Register new schedule 
 function addNewShedule() {
-    var id = document.getElementById("sh_id_em").value;
-    var date = document.getElementById("sh_datetime_em").value;
-
+    var id = document.getElementById("sh_id_add").value;
+    var date = document.getElementById("sh_datetime_add").value;
+    var a = new Date(date);
+    a.setMinutes(a.getMinutes() - a.getTimezoneOffset());
     var jsonUser = {
         "id": id,
-        "date": date
+        "date": a.toISOString().substring(0, 19)
     }
 
     $.ajax({
@@ -439,7 +460,7 @@ function addNewShedule() {
         method: "POST",
         data: jsonUser,
         success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">horario de vuelo agregado con exito.</p>');
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Horario de vuelo agregado con exito.</p>');
             jQuery("#successModal").modal('show');
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
@@ -451,7 +472,110 @@ function addNewShedule() {
     });
 }
 // Register new ticket 
+function addNewTicket() {
+    var id = document.getElementById("tk_id_add").value;
+    var flight_id = document.getElementById("tk_fid_add").value;
+    var price = document.getElementById("tk_price_phone_add").value;
+    var discount = document.getElementById("tk_discount_phone_add").value;
+    var seat = document.getElementById("tk_seat_add").value;
+    var user_usuario = document.getElementById("tk_user_add").value;
 
+    var jsonUser = {
+        "id": id,
+        "flight_id": flight_id,
+        "price": price,
+        "discount": discount,
+        "seat": seat,
+        "user_usuario": user_usuario
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/tiquete",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ticket agregado con exito.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+// Register new flight 
+function addNewFlight() {
+    var id = document.getElementById("f_id_add").value;
+    var rute_id = document.getElementById("f_rid_add").value;
+    var airplane_id = document.getElementById("f_apid_add").value;
+    var shedule_id = document.getElementById("f_schid_add").value;
+
+    var jsonUser = {
+        "id": id,
+        "rute_id": rute_id,
+        "airplane_id": airplane_id,
+        "shedule_id": shedule_id
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/vuelo",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center"Vuelo agregado con exito.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+// Register new user from admin 
+function addNewUserAdmin() {
+    var user_username_rm = document.getElementById("p_username_add").value;
+    var email_rm = document.getElementById("p_addail_add").value;
+    var password_rm = document.getElementById("p_password_add").value;
+    var name_rm = document.getElementById("p_name_add").value;
+    var lastname_rm = document.getElementById("p_lastname_add").value;
+    var work_phone_rm = document.getElementById("p_work_phone_add").value;
+    var cell_phone_rm = document.getElementById("p_cell_phone_add").value;
+    var address_rm = document.getElementById("p_address_add").value;
+    var dob_rm = document.getElementById("p_dob_add").value;
+
+    var jsonUser = {
+        "user_name": user_username_rm,
+        "password": password_rm,
+        "name_": name_rm,
+        "lastname": lastname_rm,
+        "email": email_rm,
+        "bob": dob_rm,
+        "address": address_rm,
+        "work_phone": work_phone_rm,
+        "cell_phone": cell_phone_rm
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/registro",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil creado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+// Register tickets from checkout
 function addNewTicketArray(flight_id, discount, array) {
 
     var flight_id = flight_id;
@@ -485,71 +609,6 @@ function addNewTicketArray(flight_id, discount, array) {
         });
     });
 
-}
-
-function addNewTicket() {
-    var id = document.getElementById("tk_id_em").value;
-    var flight_id = document.getElementById("tk_fid_em").value;
-    var price = document.getElementById("tk_price_phone_em").value;
-    var discount = document.getElementById("tk_discount_phone_em").value;
-    var seat = document.getElementById("tk_seat_em").value;
-    var user_usuario = document.getElementById("tk_id_user_em").value;
-
-
-    var jsonUser = {
-        "id": id,
-        "flight_id": flight_id,
-        "price": price,
-        "discount": discount,
-        "seat": seat,
-        "user_usuario": user_usuario
-    }
-
-    $.ajax({
-        url: "/lab01_frontend1/servletInsert/tiquete",
-        method: "POST",
-        data: jsonUser,
-        success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">horario de vuelo agregado con exito.</p>');
-            jQuery("#successModal").modal('show');
-            $("#successModal").on("hidden.bs.modal", function () {
-                $('#registerModal').modal('hide')
-            });
-        },
-        error: function () {
-            alert("algo salio mal");
-        }
-    });
-}
-// Register new flight 
-function addNewFlight() {
-    var id = document.getElementById("f_id_em").value;
-    var rute_id = document.getElementById("f_rid_em").value;
-    var airplane_id = document.getElementById("f_apid_em").value;
-    var shedule_id = document.getElementById("f_schid_em").value;
-
-    var jsonUser = {
-        "id": id,
-        "rute_id": rute_id,
-        "airplane_id": airplane_id,
-        "shedule_id": shedule_id
-    }
-
-    $.ajax({
-        url: "/lab01_frontend1/servletInsert/vuelo",
-        method: "POST",
-        data: jsonUser,
-        success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">horario de vuelo agregado con exito.</p>');
-            jQuery("#successModal").modal('show');
-            $("#successModal").on("hidden.bs.modal", function () {
-                $('#registerModal').modal('hide')
-            });
-        },
-        error: function () {
-            alert("algo salio mal");
-        }
-    });
 }
 
 
@@ -939,7 +998,6 @@ function fillWithInformation(data, i) {
         case 3:
         {
             // Routes
-            console.log(data)
             document.getElementById("rt_id_em").value = data['route']['id'];
             document.getElementById("rt_origin_em").value = data['route']['origin'];
             document.getElementById("rt_destination_em").value = data['route']['destination'];
@@ -1272,8 +1330,8 @@ function row(data, i) {
                     cache: false,
                     async: false,
                     success: function (a) {
-                        tr += '<td>' + a["route"]["destination"]+'</td>';
-                        tr += '<td>' + a["route"]["origin"]+'</td>';
+                        tr += '<td>' + a["route"]["destination"] + '</td>';
+                        tr += '<td>' + a["route"]["origin"] + '</td>';
                     },
                     error: function () {
                         jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
@@ -1293,7 +1351,7 @@ function row(data, i) {
                     cache: false,
                     async: false,
                     success: function (b) {
-                        tr += '<td>' + b["schedule"]["date_time"] +'</td>';
+                        tr += '<td>' + b["schedule"]["date_time"] + '</td>';
                     },
                     error: function () {
                         jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
