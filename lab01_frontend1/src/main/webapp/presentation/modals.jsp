@@ -161,28 +161,19 @@
                             <table class="table-dark table-striped table-bordered" id='fligthsSearch' style="width:100%">
                                 <thead>
                                     <tr>
+                                        <!-- Hay que poner estas  
+                                        
+                                        <th>Acciones</th>
+                                        -->
+                                        <th class="th">ID</th>
                                         <th class="th">Destino</th>
                                         <th class="th">Origen</th>
                                         <th class="th">Fecha de salida</th>
-                                        <th class="th">Precio neto</th>
-                                        <th class="th">Descuento</th>
-                                        <th class="th">Precio final</th>
-                                        <th class="th">Asientos disponibles</th>
-                                        <th>Acciones</th>
+                                        <th>Compra</th>
                                     </tr>
                                 </thead>
                                 <tbody id="flightsAvailable">
-                                    <tr>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td>Mark</td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
-                                        <td><button class="checkout" href="#checkoutModal" class="trigger-btn" data-toggle="modal">Comprar ticket</button></td>
-                                    </tr>
-                                </tbody>
+
                             </table>
                         </div>
                     </div>        
@@ -265,7 +256,7 @@
                                     <div class="col-sm-4">
                                     </div>
                                     <div class="col-sm-4">
-                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo vuelo</span></a>						
+                                        <a href='#registerFlightModal' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo vuelo</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -273,9 +264,9 @@
                                 <thead>
                                     <tr>
                                         <th class="th">ID</th>
-                                        <th class="th">ID de ruta</th>
-                                        <th class="th">ID de avion</th>
-                                        <th class="th">ID de horario</th>
+                                        <th class="th">Destino</th>
+                                        <th class="th">Origen</th>
+                                        <th class="th">Fecha de salida</th>
                                         <th>Editar</th>
                                         <th>Borrar</th>
                                     </tr>
@@ -330,7 +321,7 @@
                                     <div class="col-sm-4">
                                     </div>
                                     <div class="col-sm-4">
-                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nueva ruta</span></a>						
+                                        <a href='#registerRouteModal' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nueva ruta</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -395,7 +386,7 @@
                                     <div class="col-sm-4">
                                     </div>
                                     <div class="col-sm-4">
-                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo avion</span></a>						
+                                        <a href='#registerAirplaneModal' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo avion</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -464,7 +455,7 @@
                                     <div class="col-sm-4">
                                     </div>
                                     <div class="col-sm-4">
-                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo horario</span></a>						
+                                        <a href='#registerScheduleModal' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo horario</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -525,7 +516,7 @@
                                     <div class="col-sm-4">
                                     </div>
                                     <div class="col-sm-4">
-                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo pasajero</span></a>						
+                                        <a href='#registerPassangerModal' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo pasajero</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -599,7 +590,7 @@
                                     <div class="col-sm-4">
                                     </div>
                                     <div class="col-sm-4">
-                                        <a href='#' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo ticket</span></a>						
+                                        <a href='#registerTicketModal' data-toggle='modal' class="btn btn-success" id=''><i class="material-icons">&#xE147;</i> <span>Agregar nuevo ticket</span></a>						
                                     </div>
                                 </div>
                             </div>
@@ -631,6 +622,257 @@
         </div>
     </div>
 </div>
+
+
+<!-- ---------------------Modal REGISTER--------------------- !-->
+
+<!-- Modal Register Airplane-->
+<div id="registerAirplaneModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">				
+                <h4 class="modal-title">Avion</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="ap_id_add" placeholder="ID" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="ap_year_add" placeholder="Año" required="required"  >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="ap_model_add" placeholder="Modelo" required="required">
+                            <input type="text" class="form-control" id="ap_brand_add" placeholder="Marca" required="required">
+                            <input type="number" min="0" max="1" class="form-control" id="ap_type_add" placeholder="Tipo" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="ap_cantmax_add" placeholder="Capacidad maxima" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='registerAirplaneB' onclick="addNewAirplane()">Registrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Register Flight-->
+<div id="registerFlightModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">				
+                <h4 class="modal-title">Vuelo</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="f_id_add" placeholder="ID" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="f_rid_add" placeholder="ID de ruta" required="required">
+                            <input type="text" class="form-control" id="f_apid_add" placeholder="ID de avion" required="required">
+                            <input type="text" class="form-control" id="f_schid_add" placeholder="ID de horario" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='registerFlightB' onclick="addNewFlight()">Registrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Register Passanger-->
+<div id="registerPassangerModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">				
+                <h4 class="modal-title">Pasajero</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="p_username_add" placeholder="Usuario" required="required" >
+                            <input type="email" class="form-control" id="p_addail_add" placeholder="Correo" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                            <input class="form-check-input" type="checkbox" onclick="showPasswordRM()">
+                            <input type="password" class="form-control" id="p_password_add" placeholder="Contraseñaaaaaaa" required="required"  >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="p_name_add" placeholder="Nombre" required="required">
+                            <input type="text" class="form-control" id="p_lastname_add" placeholder="Apellido" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="p_work_phone_add" placeholder="Teléfono de trabajo" required="required">
+                            <input type="number" class="form-control" id="p_cell_phone_add" placeholder="Teléfono personal" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="p_address_add" placeholder="Dirección" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="p_dob_add" placeholder="Fecha de nacimiento" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='registerPassangerAdmin' onclick="addNewUserAdmin()">Registrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Register Route-->
+<div id="registerRouteModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">				
+                <h4 class="modal-title">Ruta</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="rt_id_add" placeholder="ID" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="rt_origin_add" placeholder="Origen" required="required">
+                            <input type="text" class="form-control" id="rt_destination_add" placeholder="Destino" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="rt_duration_add" placeholder="Duracion" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='registerRouteB' onclick="addNewRoute()">Registrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Register Schedule-->
+<div id="registerScheduleModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">				
+                <h4 class="modal-title">Horario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="sh_id_add" placeholder="ID" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="datetime-local" class="form-control" id="sh_datetime_add" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='registerScheduleB' onclick="addNewShedule()">Registrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Register Ticket-->
+<div id="registerTicketModal" class="modal fade">
+    <div class="modal-dialog modal-login">
+        <div class="modal-content">
+            <div class="modal-header">				
+                <h4 class="modal-title">Ticket</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                            <input type="text" class="form-control" id="tk_id_add" placeholder="ID" required="required" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tk_fid_add" placeholder="ID vuelo" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="tk_price_phone_add" placeholder="Precio neto" required="required">
+                            <input type="number" class="form-control" id="tk_discount_phone_add" placeholder="Descuento" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tk_seat_add" placeholder="Asiento" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tk_user_add" placeholder="Usuario" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='registerTicketB' onclick="addNewTicket()">Registrar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
 
 <!-- ---------------------Modal UPDATE--------------------- !-->
 
@@ -668,7 +910,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateAirplaneB'>Registrarse</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateAirplaneB' onclick="updateAirplane()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -695,13 +937,13 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="number" class="form-control" id="f_rid_em" placeholder="ID de ruta" required="required">
-                            <input type="number" class="form-control" id="f_apid_em" placeholder="ID de avion" required="required">
-                            <input type="number" class="form-control" id="f_schid_em" placeholder="ID de horario" required="required">
+                            <input type="text" class="form-control" id="f_rid_em" placeholder="ID de ruta" required="required">
+                            <input type="text" class="form-control" id="f_apid_em" placeholder="ID de avion" required="required">
+                            <input type="text" class="form-control" id="f_schid_em" placeholder="ID de horario" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateFlightB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateFlightB' onclick="updateFlight()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -790,11 +1032,11 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="number" class="form-control" id="rt_duration_phone_em" placeholder="Duracion" required="required">
+                            <input type="number" class="form-control" id="rt_duration_em" placeholder="Duracion" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateRouteB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateRouteB' onclick="updateRoute()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -821,11 +1063,11 @@
                     </div>
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="date" class="form-control" id="sh_datetime_em" placeholder="Origen" required="required">
+                            <input type="datetime-local" class="form-control" id="sh_datetime_em" required="required">
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateScheduleB'>Actualizar</button>
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateScheduleB' onclick="updateSchedule()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -868,7 +1110,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateTicketB'>Actualizar</button>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="tk_user_em" placeholder="Usuario" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id='updateTicketB' onclick="updateTicket()">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -1094,7 +1341,7 @@
 
                     return 'available';
                 } else if (this.status() == 'unavailable') {
-                    //seat has been already booked
+                    //seat has' been already booked
                     return 'unavailable';
                 } else {
                     return this.style();
@@ -1124,8 +1371,8 @@
         });
         return array;
     }
-    function getNumber(id){
-        a = id[0]+id[2];
+    function getNumber(id) {
+        a = id[0] + id[2];
         return a;
     }
     function flight_id_set(id) {

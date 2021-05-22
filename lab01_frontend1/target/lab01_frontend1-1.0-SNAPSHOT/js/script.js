@@ -16,6 +16,48 @@ window.onload = function () {
         $('.modal').modal('hide')
     });
 
+    $('#updateAirplaneB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateRouteB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateScheduleB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateTicketB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#updateFlightB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+    $('#registerPassangerAdmin').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerAirplaneB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerRouteB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerScheduleB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerTicketB').on('click', function () {
+        $('.modal').modal('hide')
+    });
+
+    $('#registerFlightB').on('click', function () {
+        $('.modal').modal('hide')
+    });
 
 
 
@@ -86,43 +128,6 @@ window.onload = function () {
             "   </nav>"
 
 
-    $('#fligthsSearch').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminRoutesTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminAirplanesTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminSchedulesTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminPassangersTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-    $('#flightsAdminTicketsTable').DataTable({
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-        },
-        retrieve: true
-    })
-
 
     if ($("#registerModal").length > 0) {
         $("#registerModal").on("click", function () {
@@ -165,6 +170,36 @@ window.onload = function () {
             });
         }
     }
+
+
+    $("#airplanesAdminTable").on('click', ".airplanesAdminEdit", (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        getAirplane(tr.cells[0].textContent);
+
+    }));
+    $("#passangersAdminTable").on('click', ".passangerAdminEdit", (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        getPassangerAdmin(tr.cells[0].textContent);
+    }));
+    $("#routesAdminTable").on('click', ".routesAdminEdit", (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        getRoute(tr.cells[0].textContent);
+    }));
+    $("#schedulesAdminTable").on('click', ".schedulesAdminEdit", (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        getSchedule(tr.cells[0].textContent);
+        console.log(tr.cells[0].textContent)
+    }));
+    $("#ticketsAdminTable").on('click', ".ticketsAdminEdit", (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        getTicket(tr.cells[0].textContent);
+        console.log(tr.cells[0].textContent)
+    }));
+    $("#flightsAdminTable").on('click', ".flightsAdminEdit", (function (ele) {
+        var tr = ele.target.parentNode.parentNode;
+        getFlight(tr.cells[0].textContent);
+        console.log(tr.cells[0].textContent)
+    }));
 }
 
 
@@ -347,12 +382,12 @@ function addNewUser() {
 }
 // Register new airplane 
 function addNewAirplane() {
-    var id = document.getElementById("ap_id_em").value;
-    var year = document.getElementById("ap_year_em").value;
-    var model = document.getElementById("ap_model_em").value;
-    var brand = document.getElementById("ap_brand_em").value;
-    var cant = document.getElementById("ap_cantmax_em").value;
-    var type = document.getElementById("ap_type_em").value;
+    var id = document.getElementById("ap_id_add").value;
+    var year = document.getElementById("ap_year_add").value;
+    var model = document.getElementById("ap_model_add").value;
+    var brand = document.getElementById("ap_brand_add").value;
+    var cant = document.getElementById("ap_cantmax_add").value;
+    var type = document.getElementById("ap_type_add").value;
 
     var jsonUser = {
         "id": id,
@@ -360,7 +395,7 @@ function addNewAirplane() {
         "model": model,
         "brand": brand,
         "cant": cant,
-        "type": type
+        "type": (type == 1 ? true : false)
     }
 
     $.ajax({
@@ -368,7 +403,7 @@ function addNewAirplane() {
         method: "POST",
         data: jsonUser,
         success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">avion agregado con exito.</p>');
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Avión agregado con exito.</p>');
             jQuery("#successModal").modal('show');
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
@@ -379,12 +414,12 @@ function addNewAirplane() {
         }
     });
 }
-// Register new rute 
-function addNewRute() {
-    var id = document.getElementById("rt_id_em").value;
-    var origin = document.getElementById("rt_origin_em").value;
-    var destination = document.getElementById("rt_destination_em").value;
-    var duration = document.getElementById("rt_duration_phone_em").value;
+// Register new route 
+function addNewRoute() {
+    var id = document.getElementById("rt_id_add").value;
+    var origin = document.getElementById("rt_origin_add").value;
+    var destination = document.getElementById("rt_destination_add").value;
+    var duration = document.getElementById("rt_duration_add").value;
 
     var jsonUser = {
         "id": id,
@@ -398,7 +433,7 @@ function addNewRute() {
         method: "POST",
         data: jsonUser,
         success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">ruta de vuelo agregada con exito.</p>');
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ruta de vuelo agregada con exito.</p>');
             jQuery("#successModal").modal('show');
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
@@ -411,12 +446,13 @@ function addNewRute() {
 }
 // Register new schedule 
 function addNewShedule() {
-    var id = document.getElementById("sh_id_em").value;
-    var date = document.getElementById("sh_datetime_em").value;
-
+    var id = document.getElementById("sh_id_add").value;
+    var date = document.getElementById("sh_datetime_add").value;
+    var a = new Date(date);
+    a.setMinutes(a.getMinutes() - a.getTimezoneOffset());
     var jsonUser = {
         "id": id,
-        "date": date
+        "date": a.toISOString().substring(0, 19)
     }
 
     $.ajax({
@@ -424,7 +460,7 @@ function addNewShedule() {
         method: "POST",
         data: jsonUser,
         success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">horario de vuelo agregado con exito.</p>');
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Horario de vuelo agregado con exito.</p>');
             jQuery("#successModal").modal('show');
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
@@ -436,7 +472,110 @@ function addNewShedule() {
     });
 }
 // Register new ticket 
+function addNewTicket() {
+    var id = document.getElementById("tk_id_add").value;
+    var flight_id = document.getElementById("tk_fid_add").value;
+    var price = document.getElementById("tk_price_phone_add").value;
+    var discount = document.getElementById("tk_discount_phone_add").value;
+    var seat = document.getElementById("tk_seat_add").value;
+    var user_usuario = document.getElementById("tk_user_add").value;
 
+    var jsonUser = {
+        "id": id,
+        "flight_id": flight_id,
+        "price": price,
+        "discount": discount,
+        "seat": seat,
+        "user_usuario": user_usuario
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/tiquete",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ticket agregado con exito.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+// Register new flight 
+function addNewFlight() {
+    var id = document.getElementById("f_id_add").value;
+    var rute_id = document.getElementById("f_rid_add").value;
+    var airplane_id = document.getElementById("f_apid_add").value;
+    var shedule_id = document.getElementById("f_schid_add").value;
+
+    var jsonUser = {
+        "id": id,
+        "rute_id": rute_id,
+        "airplane_id": airplane_id,
+        "shedule_id": shedule_id
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/vuelo",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center"Vuelo agregado con exito.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+// Register new user from admin 
+function addNewUserAdmin() {
+    var user_username_rm = document.getElementById("p_username_add").value;
+    var email_rm = document.getElementById("p_addail_add").value;
+    var password_rm = document.getElementById("p_password_add").value;
+    var name_rm = document.getElementById("p_name_add").value;
+    var lastname_rm = document.getElementById("p_lastname_add").value;
+    var work_phone_rm = document.getElementById("p_work_phone_add").value;
+    var cell_phone_rm = document.getElementById("p_cell_phone_add").value;
+    var address_rm = document.getElementById("p_address_add").value;
+    var dob_rm = document.getElementById("p_dob_add").value;
+
+    var jsonUser = {
+        "user_name": user_username_rm,
+        "password": password_rm,
+        "name_": name_rm,
+        "lastname": lastname_rm,
+        "email": email_rm,
+        "bob": dob_rm,
+        "address": address_rm,
+        "work_phone": work_phone_rm,
+        "cell_phone": cell_phone_rm
+    }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletInsert/registro",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil creado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#registerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+// Register tickets from checkout
 function addNewTicketArray(flight_id, discount, array) {
 
     var flight_id = flight_id;
@@ -472,75 +611,30 @@ function addNewTicketArray(flight_id, discount, array) {
 
 }
 
-function addNewTicket() {
-    var id = document.getElementById("tk_id_em").value;
-    var flight_id = document.getElementById("tk_fid_em").value;
-    var price = document.getElementById("tk_price_phone_em").value;
-    var discount = document.getElementById("tk_discount_phone_em").value;
-    var seat = document.getElementById("tk_seat_em").value;
-    var user_usuario = document.getElementById("tk_id_user_em").value;
-
-
-    var jsonUser = {
-        "id": id,
-        "flight_id": flight_id,
-        "price": price,
-        "discount": discount,
-        "seat": seat,
-        "user_usuario": user_usuario
-    }
-
-    $.ajax({
-        url: "/lab01_frontend1/servletInsert/tiquete",
-        method: "POST",
-        data: jsonUser,
-        success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">horario de vuelo agregado con exito.</p>');
-            jQuery("#successModal").modal('show');
-            $("#successModal").on("hidden.bs.modal", function () {
-                $('#registerModal').modal('hide')
-            });
-        },
-        error: function () {
-            alert("algo salio mal");
-        }
-    });
-}
-// Register new flight 
-function addNewFlight() {
-    var id = document.getElementById("f_id_em").value;
-    var rute_id = document.getElementById("f_rid_em").value;
-    var airplane_id = document.getElementById("f_apid_em").value;
-    var shedule_id = document.getElementById("f_schid_em").value;
-
-    var jsonUser = {
-        "id": id,
-        "rute_id": rute_id,
-        "airplane_id": airplane_id,
-        "shedule_id": shedule_id
-    }
-
-    $.ajax({
-        url: "/lab01_frontend1/servletInsert/vuelo",
-        method: "POST",
-        data: jsonUser,
-        success: function (data) {
-            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">horario de vuelo agregado con exito.</p>');
-            jQuery("#successModal").modal('show');
-            $("#successModal").on("hidden.bs.modal", function () {
-                $('#registerModal').modal('hide')
-            });
-        },
-        error: function () {
-            alert("algo salio mal");
-        }
-    });
-}
-
 
 // Get Passanger
 function getPassanger() {
     var main = JSON.parse(window.sessionStorage.main);
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/passenger',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 1)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
+}
+// Get Passanger Admin
+function getPassangerAdmin(data) {
+    var main = {
+        "username": data
+    }
     $.ajax({
         url: '/lab01_frontend1/servletSearch/passenger',
         data: main,
@@ -570,6 +664,8 @@ function updatePassanger() {
     var address_rm = document.getElementById("p_address_em").value;
     var dob_rm = document.getElementById("p_dob_em").value;
     var role_rm = window.sessionStorage.getItem("role");
+
+    console.log(dob_rm)
 
     var jsonUser = {
         "user_name": user_username_rm,
@@ -603,505 +699,268 @@ function updatePassanger() {
 
 }
 // Get Airplane
-function getAirplane() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+function getAirplane(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/airplane',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 2)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
 // Update Airplane
 function updateAirplane() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
+    var id = document.getElementById("ap_id_em").value;
+    var year = document.getElementById("ap_year_em").value;
+    var model = document.getElementById("ap_model_em").value;
+    var brand = document.getElementById("ap_brand_em").value;
+    var type = document.getElementById("ap_type_em").value == 1 ? true : false;
+    var cant_max = document.getElementById("ap_cantmax_em").value;
 
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var jsonUser = {
+        "id": id,
+        "year": year,
+        "model": model,
+        "brand": brand,
+        "type": type,
+        "cant_max": cant_max
     }
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/avion",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Avión actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updatePassangerModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+
 }
-// Get Rute
-function getRute() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+// Get Airplane
+function getRoute(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/route',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 3)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
-// Update Rute
-function updateRute() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
+// Update Airplane
+function updateRoute() {
+    var id = document.getElementById("rt_id_em").value;
+    var origin = document.getElementById("rt_origin_em").value;
+    var destination = document.getElementById("rt_destination_em").value;
+    var duration = document.getElementById("rt_duration_em").value;
 
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var jsonUser = {
+        "id": id,
+        "origin": origin,
+        "destination": destination,
+        "duration": duration
     }
+
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/ruta",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            console.log(JSON.stringify(data))
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ruta actualizada satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
-// Get Shedule
-function getShedule() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+// Get Schedule
+function getSchedule(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/schedule',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 4)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
-// Update Shedule
-function updateShedule() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
-
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+// Update Schedule
+function updateSchedule() {
+    var id = document.getElementById("sh_id_em").value;
+    var date_time = document.getElementById("sh_datetime_em").value;
+    var a = new Date(date_time).toISOString().slice(0, 19).replace('T', ' ');
+    var jsonUser = {
+        "id": id,
+        "date_time": a
     }
+
+    console.log(jsonUser);
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/horario",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Horario actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
 // Get Ticket
-function getTicket() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+function getTicket(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/ticket',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 5)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
 // Update Ticket
 function updateTicket() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
-
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var id = document.getElementById("tk_id_em").value;
+    var flight_id = document.getElementById("tk_fid_em").value;
+    var price = document.getElementById("tk_price_phone_em").value;
+    var discount = document.getElementById("tk_discount_phone_em").value;
+    var seat = document.getElementById("tk_seat_em").value;
+    var user_username = document.getElementById("tk_user_em").value;
+    var jsonUser = {
+        "id": id,
+        "flight_id": flight_id,
+        "price": price,
+        "discount": discount,
+        "seat": seat,
+        "user_username": user_username
     }
+
+    console.log(jsonUser);
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/tiquete",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ticket actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
 // Get Flight
-function getFlight() {
-    var user = JSON.parse(window.sessionStorage.user);
-    if (window.sessionStorage.role === "1") {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/lab01_frontend1/servletList/userList/" + user.username,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-    } else {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8081/smartmsphv2/api/v1/officials/" + user.email,
-            contentType: "application/json",
-            dataType: 'json',
-            success: function (data) {
-                window.sessionStorage.citizen = JSON.stringify(data);
-                fill(user, data);
-            },
-            error: function (status) {
-                document.getElementById("user").setAttribute('class', 'form-control is-invalid');
-                document.getElementById("user").setAttribute('title', 'Usuario no existente');
-            },
-            fail: function (xhr, textStatus, errorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
+function getFlight(data) {
+    var main = {
+        "id": data
     }
+    $.ajax({
+        url: '/lab01_frontend1/servletSearch/flight',
+        data: main,
+        type: 'post',
+        cache: false,
+        success: function (data) {
+            fillWithInformation(data, 6)
+        },
+        error: function () {
+            jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+            jQuery("#errorModal").modal('show');
+        }
+    }
+    );
 }
 // Update Flight
 function updateFlight() {
-    var email = document.getElementById("userU").value;
-    var pass = document.getElementById("passwordU").value;
-    var name = document.getElementById("nameU").value;
-    var lastname = document.getElementById("lastnameU").value;
-    var cel = document.getElementById("celU").value;
-
-    if (validateAll()) {
-        var lat = markersArray[0].getPosition().toJSON()["lat"];
-        var longi = markersArray[0].getPosition().toJSON()["lng"];
-        var jsonUser = {
-            "email": email,
-            "password": pass,
-            "role_id_role": window.sessionStorage.role
-        }
-        var jsonCitizen = {
-            "email": email,
-            "firstName": name,
-            "lastName": lastname,
-            "cel_Num": cel,
-            "lat": lat,
-            "longi": longi
-        }
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/users/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonUser),
-            dataType: 'json',
-            contentType: "application/json",
-            fail: function (xhr, textStatus, erarorThrown) {
-                jQuery("#errorModal").modal('show');
-            }
-        });
-
-        $.ajax({
-            url: "http://localhost:8081/smartmsphv2/api/v1/citizens/" + email,
-            method: "PUT",
-            data: JSON.stringify(jsonCitizen),
-            dataType: 'json',
-            contentType: "application/json",
-            success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Perfil actualizado.</p>');
-                jQuery("#successModal").modal('show');
-                $("#successModal").on("hidden.bs.modal", function () {
-                    $('#updateModal').modal('hide')
-                });
-                window.sessionStorage.pass = pass;
-                window.sessionStorage.name = name;
-
-            }
-        });
-
-    } else {
-        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Datos faltantes o incorrectos.</p>');
-        jQuery("#errorModal").modal('show');
+    var id = document.getElementById("f_id_em").value;
+    var route_id = document.getElementById("f_rid_em").value;
+    var airplaine_id = document.getElementById("f_apid_em").value;
+    var schedule_id = document.getElementById("f_schid_em").value;
+    var jsonUser = {
+        "id": id,
+        "route_id": route_id,
+        "airplaine_id": airplaine_id,
+        "schedule_id": schedule_id
     }
+
+    console.log(jsonUser);
+
+    $.ajax({
+        url: "/lab01_frontend1/servletUpdate/vuelo",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Vuelo actualizado satisfactoriamente.</p>');
+            jQuery("#successModal").modal('show');
+            $("#successModal").on("hidden.bs.modal", function () {
+                $('#updateRouteModal').modal('hide')
+            });
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
 }
+
+
 
 
 
@@ -1112,6 +971,8 @@ function fillWithInformation(data, i) {
         {
             // Passangers
             var a = new Date(data['passanger']['dob']);
+            a.setDate(a.getDate() + 1)
+            console.log(data['passanger']['dob']);
             document.getElementById("p_username_em").value = data['passanger']['user_username'];
             document.getElementById("p_email_em").value = data['passanger']['email'];
             document.getElementById("p_password_em").value = window.sessionStorage.getItem("password")
@@ -1126,51 +987,52 @@ function fillWithInformation(data, i) {
         case 2:
         {
             // Airplanes
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            document.getElementById("ap_id_em").value = data['airplane']['id'];
+            document.getElementById("ap_year_em").value = data['airplane']['year'];
+            document.getElementById("ap_model_em").value = data['airplane']['model'];
+            document.getElementById("ap_brand_em").value = data['airplane']['brand'];
+            document.getElementById("ap_type_em").value = data['airplane']['type'] ? 1 : 0;
+            document.getElementById("ap_cantmax_em").value = data['airplane']['cant_max'];
             break;
         }
         case 3:
         {
-            // Rutes
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            // Routes
+            document.getElementById("rt_id_em").value = data['route']['id'];
+            document.getElementById("rt_origin_em").value = data['route']['origin'];
+            document.getElementById("rt_destination_em").value = data['route']['destination'];
+            document.getElementById("rt_duration_em").value = data['route']['duration'];
             break;
         }
         case 4:
         {
             // Shedules
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            var a = new Date(data['schedule']['date_time']);
+            a.setMinutes(a.getMinutes() - a.getTimezoneOffset());
+            document.getElementById("sh_id_em").value = data['schedule']['id'];
+            document.getElementById("sh_datetime_em").value = a.toISOString().substring(0, 19);
             break;
         }
         case 5:
         {
             // Tickets
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            var disc = parseInt(data['tickets']['price']) - (parseInt(data['tickets']['price']) * 1 / parseInt(data['tickets']['discount']));
+            document.getElementById("tk_id_em").value = data['tickets']['id'];
+            document.getElementById("tk_fid_em").value = data['tickets']['flight_id'];
+            document.getElementById("tk_price_phone_em").value = data['tickets']['price'];
+            document.getElementById("tk_discount_phone_em").value = data['tickets']['discount'];
+            document.getElementById("tk_finalprice_em").value = disc.toString();
+            document.getElementById("tk_seat_em").value = data['tickets']['seat'];
+            document.getElementById("tk_user_em").value = data['tickets']['user_username'];
             break;
         }
         case 6:
         {
             // Flights
-            document.getElementById("userU").value = data1.email;
-            document.getElementById("passwordU").value = data1.password;
-            document.getElementById("nameU").value = data2['firstName'];
-            document.getElementById("lastnameU").value = data2['lastName'];
-            document.getElementById("celU").value = data2['cel_Num'];
+            document.getElementById("f_id_em").value = data['flight']['id'];
+            document.getElementById("f_rid_em").value = data['flight']['route_id'];
+            document.getElementById("f_apid_em").value = data['flight']['airplaine_id'];
+            document.getElementById("f_schid_em").value = data['flight']['schedule_id'];
             break;
         }
     }
@@ -1179,8 +1041,6 @@ function fillWithInformation(data, i) {
 
 
 // List
-
-
 function showListFlightsAdmin() {
     $.ajax({
         type: 'GET',
@@ -1189,29 +1049,24 @@ function showListFlightsAdmin() {
         success: function (data) {
             list(data, 1);
             $(document).ready(function () {
-                $('#flightsAdminTable').DataTable({
+                $('#flightsAdminFlightsTable').DataTable({
                     "language": {
                         "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
                     },
                     retrieve: true
                 })
             });
-        },
-        error: function () {
-            alert('error');
-        },
-        fail: function () {
-            alert("fail")
         }
     })
 }
+
 function showListFlightsClient() {
     $.ajax({
         type: 'GET',
-        url: '/lab01_frontend1/servletList/clientFlightList',
+        url: '/lab01_frontend1/servletList/flightList',
         cache: false,
         success: function (data) {
-            list(data, 11);
+            list(data, 7);
             $(document).ready(function () {
                 $('#fligthsSearch').DataTable({
                     "language": {
@@ -1230,31 +1085,31 @@ function showListFlightsClient() {
     })
 }
 
-function showListTicketsAdmin() {
-    $.ajax({
-        type: 'GET',
-        url: '/lab01_frontend1/servletList/ticketsList',
-        cache: false,
-        success: function (data) {
-            //alert(JSON.stringify(data));
-            list(data, 6);
-            $(document).ready(function () {
-                $('#flightsAdminTicketsTable').DataTable({
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-                    },
-                    retrieve: true
-                })
-            });
-        },
-        error: function () {
-            alert('error');
-        },
-        fail: function () {
-            alert("fail")
-        }
-    })
-}
+//function showListTicketsAdmin() {
+//    $.ajax({
+//        type: 'GET',
+//        url: '/lab01_frontend1/servletList/ticketsList',
+//        cache: false,
+//        success: function (data) {
+//            //alert(JSON.stringify(data));
+//            list(data, 6);
+//            $(document).ready(function () {
+//                $('#flightsAdminTicketsTable').DataTable({
+//                    "language": {
+//                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+//                    },
+//                    retrieve: true
+//                })
+//            });
+//        },
+//        error: function () {
+//            alert('error');
+//        },
+//        fail: function () {
+//            alert("fail")
+//        }
+//    })
+//}
 
 function showListRoutesAdmin() {
     $.ajax({
@@ -1444,12 +1299,12 @@ function list(data, i) {
             });
             break;
         }
-        case 11:
+        case 7:
         {
-            var listado = document.getElementById("fligthsSearch");
+            var listado = document.getElementById("flightsAvailable");
             listado.innerHTML = "";
             data["flightList"].forEach((u) => {
-                row(u, 11);
+                row(u, 7);
             });
             break;
         }
@@ -1463,13 +1318,55 @@ function row(data, i) {
             case 1:
             {
                 tr += '<td>' + data.id + '</td>';
-                tr += '<td>' + data.route_id + '</td>';
-                tr += '<td>' + data.airplaine_id + '</td>';
-                tr += '<td>' + data.schedule_id + '</td>';
+
+                // Route data
+                var route = {
+                    "id": data.route_id
+                }
+                $.ajax({
+                    url: '/lab01_frontend1/servletSearch/route',
+                    data: route,
+                    type: 'post',
+                    cache: false,
+                    async: false,
+                    success: function (a) {
+                        tr += '<td>' + a["route"]["destination"] + '</td>';
+                        tr += '<td>' + a["route"]["origin"] + '</td>';
+                    },
+                    error: function () {
+                        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+                        jQuery("#errorModal").modal('show');
+                    }
+                }
+                );
+
+                // Schedule data
+                var schedule = {
+                    "id": data.schedule_id
+                }
+                $.ajax({
+                    url: '/lab01_frontend1/servletSearch/schedule',
+                    data: schedule,
+                    type: 'post',
+                    cache: false,
+                    async: false,
+                    success: function (b) {
+                        tr += '<td>' + b["schedule"]["date_time"] + '</td>';
+                    },
+                    error: function () {
+                        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+                        jQuery("#errorModal").modal('show');
+                    }
+                }
+                );
+
                 tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
                 tr += '</tr>';
                 $('#flightsAdminTable').append(tr);
+
+
+
                 break;
             }
             case 2:
@@ -1490,7 +1387,7 @@ function row(data, i) {
                 tr += '<td>' + data.year + '</td>';
                 tr += '<td>' + data.model + '</td>';
                 tr += '<td>' + data.brand + '</td>';
-                tr += '<td>' + data.type + '</td>';
+                tr += '<td>' + (data.type ? "Grande" : "Pequeño") + '</td>';
                 tr += '<td>' + data.cant_max + '</td>';
                 tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
@@ -1539,7 +1436,7 @@ function row(data, i) {
                 $('#ticketsAdminTable').append(tr);
                 break;
             }
-            case 11:
+            case 7:
             {
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.route_id + '</td>';
@@ -1553,7 +1450,6 @@ function row(data, i) {
         }
     }
 }
-
 
 
 // Web Sockets
