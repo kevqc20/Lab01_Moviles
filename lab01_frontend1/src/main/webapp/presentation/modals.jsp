@@ -213,7 +213,7 @@
                         <ul id="selected-seats">
                         </ul>
                         Total: <b>$<span id="total">0</span></b>
-                        <button class="checkout-button" onclick="checkout()">Checkout &raquo;</button>                        
+                        <button class="checkout-button" onclick="checkout()">Checkout &raquo;</button>  
                     </div>
 
                 </div>
@@ -1266,6 +1266,7 @@
     var firstSeatLabel = 1;
     var flight_id = '';
     var seat_array = [];
+    var scMap;
     $(document).ready(function () {
         var $cart = $('#selected-seats'),
                 $counter = $('#counter'),
@@ -1348,6 +1349,7 @@
                 }
             }
         });
+        scMap = sc;
         //this will handle "[cancel]" link clicks
         $('#selected-seats').on('click', '.cancel-cart-item', function () {
             //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
@@ -1377,6 +1379,7 @@
     }
     function flight_id_set(id) {
         flight_id = id;
+        charge_seats();
     }
     function checkout() {
         if (seat_array.length > 0) {
@@ -1385,5 +1388,14 @@
             alert("seleccione un asiento");
         }
     }
+    function charge_seats() {
+        flighTickets(flight_id, scMap);
+    }
 
+    function clear_map() {
+        scMap.find('selected').status('available');
+    }
+    function set_unavailable(seat){
+        scMap.get(seat).status('unavailable');
+    }
 </script>
