@@ -1379,6 +1379,7 @@
     }
     function flight_id_set(id) {
         flight_id = id;
+        console.log(id)
         charge_seats();
     }
     function checkout() {
@@ -1389,10 +1390,12 @@
         }
     }
     function charge_seats() {
+        clear_map();
         flighTickets(flight_id, scMap);
     }
 
     function clear_map() {
+        scMap.find('unavailable').status('available');
         scMap.find('selected').status('available');
     }
     function set_unavailable(seat){

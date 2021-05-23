@@ -59,6 +59,12 @@ window.onload = function () {
         $('.modal').modal('hide')
     });
 
+    $('.checkout-button').on('click', function () {
+        $('.modal').modal('hide')
+    });
+    
+    
+
 
 
 // Enter key
@@ -597,7 +603,7 @@ function addNewTicketArray(flight_id, discount, array) {
             method: "POST",
             data: jsonUser,
             success: function (data) {
-                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">compra realizada con exito.</p>');
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">¡Muchas gracias por su compra!.</p>');
                 jQuery("#successModal").modal('show');
                 $("#successModal").on("hidden.bs.modal", function () {
                     $('#registerModal').modal('hide')
