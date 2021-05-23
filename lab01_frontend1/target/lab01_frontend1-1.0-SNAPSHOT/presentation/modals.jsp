@@ -92,6 +92,56 @@
     </div>
 </div>
 
+<!-- Modal List Tickets clients-->
+<div class="modal fade" id="flightsClientTickets">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div class="container">
+                    <div class="table-responsive">
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <h2>Administrar <b>tickets</b></h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="table-dark table-striped table-bordered" id='flightsClientTicketsTable' style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="th">ID</th>
+                                        <th class="th">ID vuelo</th>
+                                        <th class="th">Precio</th>
+                                        <th class="th">Descuento</th>
+                                        <th class="th">Asiento</th>
+                                        <th class="th">Usuario</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ticketsClientTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- Modal Success -->
 <div id="successModal" class="modal fade">
     <div class="modal-dialog modal-confirm">

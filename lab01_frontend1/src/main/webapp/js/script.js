@@ -62,8 +62,8 @@ window.onload = function () {
     $('.checkout-button').on('click', function () {
         $('.modal').modal('hide')
     });
-    
-    
+
+
 
 
 
@@ -103,6 +103,7 @@ window.onload = function () {
                     "                       <a class='nav-link dropdown-toggle' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>Herramientas de usuario</a>" +
                     "                       <div class='dropdown-menu' aria-labelledby='navbarDropdownMenuLink'>" +
                     "                           <a class='dropdown-item' href='#flightsSearchModal' class='trigger-btn' data-toggle='modal' onclick='showListFlightsClient()'>Comprar ticket de vuelo</a>" +
+                    "                           <a class='dropdown-item' href='#flightsClientTickets' class='trigger-btn' data-toggle='modal' onclick='showListTicketsClient()'>Tiquetes comprados</a>" +
                     "                       </div>" +
                     "                   </li>"
                     :
@@ -1270,6 +1271,31 @@ function showListTicketsAdmin() {
     })
 }
 
+function showListTicketsClient() {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/ticketsList',
+        cache: false,
+        success: function (data) {
+            list(data, 8);
+            $(document).ready(function () {
+                $('#flightsClientTicketsTable').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                    },
+                    retrieve: true
+                })
+            });
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
+
 
 //Create list
 function list(data, i) {
@@ -1334,6 +1360,18 @@ function list(data, i) {
             listado.innerHTML = "";
             data["flightList"].forEach((u) => {
                 row(u, 7);
+            });
+            break;
+        }
+        case 8:
+        {
+            var listado = document.getElementById("ticketsClientTable");
+            listado.innerHTML = "";
+            
+            data["ticketsLists"].forEach((u) => {
+                if (u.user_username.toString() === window.sessionStorage.user.toString()) {
+                    row(u, 8);
+                }
             });
             break;
         }
@@ -1468,12 +1506,63 @@ function row(data, i) {
             case 7:
             {
                 tr += '<td>' + data.id + '</td>';
-                tr += '<td>' + data.route_id + '</td>';
-                tr += '<td>' + data.airplaine_id + '</td>';
-                tr += '<td>' + data.schedule_id + '</td>';
+
+                // Route data
+                var route = {
+                    "id": data.route_id
+                }
+                $.ajax({
+                    url: '/lab01_frontend1/servletSearch/route',
+                    data: route,
+                    type: 'post',
+                    cache: false,
+                    async: false,
+                    success: function (a) {
+                        tr += '<td>' + a["route"]["destination"] + '</td>';
+                        tr += '<td>' + a["route"]["origin"] + '</td>';
+                    },
+                    error: function () {
+                        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+                        jQuery("#errorModal").modal('show');
+                    }
+                }
+                );
+
+                // Schedule data
+                var schedule = {
+                    "id": data.schedule_id
+                }
+                $.ajax({
+                    url: '/lab01_frontend1/servletSearch/schedule',
+                    data: schedule,
+                    type: 'post',
+                    cache: false,
+                    async: false,
+                    success: function (b) {
+                        tr += '<td>' + b["schedule"]["date_time"] + '</td>';
+                    },
+                    error: function () {
+                        jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Error con los datos.</p>');
+                        jQuery("#errorModal").modal('show');
+                    }
+                }
+                );
                 tr += '<td><button class="checkout" href="#checkoutModal" class="trigger-btn" data-toggle="modal" onclick="flight_id_set(' + data.id + ')">Comprar ticket</button></td>';
                 tr += '</tr>';
                 $('#fligthsSearch').append(tr);
+                break;
+            }
+            case 8:
+            {
+                console.log(data);
+                tr += '<td>' + data.id + '</td>';
+                tr += '<td>' + data.flight_id + '</td>';
+                tr += '<td>' + data.price + '</td>';
+                tr += '<td>' + data.discount + '</td>';
+                tr += '<td>' + data.seat + '</td>';
+                tr += '<td>' + data.user_username + '</td>';
+                tr += '</tr>';
+                $('#ticketsClientTable').append(tr);
                 break;
             }
         }
