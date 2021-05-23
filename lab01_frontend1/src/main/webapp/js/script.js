@@ -961,6 +961,29 @@ function updateFlight() {
 }
 
 
+function flighTickets(id_fly, scMap) {
+    $.ajax({
+        type: 'GET',
+        url: '/lab01_frontend1/servletList/ticketsList',
+        cache: false,
+        success: function (data) {
+            data["ticketsLists"].forEach((x) => {
+                if (x.flight_id == id_fly) {
+                    var num = x.seat.toString();
+                    num = num[0] + "_" + num[1];
+                    set_unavailable(num);
+                }
+            });
+
+        },
+        error: function () {
+            alert('error');
+        },
+        fail: function () {
+            alert("fail")
+        }
+    })
+}
 
 
 

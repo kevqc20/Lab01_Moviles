@@ -87,9 +87,16 @@ public class servletInsert extends HttpServlet {
         String cellphone = request.getParameter("cell_phone");
         String address = request.getParameter("address");
         String birthday = request.getParameter("bob");
-        Date date = Date.valueOf(birthday);
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        java.sql.Date sql = null;
+        try {
+            java.util.Date parsed = format.parse(birthday);
+            sql = new java.sql.Date(parsed.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         serv.insertUser(user, pass, false);
-        serv.insertPassenger(user, name, last_name, email, date, address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
+        serv.insertPassenger(user, name, last_name, email, sql, address, Integer.parseInt(wk_phone), Integer.parseInt(cellphone));
     }
 
     private void avion(HttpServletRequest request, HttpServletResponse response) {
