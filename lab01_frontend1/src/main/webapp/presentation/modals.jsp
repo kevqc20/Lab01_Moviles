@@ -650,7 +650,6 @@
                                         <th class="th">ID</th>
                                         <th class="th">ID vuelo</th>
                                         <th class="th">Precio</th>
-                                        <th class="th">Descuento</th>
                                         <th class="th">Asiento</th>
                                         <th class="th">Usuario</th>
                                         <th>Editar</th>
@@ -1174,139 +1173,7 @@
     </div>
 </div>
 
-<!-- ---------------------Modal DELETE--------------------- -->
 
-<!-- Modal Delete Airplante -->
-<div id="airplaneDeleteModal" class="modal fade">
-    <div class="modal-dialog modal-delete">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
-                </div>						
-                <h4 class="modal-title w-100">¿Desea borrar este avión?</h4>	
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Este procedimiento no se puede revertir. ¿Desea continuar?.</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" onclick="">Borrar</button>
-            </div>
-        </div>
-    </div>
-</div>   
-
-<!-- Modal Delete Flight -->
-<div id="flightDeleteModal" class="modal fade">
-    <div class="modal-dialog modal-delete">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
-                </div>						
-                <h4 class="modal-title w-100">¿Desea borrar este vuelo?</h4>	
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Este procedimiento no se puede revertir. ¿Desea continuar?.</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" onclick="">Borrar</button>
-            </div>
-        </div>
-    </div>
-</div> 
-
-<!-- Modal Delete Passanger -->
-<div id="passangerDeleteModal" class="modal fade">
-    <div class="modal-dialog modal-delete">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
-                </div>						
-                <h4 class="modal-title w-100">¿Desea borrar est@ pasajer@?</h4>	
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Este procedimiento no se puede revertir. ¿Desea continuar?.</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" onclick="">Borrar</button>
-            </div>
-        </div>
-    </div>
-</div> 
-
-<!-- Modal Delete Route -->
-<div id="routeDeleteModal" class="modal fade">
-    <div class="modal-dialog modal-delete">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
-                </div>						
-                <h4 class="modal-title w-100">¿Desea borrar esta ruta?</h4>	
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Este procedimiento no se puede revertir. ¿Desea continuar?.</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" onclick="">Borrar</button>
-            </div>
-        </div>
-    </div>
-</div> 
-
-<!-- Modal Delete Schedule -->
-<div id="scheduleDeleteModal" class="modal fade">
-    <div class="modal-dialog modal-delete">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
-                </div>						
-                <h4 class="modal-title w-100">¿Desea borrar este horario?</h4>	
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Este procedimiento no se puede revertir. ¿Desea continuar?.</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" onclick="">Borrar</button>
-            </div>
-        </div>
-    </div>
-</div> 
-
-<!-- Modal Delete Ticket -->
-<div id="ticketDeleteModal" class="modal fade">
-    <div class="modal-dialog modal-delete">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="material-icons">&#xE5CD;</i>
-                </div>						
-                <h4 class="modal-title w-100">¿Desea borrar este ticket?</h4>	
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Este procedimiento no se puede revertir. ¿Desea continuar?.</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-danger" onclick="">Borrar</button>
-            </div>
-        </div>
-    </div>
-</div> 
 
 
 

@@ -1115,32 +1115,6 @@ function showListFlightsClient() {
     })
 }
 
-//function showListTicketsAdmin() {
-//    $.ajax({
-//        type: 'GET',
-//        url: '/lab01_frontend1/servletList/ticketsList',
-//        cache: false,
-//        success: function (data) {
-//            //alert(JSON.stringify(data));
-//            list(data, 6);
-//            $(document).ready(function () {
-//                $('#flightsAdminTicketsTable').DataTable({
-//                    "language": {
-//                        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
-//                    },
-//                    retrieve: true
-//                })
-//            });
-//        },
-//        error: function () {
-//            alert('error');
-//        },
-//        fail: function () {
-//            alert("fail")
-//        }
-//    })
-//}
-
 function showListRoutesAdmin() {
     $.ajax({
         type: 'GET',
@@ -1367,7 +1341,7 @@ function list(data, i) {
         {
             var listado = document.getElementById("ticketsClientTable");
             listado.innerHTML = "";
-            
+
             data["ticketsLists"].forEach((u) => {
                 if (u.user_username.toString() === window.sessionStorage.user.toString()) {
                     row(u, 8);
@@ -1377,6 +1351,7 @@ function list(data, i) {
         }
     }
 }
+
 // Add rows to table
 function row(data, i) {
     if (data) {
@@ -1428,7 +1403,7 @@ function row(data, i) {
                 );
 
                 tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-                tr += '<td><button class="flightsAdminDelete" href="#flightDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '<td><button class="flightsAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deleteFlight(' + "\'" + data.id + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#flightsAdminTable').append(tr);
 
@@ -1443,13 +1418,14 @@ function row(data, i) {
                 tr += '<td>' + data.destination + '</td>';
                 tr += '<td>' + data.duration + '</td>';
                 tr += '<td><button class="routesAdminEdit" href="#updateRouteModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-                tr += '<td><button class="routesAdminDelete" href="#routeDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '<td><button class="routesAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deleteRoute(' + "\'" + data.id + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#routesAdminTable').append(tr);
                 break;
             }
             case 3:
             {
+                console.log(data.id)
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.year + '</td>';
                 tr += '<td>' + data.model + '</td>';
@@ -1457,7 +1433,7 @@ function row(data, i) {
                 tr += '<td>' + (data.type ? "Grande" : "Pequeño") + '</td>';
                 tr += '<td>' + data.cant_max + '</td>';
                 tr += '<td><button class="airplanesAdminEdit" href="#updateAirplaneModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-                tr += ' <td><button class="airplanesAdminDelete" href="#airplaneDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += ' <td><button class="airplanesAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deleteAirplane(' + "\'" + data.id + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#airplanesAdminTable').append(tr);
                 break;
@@ -1467,7 +1443,7 @@ function row(data, i) {
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.date_time + '</td>';
                 tr += '<td><button class="schedulesAdminEdit" href="#updateScheduleModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-                tr += '<td><button class="schedulesAdminDelete" href="#scheduleDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '<td><button class="schedulesAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deleteSchedule(' + "\'" + data.id + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#schedulesAdminTable').append(tr);
                 break;
@@ -1483,7 +1459,7 @@ function row(data, i) {
                 tr += '<td>' + data.work_phone + '</td>';
                 tr += '<td>' + data.cell_phone + '</td>';
                 tr += '<td><button class="passangerAdminEdit" href="#updatePassangerModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-                tr += '<td><button class="passangerAdminDelete" href="#passangerDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '<td><button class="passangerAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deletePassanger(' + "\'" + data.user_username + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#passangersAdminTable').append(tr);
                 break;
@@ -1494,11 +1470,10 @@ function row(data, i) {
                 tr += '<td>' + data.id + '</td>';
                 tr += '<td>' + data.flight_id + '</td>';
                 tr += '<td>' + data.price + '</td>';
-                tr += '<td>' + data.discount + '</td>';
                 tr += '<td>' + data.seat + '</td>';
                 tr += '<td>' + data.user_username + '</td>';
                 tr += '<td><button class="ticketsAdminEdit" href="#updateTicketModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
-                tr += '<td><button class="ticketsAdminDelete" href="#ticketDeleteModal" class="trigger-btn" data-toggle="modal">Borrar</button></td>';
+                tr += '<td><button class="ticketsAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deleteTicket(' + "\'" + data.id + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#ticketsAdminTable').append(tr);
                 break;
@@ -1569,6 +1544,166 @@ function row(data, i) {
     }
 }
 
+
+// Delete
+
+function deleteFlight(id) {
+    var jsonUser = {
+        "id": id,
+    }
+    $.ajax({
+        url: "/lab01_frontend1/servletDelete/vuelo",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            if (data.delete) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Vuelo eliminado satisfactoriamente.</p>');
+                $('#flightsAdminFlights').modal('hide')
+                jQuery("#successModal").modal('show');
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Este vuelo tiene tickets asociados. No se puede eliminar.</p>');
+                $('#flightsAdminFlights').modal('hide')
+                jQuery("#errorModal").modal('show');
+            }
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+
+function deleteRoute(id) {
+    var jsonUser = {
+        "id": id,
+    }
+    $.ajax({
+        url: "/lab01_frontend1/servletDelete/ruta",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            if (data.delete) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ruta eleminada satisfactoriamente.</p>');
+                $('#flightsAdminRoutes').modal('hide')
+                jQuery("#successModal").modal('show');
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Esta ruta tiene vuelos asociados. No se puede eliminar.</p>');
+                $('#flightsAdminRoutes').modal('hide')
+                jQuery("#errorModal").modal('show');
+            }
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+
+function deleteAirplane(id) {
+    var jsonUser = {
+        "id": id,
+    }
+    
+    console.log(jsonUser)
+    $.ajax({
+        url: "/lab01_frontend1/servletDelete/avion",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            if (data.delete) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Avion eliminado satisfactoriamente.</p>');
+                $('#flightsAdminAirplanes').modal('hide')
+                jQuery("#successModal").modal('show');
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Esta avion tiene vuelos asociados. No se puede eliminar.</p>');
+                $('#flightsAdminAirplanes').modal('hide')
+                jQuery("#errorModal").modal('show');
+            }
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+
+function deleteSchedule(id) {
+    var jsonUser = {
+        "id": id,
+    }
+    
+    console.log(jsonUser)
+    $.ajax({
+        url: "/lab01_frontend1/servletDelete/horario",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            if (data.delete) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Horario eliminado satisfactoriamente.</p>');
+                $('#flightsAdminSchedules').modal('hide')
+                jQuery("#successModal").modal('show');
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Este horario tiene vuelos asociados. No se puede eliminar.</p>');
+                $('#flightsAdminSchedules').modal('hide')
+                jQuery("#errorModal").modal('show');
+            }
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+
+function deletePassanger(id) {
+    var jsonUser = {
+        "id": id,
+    }
+    
+    console.log(jsonUser)
+    $.ajax({
+        url: "/lab01_frontend1/servletDelete/registro",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            if (data.delete) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Pasajero eliminado satisfactoriamente.</p>');
+                $('#flightsAdminPassangers').modal('hide')
+                jQuery("#successModal").modal('show');
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Este pasajero tiene tickets asociados. No se puede eliminar.</p>');
+                $('#flightsAdminPassangers').modal('hide')
+                jQuery("#errorModal").modal('show');
+            }
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
+
+function deleteTicket(id) {
+    var jsonUser = {
+        "id": id,
+    }
+    
+    console.log(jsonUser)
+    $.ajax({
+        url: "/lab01_frontend1/servletDelete/tiquete",
+        method: "POST",
+        data: jsonUser,
+        success: function (data) {
+            if (data.delete) {
+                jQuery("#success-text").html('<p style="font-size:25px;" class="text-center">Ticket eliminado satisfactoriamente.</p>');
+                $('#flightsAdminTickets').modal('hide')
+                jQuery("#successModal").modal('show');
+            } else {
+                jQuery("#error-text").html('<p style="font-size:25px;" class="text-center">Este ticket tiene pasajeros asociados. No se puede eliminar.</p>');
+                $('#flightsAdminTickets').modal('hide')
+                jQuery("#errorModal").modal('show');
+            }
+        },
+        error: function () {
+            alert("algo salio mal");
+        }
+    });
+}
 
 // Web Sockets
 var socket = new WebSocket("ws://localhost:8080/ProgressWebSocket-1.0-SNAPSHOT/progress");
