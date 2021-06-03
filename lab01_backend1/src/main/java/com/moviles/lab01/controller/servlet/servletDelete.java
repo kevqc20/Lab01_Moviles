@@ -5,6 +5,7 @@
  */
 package com.moviles.lab01.controller.servlet;
 
+import com.google.gson.Gson;
 import com.moviles.lab01.dao.services.serviceDelete;
 import com.moviles.lab01.model.entities.User;
 import com.moviles.lab01.dao.services.serviceSearch;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,8 +28,8 @@ import java.util.logging.Logger;
  *
  * @author jose
  */
-@WebServlet(name = "servletDelete", urlPatterns = {"/servletDelete/registro", "/servletDelete/avion", "/servletDelete/ruta", "/servletDelete/horario", 
-    "/servletDelete/tiquete","/servletDelete/vuelo"})
+@WebServlet(name = "servletDelete", urlPatterns = {"/servletDelete/registro", "/servletDelete/avion", "/servletDelete/ruta", "/servletDelete/horario",
+    "/servletDelete/tiquete", "/servletDelete/vuelo"})
 public class servletDelete extends HttpServlet {
 
     @Override
@@ -70,45 +73,86 @@ public class servletDelete extends HttpServlet {
             case "/servletDelete/tiquete":
                 this.tiquetes(request, response);
                 break;
-                case "/servletDelete/vuelo":
+            case "/servletDelete/vuelo":
                 this.vuelo(request, response);
                 break;
 
         }
     }
 
-    private void registrar(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-        String user = request.getParameter("user_username_rm");
-        serv.deletePassenger(user);
-        serv.deleteUser(user);
-        
+    private void registrar(HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+        String user = request.getParameter("id");
+        Map map = new HashMap();
+        if (serv.deletePassenger(user) == true && serv.deleteUser(user) == true) { //or whatever conditions you need
+            map.put("delete", true);
+        } else {
+            map.put("delete", false);
+        }
+        write(response, map);
     }
 
-    private void avion(HttpServletRequest request, HttpServletResponse response) {
+    private void avion(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        serv.deleteAirplane(id);
+        Map map = new HashMap();
+        if (serv.deleteAirplane(id) == true) { //or whatever conditions you need
+            map.put("delete", true);
+        } else {
+            map.put("delete", false);
+        }
+        write(response, map);
     }
 
-    private void ruta(HttpServletRequest request, HttpServletResponse response) {
+    private void ruta(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        serv.deleteRoute(id);
+        Map map = new HashMap();
+        if (serv.deleteRoute(id) == true) { //or whatever conditions you need
+            map.put("delete", true);
+        } else {
+            map.put("delete", false);
+        }
+        write(response, map);
     }
 
-    private void horario(HttpServletRequest request, HttpServletResponse response) {
+    private void horario(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        serv.deleteSchedule(id);
+        Map map = new HashMap();
+        if (serv.deleteSchedule(id) == true) { //or whatever conditions you need
+            map.put("delete", true);
+        } else {
+            map.put("delete", false);
+        }
+        write(response, map);
     }
 
-    private void tiquetes(HttpServletRequest request, HttpServletResponse response) {
+    private void tiquetes(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        serv.deleteTicket(id);
+        Map map = new HashMap();
+        if (serv.deleteTicket(id) == true) { //or whatever conditions you need
+            map.put("delete", true);
+        } else {
+            map.put("delete", false);
+        }
+        write(response, map);
     }
-    private void vuelo(HttpServletRequest request, HttpServletResponse response) {
+
+    private void vuelo(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String id = request.getParameter("id");
-        serv.deleteFlight(id);
+        Map map = new HashMap();
+        if (serv.deleteFlight(id) == true) { //or whatever conditions you need
+            map.put("delete", true);
+        } else {
+            map.put("delete", false);
+        }
+        write(response, map);
+    }
+
+    private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(new Gson().toJson(map)); //this is how simple GSON works
     }
     Model mod = Model.getInstance();
     serviceDelete serv = mod.getServDelete();
     HttpSession sesion = null;
-    
+
 }
