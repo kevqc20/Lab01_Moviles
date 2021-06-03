@@ -857,9 +857,6 @@ DELIMITER ;
 -- TODOS FUNCIONAN CORRECTAMENTE
 -- -----------------------------------------------------
 
-
-
-
 call PRC_INSERT_AIRPLANE('5094A',2020,'Iberia','Airbus A330',01,150);
 call PRC_INSERT_AIRPLANE('6589B',2019,'Iberia','Airbus B440',02,140);
 call PRC_LIST_AIRPLANES();
@@ -878,12 +875,9 @@ call PRC_LIST_SCHEDULE();
 call PRC_SEARCH_SCHEDULE('01');
 call PRC_UPDATE_SCHEDULE('02','1995-12-27');
 
-call PRC_INSERT_USER('yen_cc','7856',0);
 call PRC_INSERT_USER('kev_qc','2095',1);
 call PRC_INSERT_USER('mari_vm','2548',0);
-call PRC_INSERT_USER('josito_ba','0245',1);
 call PRC_LIST_USER();
-call PRC_SEARCH_USER('yen_cc');
 
 call PRC_INSERT_FLIGHT('5789','5296','5094A','01');
 call PRC_INSERT_FLIGHT('7845','7854','6589B','02');
@@ -891,12 +885,9 @@ call PRC_LIST_FLIGHT();
 call PRC_SEARCH_FLIGHT('5789');
 call PRC_UPDATE_FLIGHT('5789','5296','5094A','02');
 
-call PRC_INSERT_PASSENGER('yen_cc','Jendry','Cascante','yencascante@hotmail.com','1996-12-27','San José',22408596,87564119);
 call PRC_INSERT_PASSENGER('kev_qc','Kevin','Quesada','kevin.q.c20@hotmail.com','1995-06-20','Heredia',22604859,84258285);
 call PRC_INSERT_PASSENGER('mari_vm','Mariana','Valverde','mari@hotmail.com','1994-08-05','Heredia',22604859,84258285);
-call PRC_INSERT_PASSENGER('josito_ba','Jose','Barrantes','jose@hotmail.com','1998-04-15','Heredia',22604859,84258285);
 call PRC_LIST_PASSENGER();
-call PRC_SEARCH_PASSENGER('yen_cc');
 
 SELECT SUM(v.price) AS Total,
 MONTHNAME(s.date_) AS Mes
