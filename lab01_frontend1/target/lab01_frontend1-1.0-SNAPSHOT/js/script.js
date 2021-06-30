@@ -1522,7 +1522,7 @@ function row(data, i) {
                     }
                 }
                 );
-                tr += '<td><button class="checkout" href="#checkoutModal" class="trigger-btn" data-toggle="modal" onclick="flight_id_set(' + data.id + ')">Comprar ticket</button></td>';
+                tr += '<td><button class="checkout" href="#checkoutModal" class="trigger-btn" data-toggle="modal" onclick="flight_id_set(' + "\'" + data.id + "\'" + ')">Comprar ticket</button></td>';
                 tr += '</tr>';
                 $('#fligthsSearch').append(tr);
                 break;
