@@ -28,7 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/script.js" type="text/javascript"></script>
-
+        <script src="../js/webSocket.js" type="text/javascript"></script>
         <script src="js/jquery.seat-charts.js"></script>
         <link rel="stylesheet" href="css/jquery.seat-charts.css">
 

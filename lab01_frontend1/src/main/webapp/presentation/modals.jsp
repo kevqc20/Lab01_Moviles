@@ -1,8 +1,3 @@
-<%-- 
-    Document   : modals
-    Author     : KEVIN
---%>
-
 <!-- Modal Login -->
 <div id="loginModal" class="modal fade">
     <div class="modal-dialog modal-login">
