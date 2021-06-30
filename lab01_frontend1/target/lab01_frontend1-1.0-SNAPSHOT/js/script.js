@@ -1666,7 +1666,7 @@ function notifyAll() {
     });
     socket.addEventListener('message', function (evt) {
         console.dir(evt.data);
-        //window.location.reload();
+        window.location.reload();
     });
     setTimeout(function () {
         console.dir(socket);
