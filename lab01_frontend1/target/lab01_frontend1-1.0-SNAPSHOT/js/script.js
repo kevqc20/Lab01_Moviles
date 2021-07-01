@@ -509,6 +509,7 @@ function addNewFlight() {
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
             });
+            notifyAll(2);
         },
         error: function () {
             alert("algo salio mal");
@@ -581,7 +582,7 @@ function addNewTicketArray(flight_id, discount, array) {
                 $("#successModal").on("hidden.bs.modal", function () {
                     $('#registerModal').modal('hide')
                 });
-                notifyAll();
+                notifyAll(1);
             },
             error: function () {
                 alert("algo salio mal");
@@ -922,6 +923,7 @@ function updateFlight() {
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#updateRouteModal').modal('hide')
             });
+            notifyAll(2);
         },
         error: function () {
             alert("algo salio mal");
@@ -1667,15 +1669,29 @@ function addsession() {
     });
     socket.addEventListener('message', function (evt) {
         console.dir(evt.data);
-        if (evt.data.toString() === 'actualizar') {
-            window.location.reload();
+        if (evt.data.toString() === 'asientos') {
+            reloadModals(1);
+        }
+        if (evt.data.toString() === 'vuelo') {
+            reloadModals(2);
         }
     });
 }
 
-function notifyAll() {
-    setTimeout(function () {
-        console.dir(socket);
-        socket.send('actualizar');
-    }, 1000);
+function notifyAll(caso) {
+    if (caso === 1) {
+        socket.send('asientos');
+    }
+    if (caso === 2) {
+        socket.send('vuelo');
+    }
+}
+
+function reloadModals(caso) {
+    if (caso === 1) {
+        charge_seats();
+    }
+    if (caso === 2) {
+        showListFlightsClient();
+    }
 }
