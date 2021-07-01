@@ -24,7 +24,7 @@ public class controllerReload {
         int numSess = session.getOpenSessions().size();
         for (Session sess : session.getOpenSessions()) {
             if (sess.isOpen())
-               sess.getBasicRemote().sendText(message+" "+numSess);
+               sess.getBasicRemote().sendText(message);
          }
         return null;
     }

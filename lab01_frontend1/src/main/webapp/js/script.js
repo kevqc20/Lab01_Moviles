@@ -187,6 +187,8 @@ window.onload = function () {
         getFlight(tr.cells[0].textContent);
         console.log(tr.cells[0].textContent)
     }));
+
+    addsession();
 }
 
 
@@ -1658,16 +1660,20 @@ function deleteTicket(id) {
 // Web Sockets
 var socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
 
-
-function notifyAll() {
-    var socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
+function addsession() {
+    socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
     socket.addEventListener('open', function (evt) {
-        socket.send('conectando');
+        console.dir('conectando');
     });
     socket.addEventListener('message', function (evt) {
         console.dir(evt.data);
-        window.location.reload();
+        if (evt.data.toString() === 'actualizar') {
+            window.location.reload();
+        }
     });
+}
+
+function notifyAll() {
     setTimeout(function () {
         console.dir(socket);
         socket.send('actualizar');
