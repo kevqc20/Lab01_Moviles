@@ -188,7 +188,7 @@ window.onload = function () {
         console.log(tr.cells[0].textContent)
     }));
 
-    addSession();
+    addsession();
 }
 
 
@@ -1661,8 +1661,8 @@ function deleteTicket(id) {
 
 // Web Sockets
 var socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
-var appSocket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "insertTicket");
-function addSession() {
+
+function addsession() {
     socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
     socket.addEventListener('open', function (evt) {
         console.dir('conectando');
@@ -1674,17 +1674,6 @@ function addSession() {
         }
         if (evt.data.toString() === 'vuelo') {
             reloadModals(2);
-        }
-    });
-    
-    appSocket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "insertTicket");
-    appSocket.addEventListener('open', function (evt) {
-        console.dir('conectando');
-    });
-    appSocket.addEventListener('message', function (evt) {
-        console.dir(evt.data);
-        if (evt.data.toString() === 'asientos') {
-            reloadModals(1);
         }
     });
 }
