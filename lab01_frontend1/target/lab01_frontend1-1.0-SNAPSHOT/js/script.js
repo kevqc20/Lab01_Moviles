@@ -10,63 +10,46 @@ window.onload = function () {
     $(".modal").on("hidden.bs.modal", function () {
         $(this).find('form').trigger("reset");
     });
-
 // Hide previous modal
     $('#updatePassangerAdmin').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#updateAirplaneB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#updateRouteB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#updateScheduleB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#updateTicketB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#updateFlightB').on('click', function () {
         $('.modal').modal('hide')
     });
     $('#registerPassangerAdmin').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#registerAirplaneB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#registerRouteB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#registerScheduleB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#registerTicketB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('#registerFlightB').on('click', function () {
         $('.modal').modal('hide')
     });
-
     $('.checkout-button').on('click', function () {
         $('.modal').modal('hide')
     });
-
-
-
-
-
 // Enter key
     $("#loginModal").keypress(function (e) {
         if (e.which == 13) {
@@ -78,7 +61,6 @@ window.onload = function () {
             $("#register").click();
         }
     });
-
 // Add header
     document.getElementById("navbar").innerHTML = "   <nav class='navbar navbar-expand-lg navbar-light fixed-top' id='mainNav'>" +
             "       <div class='container'>" +
@@ -167,7 +149,6 @@ window.onload = function () {
                     'min:8:No puede tener menos de 8 caracteres.'
                     );
         });
-
         if ($("#loginModal").length > 0) {
             $("#loginModal").on("click", function () {
                 bootstrapValidate(
@@ -182,7 +163,6 @@ window.onload = function () {
     $("#airplanesAdminTable").on('click', ".airplanesAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
         getAirplane(tr.cells[0].textContent);
-
     }));
     $("#passangersAdminTable").on('click', ".passangerAdminEdit", (function (ele) {
         var tr = ele.target.parentNode.parentNode;
@@ -207,6 +187,8 @@ window.onload = function () {
         getFlight(tr.cells[0].textContent);
         console.log(tr.cells[0].textContent)
     }));
+
+    addSession();
 }
 
 
@@ -247,18 +229,15 @@ function isEmail(email) {
             }
         }
     });
-
     // Closes responsive menu when a scroll trigger link is clicked
     $(".js-scroll-trigger").click(function () {
         $(".navbar-collapse").collapse("hide");
     });
-
     // Activate scrollspy to add active class to navbar items on scroll
     $("body").scrollspy({
         target: "#mainNav",
         offset: 100,
     });
-
     // Collapse Navbar
     var navbarCollapse = function () {
         if ($("#mainNav").offset().top > 100) {
@@ -300,7 +279,6 @@ function showPasswordRM() {
 function logIn() {
     var user = document.getElementById("user").value;
     var password = document.getElementById("password").value;
-
     var jsonUser = {
         "user": user,
         "password": password,
@@ -358,7 +336,6 @@ function addNewUser() {
     var cell_phone_rm = document.getElementById("cell_phone_rm").value;
     var address_rm = document.getElementById("address_rm").value;
     var dob_rm = document.getElementById("dob_rm").value;
-
     var jsonUser = {
         "user_name": user_username_rm,
         "password": password_rm,
@@ -395,7 +372,6 @@ function addNewAirplane() {
     var brand = document.getElementById("ap_brand_add").value;
     var cant = document.getElementById("ap_cantmax_add").value;
     var type = document.getElementById("ap_type_add").value;
-
     var jsonUser = {
         "id": id,
         "year": year,
@@ -427,7 +403,6 @@ function addNewRoute() {
     var origin = document.getElementById("rt_origin_add").value;
     var destination = document.getElementById("rt_destination_add").value;
     var duration = document.getElementById("rt_duration_add").value;
-
     var jsonUser = {
         "id": id,
         "origin": origin,
@@ -486,7 +461,6 @@ function addNewTicket() {
     var discount = document.getElementById("tk_discount_phone_add").value;
     var seat = document.getElementById("tk_seat_add").value;
     var user_usuario = document.getElementById("tk_user_add").value;
-
     var jsonUser = {
         "id": id,
         "flight_id": flight_id,
@@ -518,7 +492,6 @@ function addNewFlight() {
     var rute_id = document.getElementById("f_rid_add").value;
     var airplane_id = document.getElementById("f_apid_add").value;
     var shedule_id = document.getElementById("f_schid_add").value;
-
     var jsonUser = {
         "id": id,
         "rute_id": rute_id,
@@ -536,6 +509,7 @@ function addNewFlight() {
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#registerModal').modal('hide')
             });
+            notifyAll(2);
         },
         error: function () {
             alert("algo salio mal");
@@ -553,7 +527,6 @@ function addNewUserAdmin() {
     var cell_phone_rm = document.getElementById("p_cell_phone_add").value;
     var address_rm = document.getElementById("p_address_add").value;
     var dob_rm = document.getElementById("p_dob_add").value;
-
     var jsonUser = {
         "user_name": user_username_rm,
         "password": password_rm,
@@ -609,13 +582,13 @@ function addNewTicketArray(flight_id, discount, array) {
                 $("#successModal").on("hidden.bs.modal", function () {
                     $('#registerModal').modal('hide')
                 });
+                notifyAll(1);
             },
             error: function () {
                 alert("algo salio mal");
             }
         });
     });
-
 }
 
 
@@ -656,7 +629,6 @@ function getPassangerAdmin(data) {
         }
     }
     );
-
 }
 // Update Passanger
 function updatePassanger() {
@@ -671,7 +643,6 @@ function updatePassanger() {
     var address_rm = document.getElementById("p_address_em").value;
     var dob_rm = document.getElementById("p_dob_em").value;
     var role_rm = window.sessionStorage.getItem("role");
-
     console.log(dob_rm)
 
     var jsonUser = {
@@ -702,8 +673,6 @@ function updatePassanger() {
             alert("algo salio mal");
         }
     });
-
-
 }
 // Get Airplane
 function getAirplane(data) {
@@ -733,7 +702,6 @@ function updateAirplane() {
     var brand = document.getElementById("ap_brand_em").value;
     var type = document.getElementById("ap_type_em").value == 1 ? true : false;
     var cant_max = document.getElementById("ap_cantmax_em").value;
-
     var jsonUser = {
         "id": id,
         "year": year,
@@ -758,7 +726,6 @@ function updateAirplane() {
             alert("algo salio mal");
         }
     });
-
 }
 // Get Airplane
 function getRoute(data) {
@@ -786,7 +753,6 @@ function updateRoute() {
     var origin = document.getElementById("rt_origin_em").value;
     var destination = document.getElementById("rt_destination_em").value;
     var duration = document.getElementById("rt_duration_em").value;
-
     var jsonUser = {
         "id": id,
         "origin": origin,
@@ -843,7 +809,6 @@ function updateSchedule() {
     }
 
     console.log(jsonUser);
-
     $.ajax({
         url: "/lab01_frontend1/servletUpdate/horario",
         method: "POST",
@@ -898,7 +863,6 @@ function updateTicket() {
     }
 
     console.log(jsonUser);
-
     $.ajax({
         url: "/lab01_frontend1/servletUpdate/tiquete",
         method: "POST",
@@ -949,7 +913,6 @@ function updateFlight() {
     }
 
     console.log(jsonUser);
-
     $.ajax({
         url: "/lab01_frontend1/servletUpdate/vuelo",
         method: "POST",
@@ -960,6 +923,7 @@ function updateFlight() {
             $("#successModal").on("hidden.bs.modal", function () {
                 $('#updateRouteModal').modal('hide')
             });
+            notifyAll(2);
         },
         error: function () {
             alert("algo salio mal");
@@ -981,7 +945,6 @@ function flighTickets(id_fly, scMap) {
                     set_unavailable(num);
                 }
             });
-
         },
         error: function () {
             alert('error');
@@ -999,7 +962,7 @@ function fillWithInformation(data, i) {
     switch (i) {
         case 1:
         {
-            // Passangers
+// Passangers
             var a = new Date(data['passanger']['dob']);
             a.setDate(a.getDate() + 1)
             console.log(data['passanger']['dob']);
@@ -1016,7 +979,7 @@ function fillWithInformation(data, i) {
         }
         case 2:
         {
-            // Airplanes
+// Airplanes
             document.getElementById("ap_id_em").value = data['airplane']['id'];
             document.getElementById("ap_year_em").value = data['airplane']['year'];
             document.getElementById("ap_model_em").value = data['airplane']['model'];
@@ -1027,7 +990,7 @@ function fillWithInformation(data, i) {
         }
         case 3:
         {
-            // Routes
+// Routes
             document.getElementById("rt_id_em").value = data['route']['id'];
             document.getElementById("rt_origin_em").value = data['route']['origin'];
             document.getElementById("rt_destination_em").value = data['route']['destination'];
@@ -1036,7 +999,7 @@ function fillWithInformation(data, i) {
         }
         case 4:
         {
-            // Shedules
+// Shedules
             var a = new Date(data['schedule']['date_time']);
             a.setMinutes(a.getMinutes() - a.getTimezoneOffset());
             document.getElementById("sh_id_em").value = data['schedule']['id'];
@@ -1045,7 +1008,7 @@ function fillWithInformation(data, i) {
         }
         case 5:
         {
-            // Tickets
+// Tickets
             var disc = parseInt(data['tickets']['price']) - (parseInt(data['tickets']['price']) * 1 / parseInt(data['tickets']['discount']));
             document.getElementById("tk_id_em").value = data['tickets']['id'];
             document.getElementById("tk_fid_em").value = data['tickets']['flight_id'];
@@ -1058,7 +1021,7 @@ function fillWithInformation(data, i) {
         }
         case 6:
         {
-            // Flights
+// Flights
             document.getElementById("f_id_em").value = data['flight']['id'];
             document.getElementById("f_rid_em").value = data['flight']['route_id'];
             document.getElementById("f_apid_em").value = data['flight']['airplaine_id'];
@@ -1341,7 +1304,6 @@ function list(data, i) {
         {
             var listado = document.getElementById("ticketsClientTable");
             listado.innerHTML = "";
-
             data["ticketsLists"].forEach((u) => {
                 if (u.user_username.toString() === window.sessionStorage.user.toString()) {
                     row(u, 8);
@@ -1360,7 +1322,6 @@ function row(data, i) {
             case 1:
             {
                 tr += '<td>' + data.id + '</td>';
-
                 // Route data
                 var route = {
                     "id": data.route_id
@@ -1381,7 +1342,6 @@ function row(data, i) {
                     }
                 }
                 );
-
                 // Schedule data
                 var schedule = {
                     "id": data.schedule_id
@@ -1401,14 +1361,10 @@ function row(data, i) {
                     }
                 }
                 );
-
                 tr += '<td><button class="flightsAdminEdit" href="#updateFlightModal" class="trigger-btn" data-toggle="modal">Editar</button></td>';
                 tr += '<td><button class="flightsAdminDelete" class="trigger-btn" data-toggle="modal" onclick="deleteFlight(' + "\'" + data.id + "\'" + ')">Borrar</button></td>';
                 tr += '</tr>';
                 $('#flightsAdminTable').append(tr);
-
-
-
                 break;
             }
             case 2:
@@ -1481,7 +1437,6 @@ function row(data, i) {
             case 7:
             {
                 tr += '<td>' + data.id + '</td>';
-
                 // Route data
                 var route = {
                     "id": data.route_id
@@ -1502,7 +1457,6 @@ function row(data, i) {
                     }
                 }
                 );
-
                 // Schedule data
                 var schedule = {
                     "id": data.schedule_id
@@ -1601,7 +1555,7 @@ function deleteAirplane(id) {
     var jsonUser = {
         "id": id,
     }
-    
+
     console.log(jsonUser)
     $.ajax({
         url: "/lab01_frontend1/servletDelete/avion",
@@ -1628,7 +1582,7 @@ function deleteSchedule(id) {
     var jsonUser = {
         "id": id,
     }
-    
+
     console.log(jsonUser)
     $.ajax({
         url: "/lab01_frontend1/servletDelete/horario",
@@ -1655,7 +1609,7 @@ function deletePassanger(id) {
     var jsonUser = {
         "id": id,
     }
-    
+
     console.log(jsonUser)
     $.ajax({
         url: "/lab01_frontend1/servletDelete/registro",
@@ -1682,7 +1636,7 @@ function deleteTicket(id) {
     var jsonUser = {
         "id": id,
     }
-    
+
     console.log(jsonUser)
     $.ajax({
         url: "/lab01_frontend1/servletDelete/tiquete",
@@ -1706,27 +1660,49 @@ function deleteTicket(id) {
 }
 
 // Web Sockets
-var socket = new WebSocket("ws://localhost:8080/ProgressWebSocket-1.0-SNAPSHOT/progress");
-socket.onmessage = onMessage;
-
-function onMessage(event) {
-    var btnSubmit = document.getElementById("btnSubmit");
-    btnSubmit.disabled = true;
-
-    var progress = document.getElementById("progress");
-    var data = JSON.parse(event.data);
-    progress.value = data.value;
-
-    var lblProgress = document.getElementById("lblProgress");
-    if (data.value < 100) {
-        lblProgress.innerHTML = 'Progress: ' + data.value + '%';
-    } else {
-        btnSubmit.disabled = false;
-        lblProgress.innerHTML = "Finish";
-    }
-
+var socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
+var appSocket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "insertTicket");
+function addSession() {
+    socket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "reload");
+    socket.addEventListener('open', function (evt) {
+        console.dir('conectando');
+    });
+    socket.addEventListener('message', function (evt) {
+        console.dir(evt.data);
+        if (evt.data.toString() === 'asientos') {
+            reloadModals(1);
+        }
+        if (evt.data.toString() === 'vuelo') {
+            reloadModals(2);
+        }
+    });
+    
+    appSocket = new WebSocket("ws://" + document.location.host + "/lab01_frontend1/" + "insertTicket");
+    appSocket.addEventListener('open', function (evt) {
+        console.dir('conectando');
+    });
+    appSocket.addEventListener('message', function (evt) {
+        console.dir(evt.data);
+        if (evt.data.toString() === 'asientos') {
+            reloadModals(1);
+        }
+    });
 }
 
-function formSubmit() {
-    socket.send("{\"start\":\"true\"}");
+function notifyAll(caso) {
+    if (caso === 1) {
+        socket.send('asientos');
+    }
+    if (caso === 2) {
+        socket.send('vuelo');
+    }
+}
+
+function reloadModals(caso) {
+    if (caso === 1) {
+        charge_seats();
+    }
+    if (caso === 2) {
+        showListFlightsClient();
+    }
 }
