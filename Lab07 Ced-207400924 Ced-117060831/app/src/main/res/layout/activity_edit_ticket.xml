@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TicketEditActivity">
+
+
+    <LinearLayout
+        android:id="@+id/re_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0F123D"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="354dp"
+            android:layout_height="142dp"
+            app:srcCompat="@drawable/register" />
+
+        <TextView
+            android:id="@+id/re_blank15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/re_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Ticket"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="60sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/re_blank13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_id3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="ID"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/et_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="ID"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/re_blank2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_flight2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="VUELO"
+            android:inputType="none|text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/et_flight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="VUELO"
+            android:inputType="none|text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/re_blank8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_user2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="PASAJERO"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/et_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="PASAJERO"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/re_blank9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_seat2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="ASIENTOS"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/et_seat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="ASIENTO"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/re_blank10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_price2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="PRECIO"
+            android:inputType="none|text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/et_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="PRECIO"
+            android:inputType="none|text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/re_blank11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/et_discount2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="DESCUENTO"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/et_discount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="DESCUENTO"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/re_blank12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>

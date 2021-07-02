@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_200"
+    tools:context=".CrudSeats">
+
+    <RelativeLayout
+        android:id="@+id/enclosing_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:adjustViewBounds="false"
+            android:baselineAligned="false"
+            android:scaleType="centerInside"
+            android:src="@drawable/airplane1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="420dp"
+            android:layout_height="740dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_span="5"
+                    android:text="Selección de asientos"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="34sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="110dp"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/seat1"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="A-1"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat2"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="A-2"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat3"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="A-3"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat4"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="A-4"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/seat5"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="B-1"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat6"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="B-2"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat7"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="B-3"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat8"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="B-4"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/seat9"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="C-1"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat10"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="C-2"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat11"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="C-3"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat12"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="C-4"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/seat13"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="D-1"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat14"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="D-2"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat15"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="D-3"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat16"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="D-4"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/seat17"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="E-1"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat18"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="E-2"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat19"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="E-3"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat20"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="E-4"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/seat21"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="F-1"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat22"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="F-2"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat23"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="F-3"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+
+                <Button
+                    android:id="@+id/seat24"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/black"
+                    android:text="F-4"
+                    android:textColor="@color/purple_200"
+                    android:textSize="9sp"
+                    app:backgroundTint="@color/black" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="59dp">
+
+                <Button
+                    android:id="@+id/buyButton"
+                    android:layout_width="157dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_span="2"
+                    android:background="@color/black"
+                    android:text="Comprar"
+                    android:textColor="@color/purple_200"
+                    android:textSize="8sp"
+                    app:backgroundTint="@color/black" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total a pagar:"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/amountDue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="0"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/red"
+                    android:textSize="16sp" />
+            </TableRow>
+
+        </TableLayout>
+
+
+    </RelativeLayout>
+
+</ScrollView>

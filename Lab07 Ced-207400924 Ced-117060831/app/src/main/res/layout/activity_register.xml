@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+
+    <LinearLayout
+        android:id="@+id/re_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0F123D"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/register" />
+
+        <TextView
+            android:id="@+id/re_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Registro"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="48sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/re_blank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/re_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="USUARIO"
+            android:inputType="text"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <EditText
+            android:id="@+id/re_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="CONTRASEÑA"
+            android:inputType="text|textPassword"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <EditText
+            android:id="@+id/re_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="NOMBRE"
+            android:inputType="text"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+
+        <EditText
+            android:id="@+id/re_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="APELLIDOS"
+            android:inputType="text"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <EditText
+            android:id="@+id/re_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="CORREO ELECTRÓNICO"
+            android:inputType="textWebEmailAddress|text"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <EditText
+            android:id="@+id/re_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="DIRECCIÓN"
+            android:inputType="text"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <EditText
+            android:id="@+id/re_cellphone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="TÉLEFONO CELULAR"
+            android:inputType="text|phone"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <EditText
+            android:id="@+id/re_workphone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:hint="TÉLEFONO DE TRABAJO"
+            android:inputType="text|phone"
+            android:textAlignment="viewStart"
+            android:textAllCaps="true"
+            android:textColor="#E2C792"
+            android:textColorHint="#E2C792" />
+
+        <TextView
+            android:id="@+id/re_blank2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="#0F123D"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/re_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Registrar"
+            android:textAllCaps="false"
+            android:textColor="#0F123D"
+            app:backgroundTint="#E2C792" />
+
+
+    </LinearLayout>
+
+
+
+</ScrollView>
