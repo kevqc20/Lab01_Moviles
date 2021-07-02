@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Lab04</string>
+    <string name="activity_menu_example">MenuExample</string>
+    <string name="title_activity_menu_example">MenuExample</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Lab04</string>
+    <string name="nav_header_subtitle">Kevin Quesada - Mariana Valverde</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="menu_home">Mi perfil</string>
+    <string name="mis_tickets">Mis tickets</string>
+    <string name="flights">Vuelos disponibles</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="actualizar">Actualizar</string>
+
+    <string-array name="destinos">
+        <item>CR</item>
+        <item>USA</item>
+        <item>Canada</item>
+        <item>Mexico</item>
+        <item>Francia</item>
+    </string-array>
+
+    <string-array name="origenes">
+        <item>CR</item>
+        <item>USA</item>
+        <item>Canada</item>
+        <item>Mexico</item>
+        <item>Francia</item>
+    </string-array>
+
+    <string-array name="tipos">
+        <item>Ida y vuelta</item>
+        <item>Solo ida</item>
+    </string-array>
+
+</resources>

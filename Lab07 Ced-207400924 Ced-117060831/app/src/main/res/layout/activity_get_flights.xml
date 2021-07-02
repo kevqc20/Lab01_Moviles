@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_200"
+    tools:context=".GetFlights">
+
+    <LinearLayout
+        android:id="@+id/re_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0F123D"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/get_flights"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="10sp"
+            android:text="Buscar vuelo"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="42sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/re_blank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="14sp"
+            android:text="Actualización de datos"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/re_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="16sp"
+            android:text="Origen"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/get_origin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:entries="@array/origenes"
+            android:popupBackground="@color/black"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/re_register2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="16sp"
+            android:text="Destino"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/get_destino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:entries="@array/destinos"
+            android:popupBackground="@color/black"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/re_register4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="16sp"
+            android:text="Tipo"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/get_tipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:entries="@array/tipos"
+            android:popupBackground="@color/black"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center" />
+
+
+        <TextView
+            android:id="@+id/re_register6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="16sp"
+            android:text="Fecha de salida"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <DatePicker
+            android:id="@+id/datePickerSalida"
+            android:layout_width="297dp"
+            android:layout_height="71dp"
+            android:calendarViewShown="false"
+            android:background="@color/green"
+            android:datePickerMode="spinner" />
+
+        <TextView
+            android:id="@+id/re_register7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/lato"
+            android:lineSpacingExtra="16sp"
+            android:text="Fecha de retorno"
+            android:textAlignment="center"
+            android:textColor="#E2C792"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <DatePicker
+            android:id="@+id/datePickerRetorno"
+            android:layout_width="297dp"
+            android:layout_height="71dp"
+            android:calendarViewShown="false"
+            android:background="@color/green"
+            android:datePickerMode="spinner" />
+
+        <Button
+            android:id="@+id/get_flightB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Buscar"
+            android:textAllCaps="false"
+            android:textColor="#0F123D"
+            app:backgroundTint="#E2C792" />
+
+    </LinearLayout>
+
+
+</ScrollView>
